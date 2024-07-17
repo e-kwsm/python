@@ -55,7 +55,7 @@ struct shared_ptr_from_python
         new (storage) SP<T>();
       else
       {
-        SP<void> hold_convertible_ref_count((void*)0, shared_ptr_deleter(handle<>(borrowed(source))) );
+        SP<void> hold_convertible_ref_count((void*)BOOST_NULLPTR, shared_ptr_deleter(handle<>(borrowed(source))) );
         // use aliasing constructor
         new (storage) SP<T>(hold_convertible_ref_count, static_cast<T*>(data->convertible));
       }

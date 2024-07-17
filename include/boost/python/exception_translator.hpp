@@ -16,7 +16,7 @@
 namespace boost { namespace python { 
 
 template <class ExceptionType, class Translate>
-void register_exception_translator(Translate translate, boost::type<ExceptionType>* = 0)
+void register_exception_translator(Translate translate, boost::type<ExceptionType>* = BOOST_NULLPTR)
 {
     using namespace boost::placeholders;
     detail::register_exception_handler(

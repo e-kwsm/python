@@ -36,9 +36,9 @@ struct pickle_suite
     struct inaccessible {};
     friend struct detail::pickle_suite_registration;
   public:
-    static inaccessible* getinitargs() { return 0; }
-    static inaccessible* getstate() { return 0; }
-    static inaccessible* setstate() { return 0; }
+    static inaccessible* getinitargs() { return BOOST_NULLPTR; }
+    static inaccessible* getstate() { return BOOST_NULLPTR; }
+    static inaccessible* setstate() { return BOOST_NULLPTR; }
     static bool getstate_manages_dict() { return false; }
 };
 

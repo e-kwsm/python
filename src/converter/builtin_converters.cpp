@@ -74,7 +74,7 @@ namespace
       static void* convertible(PyObject* obj)
       {
           unaryfunc* slot = SlotPolicy::get_slot(obj);
-          return slot && *slot ? slot : 0;
+          return slot && *slot ? slot : BOOST_NULLPTR;
       }
 
       static void construct(PyObject* obj, rvalue_from_python_stage1_data* data)
@@ -116,7 +116,7 @@ namespace
   {
       static unaryfunc* get_slot(PyObject* obj)
       {
-          return PyLong_Check(obj) ? &py_object_identity : 0;
+          return PyLong_Check(obj) ? &py_object_identity : BOOST_NULLPTR;
       }
       static PyTypeObject const* get_pytype() {return &PyLong_Type;}
   };
@@ -152,7 +152,7 @@ namespace
       {
           PyNumberMethods* number_methods = obj->ob_type->tp_as_number;
           if (number_methods == 0)
-              return 0;
+              return BOOST_NULLPTR;
 
           return (
 #if PY_VERSION_HEX >= 0x02040000 && defined(BOOST_PYTHON_BOOL_INT_STRICT)
@@ -160,7 +160,7 @@ namespace
 #endif
           (PyInt_Check(obj) || PyLong_Check(obj)))
 
-        ? &number_methods->nb_int : 0;
+        ? &number_methods->nb_int : BOOST_NULLPTR;
       }
       static PyTypeObject const* get_pytype() { return &PyInt_Type;}
   };
@@ -184,7 +184,7 @@ namespace
       {
           PyNumberMethods* number_methods = obj->ob_type->tp_as_number;
           if (number_methods == 0)
-              return 0;
+              return BOOST_NULLPTR;
 
           return (
 #if PY_VERSION_HEX >= 0x02040000 && defined(BOOST_PYTHON_BOOL_INT_STRICT)
@@ -238,7 +238,7 @@ namespace
       static unaryfunc* get_slot(PyObject* obj)
       {
 #if PY_VERSION_HEX >= 0x03000000
-          return PyLong_Check(obj) ? &py_object_identity : 0;
+          return PyLong_Check(obj) ? &py_object_identity : BOOST_NULLPTR;
 #else
           PyNumberMethods* number_methods = obj->ob_type->tp_as_number;
           if (number_methods == 0)
@@ -308,9 +308,9 @@ namespace
       static unaryfunc* get_slot(PyObject* obj)
       {
 #if PY_VERSION_HEX >= 0x03000000
-          return obj == Py_None || PyLong_Check(obj) ? &py_object_identity : 0;
+          return obj == Py_None || PyLong_Check(obj) ? &py_object_identity : BOOST_NULLPTR;
 #elif PY_VERSION_HEX >= 0x02040000 && defined(BOOST_PYTHON_BOOL_INT_STRICT)
-          return obj == Py_None || PyBool_Check(obj) ? &py_object_identity : 0;
+          return obj == Py_None || PyBool_Check(obj) ? &py_object_identity : BOOST_NULLPTR;
 #else
           return obj == Py_None || PyInt_Check(obj) ? &py_object_identity : 0;
 #endif
@@ -337,8 +337,8 @@ namespace
       static unaryfunc* get_slot(PyObject* obj)
       {
           PyNumberMethods* number_methods = obj->ob_type->tp_as_number;
-          if (number_methods == 0)
-              return 0;
+          if (number_methods == BOOST_NULLPTR)
+              return BOOST_NULLPTR;
 
           // For integer types, return the tp_int conversion slot to avoid
           // creating a new object. We'll handle that below
@@ -348,7 +348,7 @@ namespace
 #endif
 
           return (PyLong_Check(obj) || PyFloat_Check(obj))
-              ? &number_methods->nb_float : 0;
+              ? &number_methods->nb_float : BOOST_NULLPTR;
       }
       
       static double extract(PyObject* intermediate)
@@ -379,7 +379,7 @@ namespace
       {
 #if PY_VERSION_HEX >= 0x03000000
           return (PyUnicode_Check(obj)) ? &py_unicode_as_string_unaryfunc : 
-                  PyBytes_Check(obj) ? &py_object_identity : 0;
+                  PyBytes_Check(obj) ? &py_object_identity : BOOST_NULLPTR;
 #else
           return (PyString_Check(obj)) ? &obj->ob_type->tp_str : 0;
 
@@ -407,7 +407,7 @@ namespace
   // "slot" which encodes a Python string using the default encoding
   extern "C" PyObject* encode_string_unaryfunc(PyObject* x)
   {
-      return PyUnicode_FromEncodedObject( x, 0, 0 );
+      return PyUnicode_FromEncodedObject( x, BOOST_NULLPTR, BOOST_NULLPTR );
   }
   unaryfunc py_encode_string = encode_string_unaryfunc;
 
@@ -425,7 +425,7 @@ namespace
             : PyString_Check(obj)
 #endif
               ? &py_encode_string
-            : 0;
+            : BOOST_NULLPTR;
       };
 
       // Remember that this will be used to construct the result object 
@@ -441,7 +441,7 @@ namespace
 
           Py_ssize_t size = 0;
           wchar_t *buf = PyUnicode_AsWideCharString(intermediate, &size);
-          if (buf == NULL) {
+          if (buf == BOOST_NULLPTR) {
               boost::python::throw_error_already_set();
           }
           std::wstring result(buf, size);
@@ -526,7 +526,7 @@ BOOST_PYTHON_DECL PyObject* do_return_to_python(PyObject* x)
   
 BOOST_PYTHON_DECL PyObject* do_arg_to_python(PyObject* x)
 {
-    if (x == 0)
+    if (x == BOOST_NULLPTR)
         return boost::python::detail::none();
       
     Py_INCREF(x);

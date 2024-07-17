@@ -5,13 +5,15 @@
 #ifndef DECREF_GUARD_DWA20021220_HPP
 # define DECREF_GUARD_DWA20021220_HPP
 
+#include <boost/config.hpp>
+
 namespace boost { namespace python { namespace detail { 
 
 struct decref_guard
 {
     decref_guard(PyObject* o) : obj(o) {}
     ~decref_guard() { Py_XDECREF(obj); }
-    void cancel() { obj = 0; }
+    void cancel() { obj = BOOST_NULLPTR; }
  private:
     PyObject* obj;
 };

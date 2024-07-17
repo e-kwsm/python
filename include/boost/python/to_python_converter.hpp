@@ -57,11 +57,11 @@ struct to_python_converter
 
     static PyTypeObject const* get_pytype_1(boost::mpl::false_ *)
     {
-        return 0;
+        return BOOST_NULLPTR;
     }
     static PyTypeObject const* get_pytype_impl()
     {
-        return get_pytype_1((HasGetPytype*)0);
+        return get_pytype_1((HasGetPytype*)BOOST_NULLPTR);
     }
 #endif
     

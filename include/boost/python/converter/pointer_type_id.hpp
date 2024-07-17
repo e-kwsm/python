@@ -56,11 +56,11 @@ namespace detail
 // Returns a type_info associated with the type pointed
 // to by T, which may be a pointer or a reference to a pointer.
 template <class T>
-type_info pointer_type_id(T(*)() = 0)
+type_info pointer_type_id(T(*)() = BOOST_NULLPTR)
 {
     return detail::pointer_typeid_select<
           boost::python::detail::is_lvalue_reference<T>::value
-        >::execute((T(*)())0);
+        >::execute((T(*)())BOOST_NULLPTR);
 }
 
 }}} // namespace boost::python::converter

@@ -54,8 +54,8 @@ template <class ArgList, class Arity, class Holder, class CallPolicies>
 object make_keyword_range_constructor(
     CallPolicies const& policies        // The CallPolicies with which to invoke the Holder's constructor
     , detail::keyword_range const& kw   // The (possibly empty) set of associated argument keywords
-    , Holder* = 0                       
-    , ArgList* = 0, Arity* = 0)
+    , Holder* = BOOST_NULLPTR
+    , ArgList* = BOOST_NULLPTR, Arity* = BOOST_NULLPTR)
 {
 #if !defined( BOOST_PYTHON_NO_PY_SIGNATURES) && defined( BOOST_PYTHON_PY_SIGNATURES_PROPER_INIT_SELF_TYPE)
     python_class<BOOST_DEDUCED_TYPENAME Holder::value_type>::register_();

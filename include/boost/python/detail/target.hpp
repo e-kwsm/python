@@ -30,7 +30,7 @@ namespace boost { namespace python { namespace detail {
 #  include BOOST_PP_ITERATE()
 
 template <class R, class T>
-T& (* target(R (T::*)) )() { return 0; }
+T& (* target(R (T::*)) )() { return BOOST_NULLPTR; }
 
 }}} // namespace boost::python::detail
 

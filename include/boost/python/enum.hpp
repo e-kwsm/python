@@ -19,7 +19,7 @@ struct enum_ : public objects::enum_base
     typedef objects::enum_base base;
 
     // Declare a new enumeration type in the current scope()
-    enum_(char const* name, char const* doc = 0);
+    enum_(char const* name, char const* doc = BOOST_NULLPTR);
 
     // Add a new enumeration value with the given name and value.
     inline enum_<T>& value(char const* name, T);
@@ -71,7 +71,7 @@ void* enum_<T>::convertible_from_python(PyObject* obj)
         , upcast<PyObject>(
             converter::registered<T>::converters.m_class_object))
         
-        ? obj : 0;
+        ? obj : BOOST_NULLPTR;
 }
 
 // Constructs an instance of the enumeration type in the from_python

@@ -15,13 +15,13 @@ namespace
 {
     PyObject* init_module_in_scope(PyObject* m, void(*init_function)())
     {
-        if (m != 0)
+        if (m != BOOST_NULLPTR)
         {
             // Create the current module scope
             object m_obj(((borrowed_reference_t*)m));
             scope current_module(m_obj);
 
-            if (handle_exception(init_function)) return NULL;
+            if (handle_exception(init_function)) return BOOST_NULLPTR;
         }
 
         return m;
@@ -122,7 +122,7 @@ namespace boost { namespace python {
 
 namespace detail
 {
-  BOOST_PYTHON_DECL PyObject* current_scope = 0;
+  BOOST_PYTHON_DECL PyObject* current_scope = BOOST_NULLPTR;
 }
 
 }}

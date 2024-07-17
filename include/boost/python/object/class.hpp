@@ -24,7 +24,7 @@ struct BOOST_PYTHON_DECL class_base : python::api::object
         , type_info const*const types    // this is wrapping. The rest are the types of
                                         // any bases.
         
-        , char const* doc = 0           // Docstring, if any.
+        , char const* doc = BOOST_NULLPTR // Docstring, if any.
         );
 
 

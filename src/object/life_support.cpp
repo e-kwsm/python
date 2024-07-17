@@ -28,7 +28,7 @@ extern "C"
     {
         // Let the patient die now
         Py_XDECREF(((life_support*)self)->patient);
-        ((life_support*)self)->patient = 0;
+        ((life_support*)self)->patient = BOOST_NULLPTR;
         // Let the weak reference die. This probably kills us.
         Py_XDECREF(PyTuple_GET_ITEM(arg, 0));
         return ::boost::python::detail::none();
@@ -42,47 +42,47 @@ PyTypeObject life_support_type = {
     0,
     life_support_dealloc,               /* tp_dealloc */
     0,                                  /* tp_print */
-    0,                                  /* tp_getattr */
-    0,                                  /* tp_setattr */
-    0,                                  /* tp_compare */
-    0, //(reprfunc)func_repr,                   /* tp_repr */
-    0,                                  /* tp_as_number */
-    0,                                  /* tp_as_sequence */
-    0,                                  /* tp_as_mapping */
-    0,                                  /* tp_hash */
+    BOOST_NULLPTR,                            /* tp_getattr */
+    BOOST_NULLPTR,                            /* tp_setattr */
+    BOOST_NULLPTR,                            /* tp_compare */
+    BOOST_NULLPTR, //(reprfunc)func_repr,     /* tp_repr */
+    BOOST_NULLPTR,                            /* tp_as_number */
+    BOOST_NULLPTR,                            /* tp_as_sequence */
+    BOOST_NULLPTR,                            /* tp_as_mapping */
+    BOOST_NULLPTR,                            /* tp_hash */
     life_support_call,                  /* tp_call */
-    0,                                  /* tp_str */
-    0, // PyObject_GenericGetAttr,            /* tp_getattro */
-    0, // PyObject_GenericSetAttr,            /* tp_setattro */
-    0,                                  /* tp_as_buffer */
+    BOOST_NULLPTR,                                  /* tp_str */
+    BOOST_NULLPTR, // PyObject_GenericGetAttr,      /* tp_getattro */
+    BOOST_NULLPTR, // PyObject_GenericSetAttr,      /* tp_setattro */
+    BOOST_NULLPTR,                                  /* tp_as_buffer */
     Py_TPFLAGS_DEFAULT /* | Py_TPFLAGS_HAVE_GC */,/* tp_flags */
-    0,                                  /* tp_doc */
-    0, // (traverseproc)func_traverse,          /* tp_traverse */
-    0,                                  /* tp_clear */
-    0,                                  /* tp_richcompare */
+    BOOST_NULLPTR,                                  /* tp_doc */
+    BOOST_NULLPTR, // (traverseproc)func_traverse,  /* tp_traverse */
+    BOOST_NULLPTR,                                  /* tp_clear */
+    BOOST_NULLPTR,                                  /* tp_richcompare */
     0, //offsetof(PyLife_SupportObject, func_weakreflist), /* tp_weaklistoffset */
-    0,                                  /* tp_iter */
-    0,                                  /* tp_iternext */
-    0,                                  /* tp_methods */
-    0, // func_memberlist,                      /* tp_members */
-    0, //func_getsetlist,                       /* tp_getset */
-    0,                                  /* tp_base */
-    0,                                  /* tp_dict */
-    0,                                  /* tp_descr_get */
-    0,                                  /* tp_descr_set */
+    BOOST_NULLPTR,                                  /* tp_iter */
+    BOOST_NULLPTR,                                  /* tp_iternext */
+    BOOST_NULLPTR,                                  /* tp_methods */
+    BOOST_NULLPTR, // func_memberlist,              /* tp_members */
+    BOOST_NULLPTR, // func_getsetlist,              /* tp_getset */
+    BOOST_NULLPTR,                                  /* tp_base */
+    BOOST_NULLPTR,                                  /* tp_dict */
+    BOOST_NULLPTR,                                  /* tp_descr_get */
+    BOOST_NULLPTR,                                  /* tp_descr_set */
     0, //offsetof(PyLife_SupportObject, func_dict),      /* tp_dictoffset */
-    0,                                      /* tp_init */
-    0,                                      /* tp_alloc */
-    0,                                      /* tp_new */
-    0,                                      /* tp_free */
-    0,                                      /* tp_is_gc */
-    0,                                      /* tp_bases */
-    0,                                      /* tp_mro */
-    0,                                      /* tp_cache */
-    0,                                      /* tp_subclasses */
-    0,                                      /* tp_weaklist */
+    BOOST_NULLPTR,                                /* tp_init */
+    BOOST_NULLPTR,                                /* tp_alloc */
+    BOOST_NULLPTR,                                /* tp_new */
+    BOOST_NULLPTR,                                /* tp_free */
+    BOOST_NULLPTR,                                /* tp_is_gc */
+    BOOST_NULLPTR,                                /* tp_bases */
+    BOOST_NULLPTR,                                /* tp_mro */
+    BOOST_NULLPTR,                                /* tp_cache */
+    BOOST_NULLPTR,                                /* tp_subclasses */
+    BOOST_NULLPTR,                                /* tp_weaklist */
 #if PYTHON_API_VERSION >= 1012
-    0                                       /* tp_del */
+    BOOST_NULLPTR                                 /* tp_del */
 #endif
 };
 
@@ -91,7 +91,7 @@ PyObject* make_nurse_and_patient(PyObject* nurse, PyObject* patient)
     if (nurse == Py_None || nurse == patient)
         return nurse;
     
-    if (Py_TYPE(&life_support_type) == 0)
+    if (Py_TYPE(&life_support_type) == BOOST_NULLPTR)
     {
         Py_SET_TYPE(&life_support_type, &PyType_Type);
         PyType_Ready(&life_support_type);
@@ -99,9 +99,9 @@ PyObject* make_nurse_and_patient(PyObject* nurse, PyObject* patient)
     
     life_support* system = PyObject_New(life_support, &life_support_type);
     if (!system)
-        return 0;
+        return BOOST_NULLPTR;
 
-    system->patient = 0;
+    system->patient = BOOST_NULLPTR;
     
     // We're going to leak this reference, but don't worry; the
     // life_support system decrements it when the nurse dies.
@@ -111,7 +111,7 @@ PyObject* make_nurse_and_patient(PyObject* nurse, PyObject* patient)
     // anyway
     Py_DECREF(system);
     if (!weakref)
-        return 0;
+        return BOOST_NULLPTR;
     
     system->patient = patient;
     Py_XINCREF(patient); // hang on to the patient until death

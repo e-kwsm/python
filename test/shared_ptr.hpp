@@ -133,7 +133,7 @@ shared_ptr<Y> factory(int n)
 
     shared_ptr<A> New(bool make)
     {
-        return shared_ptr<A>( make ? new B() : 0 );
+        return shared_ptr<A>( make ? new B() : BOOST_NULLPTR );
     }
 
     struct A_Wrapper: A

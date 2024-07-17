@@ -66,7 +66,7 @@ struct dynamic_id_generator
 // Register the dynamic id function for T with the type-conversion
 // system.
 template <class T>
-void register_dynamic_id(T* = 0)
+void register_dynamic_id(T* = BOOST_NULLPTR)
 {
     typedef typename dynamic_id_generator<T>::type generator;
     register_dynamic_id_aux(
@@ -114,7 +114,7 @@ template <class Source, class Target>
 inline void register_conversion(
     bool is_downcast = ::boost::is_base_and_derived<Source,Target>::value
     // These parameters shouldn't be used; they're an MSVC bug workaround
-    , Source* = 0, Target* = 0)
+    , Source* = BOOST_NULLPTR, Target* = BOOST_NULLPTR)
 {
     typedef typename cast_generator<Source,Target>::type generator;
 

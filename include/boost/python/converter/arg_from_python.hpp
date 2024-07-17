@@ -205,7 +205,7 @@ inline arg_lvalue_from_python_base::arg_lvalue_from_python_base(void* result)
 
 inline bool arg_lvalue_from_python_base::convertible() const
 {
-    return m_result != 0;
+    return m_result != BOOST_NULLPTR;
 }
 
 inline void*const& arg_lvalue_from_python_base::result() const
@@ -225,7 +225,7 @@ namespace detail
   {
       static T value;
   };
-  template <class T> T null_ptr_owner<T>::value = 0;
+  template <class T> T null_ptr_owner<T>::value = BOOST_NULLPTR;
   
   template <class U>
   inline U& null_ptr_reference(U&(*)())
@@ -243,21 +243,21 @@ inline pointer_cref_arg_from_python<T>::pointer_cref_arg_from_python(PyObject* p
     python::detail::write_void_ptr_reference(
         m_result.bytes
         , p == Py_None ? p : converter::get_lvalue_from_python(p, registered_pointee<T>::converters)
-        , (T(*)())0);
+        , (T(*)())BOOST_NULLPTR);
 }
 
 template <class T>
 inline bool pointer_cref_arg_from_python<T>::convertible() const
 {
-    return python::detail::void_ptr_to_reference(m_result.bytes, (T(*)())0) != 0;
+    return python::detail::void_ptr_to_reference(m_result.bytes, (T(*)())BOOST_NULLPTR) != BOOST_NULLPTR;
 }
 template <class T>
 inline T pointer_cref_arg_from_python<T>::operator()() const
 {
     return (*(void**)m_result.bytes == Py_None)  // None ==> 0
-        ? detail::null_ptr_reference((T(*)())0)
+        ? detail::null_ptr_reference((T(*)())BOOST_NULLPTR)
         // Otherwise, return a U*const& to the m_result storage.
-        : python::detail::void_ptr_to_reference(m_result.bytes, (T(*)())0);
+        : python::detail::void_ptr_to_reference(m_result.bytes, (T(*)())BOOST_NULLPTR);
 }
 
 // pointer_arg_from_python
@@ -272,7 +272,7 @@ inline pointer_arg_from_python<T>::pointer_arg_from_python(PyObject* p)
 template <class T>
 inline T pointer_arg_from_python<T>::operator()() const
 {
-    return (result() == Py_None) ? 0 : T(result());
+    return (result() == Py_None) ? BOOST_NULLPTR : T(result());
 }
 
 // reference_arg_from_python
@@ -286,7 +286,7 @@ inline reference_arg_from_python<T>::reference_arg_from_python(PyObject* p)
 template <class T>
 inline T reference_arg_from_python<T>::operator()() const
 {
-    return python::detail::void_ptr_to_reference(result(), (T(*)())0);
+    return python::detail::void_ptr_to_reference(result(), (T(*)())BOOST_NULLPTR);
 }
 
 
@@ -302,17 +302,17 @@ inline arg_rvalue_from_python<T>::arg_rvalue_from_python(PyObject* obj)
 template <class T>
 inline bool arg_rvalue_from_python<T>::convertible() const
 {
-    return m_data.stage1.convertible != 0;
+    return m_data.stage1.convertible != BOOST_NULLPTR;
 }
 
 template <class T>
 inline typename arg_rvalue_from_python<T>::result_type
 arg_rvalue_from_python<T>::operator()()
 {
-    if (m_data.stage1.construct != 0)
+    if (m_data.stage1.construct != BOOST_NULLPTR)
         m_data.stage1.construct(m_source, &m_data.stage1);
     
-    return python::detail::void_ptr_to_reference(m_data.stage1.convertible, (result_type(*)())0);
+    return python::detail::void_ptr_to_reference(m_data.stage1.convertible, (result_type(*)())BOOST_NULLPTR);
 }
 
 // back_reference_arg_from_python

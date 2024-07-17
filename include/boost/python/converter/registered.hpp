@@ -89,14 +89,14 @@ namespace detail
   inline void
   register_shared_ptr1(T const volatile*)
   {
-      detail::register_shared_ptr0((T*)0);
+      detail::register_shared_ptr0((T*)BOOST_NULLPTR);
   }
   
   template <class T>
   inline registration const& 
   registry_lookup2(T&(*)())
   {
-      detail::register_shared_ptr1((T*)0);
+      detail::register_shared_ptr1((T*)BOOST_NULLPTR);
       return registry::lookup(type_id<T&>());
   }
 
@@ -104,13 +104,13 @@ namespace detail
   inline registration const& 
   registry_lookup1(type<T>)
   {
-      return registry_lookup2((T(*)())0);
+      return registry_lookup2((T(*)())BOOST_NULLPTR);
   }
 
   inline registration const& 
   registry_lookup1(type<const volatile void>)
   {
-      detail::register_shared_ptr1((void*)0);
+      detail::register_shared_ptr1((void*)BOOST_NULLPTR);
       return registry::lookup(type_id<void>());
   }
 

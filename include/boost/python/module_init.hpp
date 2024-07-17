@@ -75,22 +75,22 @@ BOOST_PYTHON_DECL PyObject* init_module(char const* name, void(*)());
   PyObject* BOOST_PP_CAT(PyInit_, name)()  \
   { \
     static PyModuleDef_Base initial_m_base = { \
-        PyObject_HEAD_INIT(NULL) \
-        0, /* m_init */ \
+        PyObject_HEAD_INIT(BOOST_NULLPTR) \
+        BOOST_NULLPTR, /* m_init */ \
         0, /* m_index */ \
-        0 /* m_copy */ };  \
-    static PyMethodDef initial_methods[] = { { 0, 0, 0, 0 } }; \
+        BOOST_NULLPTR /* m_copy */ };  \
+    static PyMethodDef initial_methods[] = { { BOOST_NULLPTR, BOOST_NULLPTR, 0, BOOST_NULLPTR } }; \
  \
     static struct PyModuleDef moduledef = { \
         initial_m_base, \
         BOOST_PP_STRINGIZE(name), \
-        0, /* m_doc */ \
+        BOOST_NULLPTR, /* m_doc */ \
         -1, /* m_size */ \
         initial_methods, \
-        0,  /* m_reload */ \
-        0, /* m_traverse */ \
-        0, /* m_clear */ \
-        0,  /* m_free */ \
+        BOOST_NULLPTR,  /* m_reload */ \
+        BOOST_NULLPTR, /* m_traverse */ \
+        BOOST_NULLPTR, /* m_clear */ \
+        BOOST_NULLPTR,  /* m_free */ \
     }; \
  \
     return boost::python::detail::init_module( \
@@ -105,21 +105,21 @@ BOOST_PYTHON_DECL PyObject* init_module(char const* name, void(*)());
   { \
     static PyModuleDef_Base initial_m_base = { \
         PyObject_HEAD_INIT(NULL) \
-        0, /* m_init */ \
+        BOOST_NULLPTR, /* m_init */ \
         0, /* m_index */ \
-        0 /* m_copy */ };  \
-    static PyMethodDef initial_methods[] = { { 0, 0, 0, 0 } }; \
+        BOOST_NULLPTR /* m_copy */ };  \
+    static PyMethodDef initial_methods[] = { { BOOST_NULLPTR, BOOST_NULLPTR, 0, BOOST_NULLPTR } }; \
  \
     static struct PyModuleDef moduledef = { \
         initial_m_base, \
         BOOST_PP_STRINGIZE(name), \
-        0, /* m_doc */ \
+        BOOST_NULLPTR, /* m_doc */ \
         -1, /* m_size */ \
         initial_methods, \
-        0,  /* m_reload */ \
-        0, /* m_traverse */ \
-        0, /* m_clear */ \
-        0,  /* m_free */ \
+        BOOST_NULLPTR, /* m_reload */ \
+        BOOST_NULLPTR, /* m_traverse */ \
+        BOOST_NULLPTR, /* m_clear */ \
+        BOOST_NULLPTR, /* m_free */ \
     }; \
  \
     return boost::python::detail::init_module( \

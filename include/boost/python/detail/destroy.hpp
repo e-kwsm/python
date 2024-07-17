@@ -53,9 +53,9 @@ inline void destroy_referent_impl(void* p, T& (*)())
 }
 
 template <class T>
-inline void destroy_referent(void* p, T(*)() = 0)
+inline void destroy_referent(void* p, T(*)() = BOOST_NULLPTR)
 {
-    destroy_referent_impl(p, (T(*)())0);
+    destroy_referent_impl(p, (T(*)())BOOST_NULLPTR);
 }
 
 }}} // namespace boost::python::detail

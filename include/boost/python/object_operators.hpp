@@ -62,7 +62,7 @@ object_operators<U>::operator bool_type() const
     object_cref2 x = *static_cast<U const*>(this);
     int is_true = PyObject_IsTrue(x.ptr());
     if (is_true < 0) throw_error_already_set();
-    return is_true ? &object::ptr : 0;
+    return is_true ? &object::ptr : BOOST_NULLPTR;
 }
 
 template <class U>

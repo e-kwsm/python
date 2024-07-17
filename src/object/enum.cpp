@@ -27,8 +27,8 @@ struct enum_object
 };
 
 static PyMemberDef enum_members[] = {
-    {const_cast<char*>("name"), T_OBJECT_EX, offsetof(enum_object,name),READONLY, 0},
-    {0, 0, 0, 0, 0}
+    {const_cast<char*>("name"), T_OBJECT_EX, offsetof(enum_object,name),READONLY, BOOST_NULLPTR},
+    {BOOST_NULLPTR, 0, 0, 0, BOOST_NULLPTR}
 };
 
 
@@ -60,8 +60,8 @@ extern "C"
         else
         {
             PyObject* name = self->name;
-            if (name == 0)
-                return 0;
+            if (name == BOOST_NULLPTR)
+                return BOOST_NULLPTR;
 
             return
 #if PY_VERSION_HEX >= 0x03030000
@@ -100,51 +100,51 @@ static PyTypeObject enum_type_object = {
     0,                                      /* tp_itemsize */
     (destructor) enum_dealloc,              /* tp_dealloc */
     0,                                      /* tp_print */
-    0,                                      /* tp_getattr */
-    0,                                      /* tp_setattr */
-    0,                                      /* tp_compare */
+    BOOST_NULLPTR,                          /* tp_getattr */
+    BOOST_NULLPTR,                          /* tp_setattr */
+    BOOST_NULLPTR,                          /* tp_compare */
     enum_repr,                              /* tp_repr */
-    0,                                      /* tp_as_number */
-    0,                                      /* tp_as_sequence */
-    0,                                      /* tp_as_mapping */
-    0,                                      /* tp_hash */
-    0,                                      /* tp_call */
+    BOOST_NULLPTR,                          /* tp_as_number */
+    BOOST_NULLPTR,                          /* tp_as_sequence */
+    BOOST_NULLPTR,                          /* tp_as_mapping */
+    BOOST_NULLPTR,                          /* tp_hash */
+    BOOST_NULLPTR,                          /* tp_call */
     enum_str,                               /* tp_str */
-    0,                                      /* tp_getattro */
-    0,                                      /* tp_setattro */
-    0,                                      /* tp_as_buffer */
+    BOOST_NULLPTR,                          /* tp_getattro */
+    BOOST_NULLPTR,                          /* tp_setattro */
+    BOOST_NULLPTR,                          /* tp_as_buffer */
     Py_TPFLAGS_DEFAULT
 #if PY_VERSION_HEX < 0x03000000
     | Py_TPFLAGS_CHECKTYPES
 #endif
     | Py_TPFLAGS_BASETYPE,                  /* tp_flags */
-    0,                                      /* tp_doc */
-    0,                                      /* tp_traverse */
-    0,                                      /* tp_clear */
-    0,                                      /* tp_richcompare */
+    BOOST_NULLPTR,                          /* tp_doc */
+    BOOST_NULLPTR,                          /* tp_traverse */
+    BOOST_NULLPTR,                          /* tp_clear */
+    BOOST_NULLPTR,                          /* tp_richcompare */
     0,                                      /* tp_weaklistoffset */
-    0,                                      /* tp_iter */
-    0,                                      /* tp_iternext */
-    0,                                      /* tp_methods */
+    BOOST_NULLPTR,                          /* tp_iter */
+    BOOST_NULLPTR,                          /* tp_iternext */
+    BOOST_NULLPTR,                          /* tp_methods */
     enum_members,                           /* tp_members */
-    0,                                      /* tp_getset */
-    0, //&PyInt_Type,                       /* tp_base */
-    0,                                      /* tp_dict */
-    0,                                      /* tp_descr_get */
-    0,                                      /* tp_descr_set */
+    BOOST_NULLPTR,                          /* tp_getset */
+    BOOST_NULLPTR, //&PyInt_Type,           /* tp_base */
+    BOOST_NULLPTR,                          /* tp_dict */
+    BOOST_NULLPTR,                          /* tp_descr_get */
+    BOOST_NULLPTR,                          /* tp_descr_set */
     0,                                      /* tp_dictoffset */
-    0,                                      /* tp_init */
-    0,                                      /* tp_alloc */
-    0,                                      /* tp_new */
-    0,                                      /* tp_free */
-    0,                                      /* tp_is_gc */
-    0,                                      /* tp_bases */
-    0,                                      /* tp_mro */
-    0,                                      /* tp_cache */
-    0,                                      /* tp_subclasses */
-    0,                                      /* tp_weaklist */
+    BOOST_NULLPTR,                          /* tp_init */
+    BOOST_NULLPTR,                          /* tp_alloc */
+    BOOST_NULLPTR,                          /* tp_new */
+    BOOST_NULLPTR,                          /* tp_free */
+    BOOST_NULLPTR,                          /* tp_is_gc */
+    BOOST_NULLPTR,                          /* tp_bases */
+    BOOST_NULLPTR,                          /* tp_mro */
+    BOOST_NULLPTR,                          /* tp_cache */
+    BOOST_NULLPTR,                          /* tp_subclasses */
+    BOOST_NULLPTR,                          /* tp_weaklist */
 #if PYTHON_API_VERSION >= 1012
-    0                                       /* tp_del */
+    BOOST_NULLPTR                           /* tp_del */
 #endif
 };
 
@@ -155,7 +155,7 @@ namespace
 {
   object new_enum_type(char const* name, char const *doc)
   {
-      if (enum_type_object.tp_dict == 0)
+      if (enum_type_object.tp_dict == BOOST_NULLPTR)
       {
           Py_SET_TYPE(&enum_type_object, incref(&PyType_Type));
 #if PY_VERSION_HEX >= 0x03000000

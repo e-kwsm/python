@@ -17,7 +17,7 @@ void *get()
 
 void *getnull()
 {
-    return 0;
+    return BOOST_NULLPTR;
 }
 
 void use(void *a)

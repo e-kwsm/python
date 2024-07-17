@@ -5,6 +5,8 @@
 #ifndef CONVERTIBLE_DWA2002614_HPP
 # define CONVERTIBLE_DWA2002614_HPP
 
+#include <boost/config.hpp>
+
 # if defined(__EDG_VERSION__) && __EDG_VERSION__ <= 241
 #  include <boost/mpl/if.hpp>
 #  include <boost/python/detail/type_traits.hpp>
@@ -21,15 +23,15 @@ template <class Target>
 struct convertible
 {
 # if !defined(__EDG_VERSION__) || __EDG_VERSION__ > 241 || __EDG_VERSION__ == 238
-    static inline no_convertible check(...) { return 0; }
-    static inline yes_convertible check(Target) { return 0; }
+    static inline no_convertible check(...) { return BOOST_NULLPTR; }
+    static inline yes_convertible check(Target) { return BOOST_NULLPTR; }
 # else
     template <class X>
     static inline typename mpl::if_c<
         is_convertible<X,Target>::value
         , yes_convertible
         , no_convertible
-        >::type check(X const&) { return 0; }
+        >::type check(X const&) { return BOOST_NULLPTR; }
 # endif 
 };
 

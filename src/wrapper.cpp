@@ -21,12 +21,12 @@ namespace detail
                           this->m_self, const_cast<char*>(name))))
           )
           {
-              PyObject* class_f = 0;
+              PyObject* class_f = BOOST_NULLPTR;
 
               if (
                   PyMethod_Check(m.get())
                   && PyMethod_GET_SELF(m.get()) == this->m_self
-                  && class_object->tp_dict != 0
+                  && class_object->tp_dict != BOOST_NULLPTR
               )
               {
 #if PY_VERSION_HEX >= 0x030D0000

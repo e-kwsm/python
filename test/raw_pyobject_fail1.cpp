@@ -6,6 +6,6 @@
 
 int main()
 {
-    boost::python::converter::arg_to_python<PyTypeObject*> x(0);
+    boost::python::converter::arg_to_python<PyTypeObject*> x(BOOST_NULLPTR);
     return 0;
 }

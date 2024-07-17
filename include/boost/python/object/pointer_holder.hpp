@@ -67,12 +67,12 @@ struct pointer_holder : instance_holder
     template <class T>
     inline void* holds_wrapped(type_info dst_t, wrapper<T>*,T* p)
     {
-        return python::type_id<T>() == dst_t ? p : 0;
+        return python::type_id<T>() == dst_t ? p : BOOST_NULLPTR;
     }
     
     inline void* holds_wrapped(type_info, ...)
     {
-        return 0;
+        return BOOST_NULLPTR;
     }
 
  private: // data members
@@ -143,8 +143,8 @@ void* pointer_holder<Pointer, Value>::holds(type_info dst_t, bool null_ptr_only)
         ;
     non_const_value* p = const_cast<non_const_value*>( p0 );
 
-    if (p == 0)
-        return 0;
+    if (p == BOOST_NULLPTR)
+        return BOOST_NULLPTR;
     
     if (void* wrapped = holds_wrapped(dst_t, p, p))
         return wrapped;
@@ -162,7 +162,7 @@ void* pointer_holder_back_reference<Pointer, Value>::holds(type_info dst_t, bool
         return &this->m_p;
 
     if (!get_pointer(this->m_p))
-        return 0;
+        return BOOST_NULLPTR;
     
     Value* p = get_pointer(m_p);
     

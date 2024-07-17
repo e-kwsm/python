@@ -41,7 +41,7 @@ namespace boost { namespace python { namespace detail {
 #  include BOOST_PP_ITERATE()
 
 template <class R, class T>
-boost::type<R>* result(R (T::*), int = 0) { return 0; }
+boost::type<R>* result(R (T::*), int = 0) { return BOOST_NULLPTR; }
 
 #  if (defined(__MWERKS__) && __MWERKS__ < 0x3000)
 // This code actually works on all implementations, but why use it when we don't have to?
@@ -75,7 +75,7 @@ result(X const&, short) { return 0; }
 #  else // Simpler code for more-capable compilers
 template <class X>
 boost::type<typename X::result_type>*
-result(X const&, short = 0) { return 0; }
+result(X const&, short = 0) { return BOOST_NULLPTR; }
 
 #  endif
 

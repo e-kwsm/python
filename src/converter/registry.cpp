@@ -23,7 +23,7 @@
 namespace boost { namespace python { namespace converter { 
 BOOST_PYTHON_DECL PyTypeObject const* registration::expected_from_python_type() const
 {
-    if (this->m_class_object != 0)
+    if (this->m_class_object != BOOST_NULLPTR)
         return this->m_class_object;
 
     std::set<PyTypeObject const*> pool;
@@ -36,24 +36,24 @@ BOOST_PYTHON_DECL PyTypeObject const* registration::expected_from_python_type() 
     if (pool.size()==1)
         return *pool.begin();
 
-    return 0;
+    return BOOST_NULLPTR;
 
 }
 
 BOOST_PYTHON_DECL PyTypeObject const* registration::to_python_target_type() const
 {
-    if (this->m_class_object != 0)
+    if (this->m_class_object != BOOST_NULLPTR)
         return this->m_class_object;
 
-    if (this->m_to_python_target_type != 0)
+    if (this->m_to_python_target_type != BOOST_NULLPTR)
         return this->m_to_python_target_type();
 
-    return 0;
+    return BOOST_NULLPTR;
 }
 
 BOOST_PYTHON_DECL PyTypeObject* registration::get_class_object() const
 {
-    if (this->m_class_object == 0)
+    if (this->m_class_object == BOOST_NULLPTR)
     {
         ::PyErr_Format(
             PyExc_TypeError
@@ -68,7 +68,7 @@ BOOST_PYTHON_DECL PyTypeObject* registration::get_class_object() const
   
 BOOST_PYTHON_DECL PyObject* registration::to_python(void const volatile* source) const
 {
-    if (this->m_to_python == 0)
+    if (this->m_to_python == BOOST_NULLPTR)
     {
         handle<> msg(
 #if PY_VERSION_HEX >= 0x3000000
@@ -87,7 +87,7 @@ BOOST_PYTHON_DECL PyObject* registration::to_python(void const volatile* source)
         throw_error_already_set();
     }
         
-    return source == 0
+    return source == BOOST_NULLPTR
         ? incref(Py_None)
         : this->m_to_python(const_cast<void*>(source));
 }
@@ -212,8 +212,8 @@ namespace registry
 #  endif 
       entry* slot = get(source_t);
       
-      assert(slot->m_to_python == 0); // we have a problem otherwise
-      if (slot->m_to_python != 0)
+      assert(slot->m_to_python == BOOST_NULLPTR); // we have a problem otherwise
+      if (slot->m_to_python != BOOST_NULLPTR)
       {
           std::string msg = (
               std::string("to-Python converter for ")
@@ -242,7 +242,7 @@ namespace registry
       registration->next = found->lvalue_chain;
       found->lvalue_chain = registration;
       
-      insert(convert, 0, key,exp_pytype);
+      insert(convert, BOOST_NULLPTR, key,exp_pytype);
   }
 
   // Insert an rvalue from_python converter
@@ -273,14 +273,14 @@ namespace registry
       std::cout << "push_back rvalue from_python " << key << "\n";
 #  endif 
       rvalue_from_python_chain** found = &get(key)->rvalue_chain;
-      while (*found != 0)
+      while (*found != BOOST_NULLPTR)
           found = &(*found)->next;
       
       rvalue_from_python_chain *registration = new rvalue_from_python_chain;
       registration->convertible = convertible;
       registration->construct = construct;
       registration->expected_pytype = exp_pytype;
-      registration->next = 0;
+      registration->next = BOOST_NULLPTR;
       *found = registration;
   }
 
@@ -304,7 +304,7 @@ namespace registry
                 << (p == entries().end() || p->target_type != type
                     ? "...NOT found\n" : "...found\n");
 #  endif 
-      return (p == entries().end() || p->target_type != type) ? 0 : &*p;
+      return (p == entries().end() || p->target_type != type) ? BOOST_NULLPTR : &*p;
   }
 } // namespace registry
 

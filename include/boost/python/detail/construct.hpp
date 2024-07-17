@@ -16,17 +16,17 @@ void construct_pointee(void* storage, Arg& x, T const volatile*)
 template <class T, class Arg>
 void construct_referent_impl(void* storage, Arg& x, T&(*)())
 {
-    construct_pointee(storage, x, (T*)0);
+    construct_pointee(storage, x, (T*)BOOST_NULLPTR);
 }
 
 template <class T, class Arg>
-void construct_referent(void* storage, Arg const& x, T(*tag)() = 0)
+void construct_referent(void* storage, Arg const& x, T(*tag)() = BOOST_NULLPTR)
 {
     construct_referent_impl(storage, x, tag);
 }
 
 template <class T, class Arg>
-void construct_referent(void* storage, Arg& x, T(*tag)() = 0)
+void construct_referent(void* storage, Arg& x, T(*tag)() = BOOST_NULLPTR)
 {
     construct_referent_impl(storage, x, tag);
 }

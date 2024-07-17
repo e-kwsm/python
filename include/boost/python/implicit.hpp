@@ -17,7 +17,7 @@
 namespace boost { namespace python { 
 
 template <class Source, class Target>
-void implicitly_convertible(boost::type<Source>* = 0, boost::type<Target>* = 0)
+void implicitly_convertible(boost::type<Source>* = BOOST_NULLPTR, boost::type<Target>* = BOOST_NULLPTR)
 {
     typedef converter::implicit<Source,Target> functions;
     

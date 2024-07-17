@@ -29,13 +29,13 @@ struct make_instance_impl
 
         PyTypeObject* type = Derived::get_class_object(x);
 
-        if (type == 0)
+        if (type == BOOST_NULLPTR)
             return python::detail::none();
 
         PyObject* raw_result = type->tp_alloc(
             type, objects::additional_instance_size<Holder>::value);
           
-        if (raw_result != 0)
+        if (raw_result != BOOST_NULLPTR)
         {
             python::detail::decref_guard protect(raw_result);
             

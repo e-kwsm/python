@@ -49,7 +49,7 @@ struct to_python_indirect
     inline PyObject* execute(U* ptr, detail::true_) const
     {
         // No special NULL treatment for references
-        if (ptr == 0)
+        if (ptr == BOOST_NULLPTR)
             return python::detail::none();
         else
             return this->execute(*ptr, detail::false_());

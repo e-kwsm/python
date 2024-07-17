@@ -114,7 +114,7 @@ class handle
     
     operator bool_type() const // never throws
     {
-        return m_p ? &handle<T>::get : 0;
+        return m_p ? &handle<T>::get : BOOST_NULLPTR;
     }
     bool operator! () const; // never throws
 
@@ -174,7 +174,7 @@ class is_handle<handle<T> >
 //
 template <class T>
 inline handle<T>::handle()
-    : m_p(0)
+    : m_p(BOOST_NULLPTR)
 {
 }
 
@@ -205,14 +205,14 @@ inline T* handle<T>::get() const
 template <class T>
 inline bool handle<T>::operator!() const
 {
-    return m_p == 0;
+    return m_p == BOOST_NULLPTR;
 }
 
 template <class T>
 inline T* handle<T>::release()
 {
     T* result = m_p;
-    m_p = 0;
+    m_p = BOOST_NULLPTR;
     return result;
 }
 
@@ -220,7 +220,7 @@ template <class T>
 inline void handle<T>::reset()
 {
     python::xdecref(m_p);
-    m_p = 0;
+    m_p = BOOST_NULLPTR;
 }
 
 // Because get_managed_object must return a non-null PyObject*, we

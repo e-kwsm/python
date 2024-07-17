@@ -59,7 +59,7 @@ namespace detail
       objects::add_to_namespace(
           name_space, name,
           detail::make_keyword_range_function(
-              f, policies, kw, get_signature(f, (wrapped_type*)0))
+              f, policies, kw, get_signature(f, (wrapped_type*)BOOST_NULLPTR))
         , doc
       );
   }

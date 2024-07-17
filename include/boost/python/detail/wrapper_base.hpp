@@ -22,7 +22,7 @@ namespace detail
     inline PyObject*
     owner_impl(void const volatile* /*x*/, detail::false_)
     {
-        return 0;
+        return BOOST_NULLPTR;
     }
     
     template <class T>
@@ -42,7 +42,7 @@ namespace detail
       friend void initialize_wrapper(PyObject* self, wrapper_base* w);
       friend PyObject* wrapper_base_::get_owner(wrapper_base const volatile& w);
    protected:
-      wrapper_base() : m_self(0) {}
+      wrapper_base() : m_self(BOOST_NULLPTR) {}
           
       override get_override(
           char const* name, PyTypeObject* class_object) const;
@@ -64,7 +64,7 @@ namespace detail
         {
             return wrapper_base_::get_owner(*w);
         }
-        return 0;
+        return BOOST_NULLPTR;
     }
     
     inline PyObject* get_owner(wrapper_base const volatile& w)

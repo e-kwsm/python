@@ -49,9 +49,9 @@ struct AFromPython
   static void* convertible(PyObject* obj_ptr)
   {
 #if PY_VERSION_HEX >= 0x03000000
-    if (!PyLong_Check(obj_ptr)) return 0;
+    if (!PyLong_Check(obj_ptr)) return BOOST_NULLPTR;
 #else
-    if (!PyInt_Check(obj_ptr)) return 0;
+    if (!PyInt_Check(obj_ptr)) return BOOST_NULLPTR;
 #endif
     return obj_ptr;
   }

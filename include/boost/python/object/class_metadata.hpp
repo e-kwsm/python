@@ -59,7 +59,7 @@ struct register_base_of
         register_conversion<Derived,Base>(false);
 
         // Register the down-cast, if appropriate.
-        this->register_downcast((Base*)0, boost::python::detail::is_polymorphic<Base>());
+        this->register_downcast((Base*)BOOST_NULLPTR, boost::python::detail::is_polymorphic<Base>());
     }
 
  private:
@@ -92,7 +92,7 @@ inline void register_shared_ptr_from_python_and_casts(T*, Bases)
   // interface to mpl::for_each to avoid an MSVC 6 bug.
   //
   register_dynamic_id<T>();
-  mpl::for_each(register_base_of<T>(), (Bases*)0, (boost::python::detail::add_pointer<mpl::_>*)0);
+  mpl::for_each(register_base_of<T>(), (Bases*)BOOST_NULLPTR, (boost::python::detail::add_pointer<mpl::_>*)BOOST_NULLPTR);
 }
 
 //
@@ -201,7 +201,7 @@ struct class_metadata
     
     inline static void register_() // Register the runtime metadata.
     {
-        class_metadata::register_aux((T*)0);
+        class_metadata::register_aux((T*)BOOST_NULLPTR);
     }
 
  private:
@@ -209,25 +209,25 @@ struct class_metadata
     inline static void register_aux(python::wrapper<T2>*) 
     {
         typedef typename mpl::not_<boost::python::detail::is_same<T2,wrapped> >::type use_callback;
-        class_metadata::register_aux2((T2*)0, use_callback());
+        class_metadata::register_aux2((T2*)BOOST_NULLPTR, use_callback());
     }
 
     inline static void register_aux(void*) 
     {
         typedef typename is_base_and_derived<T,wrapped>::type use_callback;
-        class_metadata::register_aux2((T*)0, use_callback());
+        class_metadata::register_aux2((T*)BOOST_NULLPTR, use_callback());
     }
 
     template <class T2, class Callback>
     inline static void register_aux2(T2*, Callback) 
     {
-	objects::register_shared_ptr_from_python_and_casts((T2*)0, bases());
-        class_metadata::maybe_register_callback_class((T2*)0, Callback());
+	objects::register_shared_ptr_from_python_and_casts((T2*)BOOST_NULLPTR, bases());
+        class_metadata::maybe_register_callback_class((T2*)BOOST_NULLPTR, Callback());
 
-        class_metadata::maybe_register_class_to_python((T2*)0, is_noncopyable());
+        class_metadata::maybe_register_class_to_python((T2*)BOOST_NULLPTR, is_noncopyable());
         
         class_metadata::maybe_register_pointer_to_python(
-            (T2*)0, (use_value_holder*)0, (use_back_reference*)0);
+            (T2*)BOOST_NULLPTR, (use_value_holder*)BOOST_NULLPTR, (use_back_reference*)BOOST_NULLPTR);
     }
 
 
@@ -283,7 +283,7 @@ struct class_metadata
     inline static void maybe_register_callback_class(T2*, mpl::true_)
     {
 	objects::register_shared_ptr_from_python_and_casts(
-            (wrapped*)0, mpl::single_view<T2>());
+            (wrapped*)BOOST_NULLPTR, mpl::single_view<T2>());
         // explicit qualification of type_id makes msvc6 happy
         objects::copy_class_object(python::type_id<T2>(), python::type_id<wrapped>());
     }

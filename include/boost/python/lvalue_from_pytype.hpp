@@ -39,7 +39,7 @@ namespace detail
           typedef typename add_lvalue_reference<U>::type param;
           return &Extractor::execute(
               boost::python::detail::void_ptr_to_reference(
-                  op, (param(*)())0 )
+                  op, (param(*)())BOOST_NULLPTR)
               );
       }
   };
@@ -51,7 +51,7 @@ namespace detail
   // usage: normalize<Extractor>(&Extractor::execute)
   template <class Extractor, class T, class U>
   inline normalized_extractor<Extractor,U>
-  normalize(T(*)(U), Extractor* = 0)
+  normalize(T(*)(U), Extractor* = BOOST_NULLPTR)
   {
       return normalized_extractor<Extractor, U>();
   }
@@ -104,7 +104,7 @@ struct lvalue_from_pytype
             ? const_cast<void*>(
                 static_cast<void const volatile*>(
                     detail::normalize<Extractor>(&Extractor::execute).execute(op)))
-            : 0
+            : BOOST_NULLPTR
             ;
     }
 #ifndef BOOST_PYTHON_NO_PY_SIGNATURES

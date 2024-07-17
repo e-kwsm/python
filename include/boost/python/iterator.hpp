@@ -100,7 +100,7 @@ object range(Accessor1 start, Accessor2 finish)
 // Create an iterator-building function which uses the given accessors
 // and next() policies. Deduce the Target type.
 template <class NextPolicies, class Accessor1, class Accessor2>
-object range(Accessor1 start, Accessor2 finish, NextPolicies* = 0)
+object range(Accessor1 start, Accessor2 finish, NextPolicies* = BOOST_NULLPTR)
 {
     return detail::make_iterator(start, finish, NextPolicies(), detail::target(start));
 }
@@ -108,10 +108,10 @@ object range(Accessor1 start, Accessor2 finish, NextPolicies* = 0)
 // Create an iterator-building function which uses the given accessors
 // and next() policies, operating on the given Target type
 template <class NextPolicies, class Target, class Accessor1, class Accessor2>
-object range(Accessor1 start, Accessor2 finish, NextPolicies* = 0, boost::type<Target>* = 0)
+object range(Accessor1 start, Accessor2 finish, NextPolicies* = BOOST_NULLPTR, boost::type<Target>* = BOOST_NULLPTR)
 {
     // typedef typename add_reference<Target>::type target;
-    return detail::make_iterator(start, finish, NextPolicies(), (Target&(*)())0);
+    return detail::make_iterator(start, finish, NextPolicies(), (Target&(*)())BOOST_NULLPTR);
 }
 
 // A Python callable object which produces an iterator traversing

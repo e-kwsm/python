@@ -183,13 +183,13 @@ namespace detail
   inline void reject_raw_object_ptr(T*)
   {
       reject_raw_object_helper<T,yes_convertible>::error(
-          python::detail::convertible<PyObject const volatile*>::check((T*)0));
+          python::detail::convertible<PyObject const volatile*>::check((T*)BOOST_NULLPTR));
       
       typedef typename remove_cv<T>::type value_type;
       
       reject_raw_object_helper<T,no_convertible>::error(
           python::detail::convertible<unspecialized*>::check(
-              (base_type_traits<value_type>*)0
+              (base_type_traits<value_type>*)BOOST_NULLPTR
               ));
   }
   // ---------
@@ -210,7 +210,7 @@ namespace detail
   inline pointer_deep_arg_to_python<Ptr>::pointer_deep_arg_to_python(Ptr x)
       : arg_to_python_base(x, registered_pointee<Ptr>::converters)
   {
-      detail::reject_raw_object_ptr((Ptr)0);
+      detail::reject_raw_object_ptr((Ptr)BOOST_NULLPTR);
   }
 
   template <class T>
@@ -236,7 +236,7 @@ namespace detail
   inline pointer_shallow_arg_to_python<Ptr>::pointer_shallow_arg_to_python(Ptr x)
       : handle<>(pointer_shallow_arg_to_python<Ptr>::get_object(x))
   {
-      detail::reject_raw_object_ptr((Ptr)0);
+      detail::reject_raw_object_ptr((Ptr)BOOST_NULLPTR);
   }
 
   template <class Ptr>

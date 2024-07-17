@@ -27,7 +27,7 @@ inline void write_void_ptr_reference(void const volatile* storage, void* ptr, U&
 {
     // stripping CV qualification suppresses warnings on older EDGs
     typedef typename remove_cv<U>::type u_stripped; 
-    write_void_ptr(storage, ptr, u_stripped(0));
+    write_void_ptr(storage, ptr, u_stripped(BOOST_NULLPTR));
 }
 
 }}} // namespace boost::python::detail

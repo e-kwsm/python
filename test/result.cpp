@@ -18,65 +18,65 @@ int main()
 {
     // Test the usage which works for functions, member functions, and data members
     expect_int(
-        result((int(*)())0)
+        result((int(*)())BOOST_NULLPTR)
         );
 
     expect_int(
-        result((int(*)(char))0)
+        result((int(*)(char))BOOST_NULLPTR)
         );
 
     expect_int(
-        result((int(X::*)())0)
+        result((int(X::*)())BOOST_NULLPTR)
         );
 
     expect_int(
-        result((int(X::*)(char))0)
+        result((int(X::*)(char))BOOST_NULLPTR)
         );
 
     expect_int(
-        result((int(X::*))0)
+        result((int(X::*))BOOST_NULLPTR)
         );
 
     expect_string(
-        result((char*(*)())0)
+        result((char*(*)())BOOST_NULLPTR)
         );
     
     expect_string(
-        result((char*(*)(char))0)
+        result((char*(*)(char))BOOST_NULLPTR)
         );
     
     expect_string(
-        result((char*(X::*)())0)
+        result((char*(X::*)())BOOST_NULLPTR)
         );
     
     expect_string(
-        result((char*(X::*)(char))0)
+        result((char*(X::*)(char))BOOST_NULLPTR)
         );
     
     expect_string(
-        result((char*(X::*))0)
+        result((char*(X::*))BOOST_NULLPTR)
         );
     
     // Show that we can use the general version that works for
     // AdaptableFunctions
     expect_int(
-        result((int(*)())0,0)
+        result((int(*)())BOOST_NULLPTR, 0)
         );
 
     expect_int(
-        result((int(*)(char))0,0)
+        result((int(*)(char))BOOST_NULLPTR, 0)
         );
 
     expect_int(
-        result((int(X::*)())0,0)
+        result((int(X::*)())BOOST_NULLPTR, 0)
         );
 
     expect_int(
-        result((int(X::*)(char))0,0)
+        result((int(X::*)(char))BOOST_NULLPTR, 0)
         );
 
     expect_int(
-        result((int(X::*))0,0)
+        result((int(X::*))BOOST_NULLPTR, 0)
         );
     
     expect_int(
@@ -84,23 +84,23 @@ int main()
         );
 
     expect_string(
-        result((char*(*)())0,0)
+        result((char*(*)())BOOST_NULLPTR, 0)
         );
     
     expect_string(
-        result((char*(*)(char))0,0)
+        result((char*(*)(char))BOOST_NULLPTR, 0)
         );
     
     expect_string(
-        result((char*(X::*)())0,0)
+        result((char*(X::*)())BOOST_NULLPTR, 0)
         );
     
     expect_string(
-        result((char*(X::*)(char))0,0)
+        result((char*(X::*)(char))BOOST_NULLPTR, 0)
         );
     
     expect_string(
-        result((char*(X::*))0,0)
+        result((char*(X::*))BOOST_NULLPTR, 0)
         );
     
     expect_string(

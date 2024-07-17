@@ -197,7 +197,7 @@ namespace boost { namespace python { namespace detail {
                 return *iter;
             }
             BOOST_PYTHON_INDEXING_CHECK_INVARIANT;
-            return 0;
+            return BOOST_NULLPTR;
         }
 
         typename std::vector<PyObject*>::size_type 
@@ -335,7 +335,7 @@ namespace boost { namespace python { namespace detail {
             typename links_t::iterator r = links.find(&container);
             if (r != links.end())
                 return r->second.find(i);
-            return 0;
+            return BOOST_NULLPTR;
         }
 
     private:
@@ -374,7 +374,7 @@ namespace boost { namespace python { namespace detail {
         }
             
         container_element(container_element const& ce)
-          : ptr(ce.ptr.get() == 0 ? 0 : new element_type(*ce.ptr.get()))
+          : ptr(ce.ptr.get() == BOOST_NULLPTR ? BOOST_NULLPTR : new element_type(*ce.ptr.get()))
           , container(ce.container)
           , index(ce.index)
         {
@@ -415,7 +415,7 @@ namespace boost { namespace python { namespace detail {
         bool
         is_detached() const
         {
-            return get_pointer(ptr) != 0;
+            return get_pointer(ptr) != BOOST_NULLPTR;
         }
 
         Container& 

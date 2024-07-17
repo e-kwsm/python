@@ -41,26 +41,26 @@ struct unwind_type_id_helper{
 };
 
 template <class T>
-inline python::type_info unwind_type_id_(boost::type<T>* = 0, mpl::false_ * =0)
+inline python::type_info unwind_type_id_(boost::type<T>* = BOOST_NULLPTR, mpl::false_ * = BOOST_NULLPTR)
 {
     return boost::python::detail::unwind_type<unwind_type_id_helper, T> ();
 }
 
 template <class T>
-inline python::type_info unwind_type_id_(boost::type<back_reference<T> >* = 0, mpl::false_ * =0)
+inline python::type_info unwind_type_id_(boost::type<back_reference<T> >* = BOOST_NULLPTR, mpl::false_ * = BOOST_NULLPTR)
 {
     return boost::python::detail::unwind_type<unwind_type_id_helper, T> ();
 }
 
-inline python::type_info unwind_type_id_(boost::type<void>* = 0, mpl::true_* =0)
+inline python::type_info unwind_type_id_(boost::type<void>* = BOOST_NULLPTR, mpl::true_* = BOOST_NULLPTR)
 {
     return type_id<void>();
 }
 
 template <class T>
-inline python::type_info unwind_type_id(boost::type<T>* p= 0)
+inline python::type_info unwind_type_id(boost::type<T>* p = BOOST_NULLPTR)
 {
-    return unwind_type_id_(p, (mpl::bool_<boost::python::detail::is_void<T>::value >*)0 );
+    return unwind_type_id_(p, (mpl::bool_<boost::python::detail::is_void<T>::value >*)BOOST_NULLPTR);
 }
 }
 
@@ -71,9 +71,9 @@ struct expected_pytype_for_arg
     static PyTypeObject const *get_pytype()
     {
         const converter::registration *r=converter::registry::query(
-            detail::unwind_type_id_((boost::type<T>*)0, (mpl::bool_<boost::python::detail::is_void<T>::value >*)0 )
+            detail::unwind_type_id_((boost::type<T>*)BOOST_NULLPTR, (mpl::bool_<boost::python::detail::is_void<T>::value >*)BOOST_NULLPTR)
             );
-        return r ? r->expected_from_python_type(): 0;
+        return r ? r->expected_from_python_type() : BOOST_NULLPTR;
     }
 };
 
@@ -84,9 +84,9 @@ struct registered_pytype
     static PyTypeObject const *get_pytype()
     {
         const converter::registration *r=converter::registry::query(
-            detail::unwind_type_id_((boost::type<T>*) 0, (mpl::bool_<boost::python::detail::is_void<T>::value >*)0 )
+            detail::unwind_type_id_((boost::type<T>*)BOOST_NULLPTR, (mpl::bool_<boost::python::detail::is_void<T>::value >*)BOOST_NULLPTR)
             );
-        return r ? r->m_class_object: 0;
+        return r ? r->m_class_object : BOOST_NULLPTR;
     }
 };
 
@@ -118,9 +118,9 @@ struct to_python_target_type
     static PyTypeObject const *get_pytype()
     {
         const converter::registration *r=converter::registry::query(
-            detail::unwind_type_id_((boost::type<T>*)0, (mpl::bool_<boost::python::detail::is_void<T>::value >*)0 )
+            detail::unwind_type_id_((boost::type<T>*)BOOST_NULLPTR, (mpl::bool_<boost::python::detail::is_void<T>::value >*)BOOST_NULLPTR)
             );
-        return r ? r->to_python_target_type(): 0;
+        return r ? r->to_python_target_type() : BOOST_NULLPTR;
     }
 };
 

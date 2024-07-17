@@ -36,7 +36,7 @@ template <bool is_const_ref>
 struct object_manager_get_pytype
 {
    template <class U>
-   static PyTypeObject const* get( U& (*)() =0)
+   static PyTypeObject const* get(U& (*)() = BOOST_NULLPTR)
    {
       return converter::object_manager_traits<U>::get_pytype();
    }
@@ -46,7 +46,7 @@ template <>
 struct object_manager_get_pytype<true>
 {
    template <class U>
-   static PyTypeObject const* get( U const& (*)() =0)
+   static PyTypeObject const* get(U const& (*)() = BOOST_NULLPTR)
    {
       return converter::object_manager_traits<U>::get_pytype();
    }
@@ -64,14 +64,14 @@ struct object_manager_get_pytype<true>
       typedef boost::mpl::bool_<is_handle<T>::value> is_t_handle;
       typedef boost::detail::indirect_traits::is_reference_to_const<T> is_t_const;
       PyTypeObject const* get_pytype() const {
-          return get_pytype_aux((is_t_handle*)0);
+          return get_pytype_aux((is_t_handle*)BOOST_NULLPTR);
       }
 
       inline static PyTypeObject const* get_pytype_aux(mpl::true_*) {return converter::object_manager_traits<T>::get_pytype();}
       
       inline static PyTypeObject const* get_pytype_aux(mpl::false_* ) 
       {
-          return object_manager_get_pytype<is_t_const::value>::get((T(*)())0);
+          return object_manager_get_pytype<is_t_const::value>::get((T(*)())BOOST_NULLPTR);
       }
       
 #endif 
@@ -106,7 +106,7 @@ struct object_manager_get_pytype<true>
     
       PyObject* operator()(argument_type) const;
 #ifndef BOOST_PYTHON_NO_PY_SIGNATURES
-      PyTypeObject const* get_pytype() const {return get_pytype((boost::type<argument_type>*)0);}
+      PyTypeObject const* get_pytype() const {return get_pytype((boost::type<argument_type>*)BOOST_NULLPTR);}
 #endif 
       // This information helps make_getter() decide whether to try to
       // return an internal reference or not. I don't like it much,

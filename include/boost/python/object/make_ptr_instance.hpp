@@ -43,8 +43,8 @@ struct make_ptr_instance
     template <class U>
     static inline PyTypeObject* get_class_object_impl(U const volatile* p)
     {
-        if (p == 0)
-            return 0; // means "return None".
+        if (p == BOOST_NULLPTR)
+            return BOOST_NULLPTR; // means "return None".
 
         PyTypeObject* derived = get_derived_class_object(
             BOOST_DEDUCED_TYPENAME boost::python::detail::is_polymorphic<U>::type(), p);
@@ -60,13 +60,13 @@ struct make_ptr_instance
         converter::registration const* r = converter::registry::query(
             type_info(typeid(*x))
         );
-        return r ? r->m_class_object : 0;
+        return r ? r->m_class_object : BOOST_NULLPTR;
     }
     
     template <class U>
     static inline PyTypeObject* get_derived_class_object(boost::python::detail::false_, U*)
     {
-        return 0;
+        return BOOST_NULLPTR;
     }
 };
   

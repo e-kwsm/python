@@ -41,7 +41,7 @@ BOOST_PYTHON_DECL void throw_error_already_set();
 template <class T>
 inline T* expect_non_null(T* x)
 {
-    if (x == 0)
+    if (x == BOOST_NULLPTR)
         throw_error_already_set();
     return x;
 }

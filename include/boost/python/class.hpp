@@ -172,11 +172,11 @@ class class_ : public objects::class_base
         id_vector()
         {
             // Stick the derived class id into the first element of the array
-            ids[0] = detail::unwrap_type_id((W*)0, (W*)0);
+            ids[0] = detail::unwrap_type_id((W*)BOOST_NULLPTR, (W*)BOOST_NULLPTR);
 
             // Write the rest of the elements into succeeding positions.
             type_info* p = ids + 1;
-            mpl::for_each(detail::write_type_id(&p), (bases*)0, (add_pointer<mpl::_>*)0);
+            mpl::for_each(detail::write_type_id(&p), (bases*)BOOST_NULLPTR, (add_pointer<mpl::_>*)BOOST_NULLPTR);
         }
 
         BOOST_STATIC_CONSTANT(
@@ -188,7 +188,7 @@ class class_ : public objects::class_base
  public: // constructors
     
     // Construct with the class name, with or without docstring, and default __init__() function
-    class_(char const* name, char const* doc = 0);
+    class_(char const* name, char const* doc = BOOST_NULLPTR);
 
     // Construct with class name, no docstring, and an uncallable __init__ function
     class_(char const* name, no_init_t);
@@ -229,8 +229,8 @@ class class_ : public objects::class_base
     self& def(char const* name, F f)
     {
         this->def_impl(
-            detail::unwrap_wrapper((W*)0)
-          , name, f, detail::def_helper<char const*>(0), &f);
+            detail::unwrap_wrapper((W*)BOOST_NULLPTR)
+          , name, f, detail::def_helper<char const*>(BOOST_NULLPTR), &f);
         return *this;
     }
 
@@ -249,7 +249,7 @@ class class_ : public objects::class_base
         //      def(name, function, doc_string, policy)
 
         this->def_impl(
-            detail::unwrap_wrapper((W*)0)
+            detail::unwrap_wrapper((W*)BOOST_NULLPTR)
           , name, fn
           , detail::def_helper<A1,A2>(a1,a2)
           , &fn);
@@ -261,7 +261,7 @@ class class_ : public objects::class_base
     self& def(char const* name, Fn fn, A1 const& a1, A2 const& a2, A3 const& a3)
     {
         this->def_impl(
-            detail::unwrap_wrapper((W*)0)
+            detail::unwrap_wrapper((W*)BOOST_NULLPTR)
           , name, fn
           , detail::def_helper<A1,A2,A3>(a1,a2,a3)
           , &fn);
@@ -273,39 +273,39 @@ class class_ : public objects::class_base
     // Data member access
     //
     template <class D>
-    self& def_readonly(char const* name, D const& d, char const* doc=0)
+    self& def_readonly(char const* name, D const& d, char const* doc = BOOST_NULLPTR)
     {
         return this->def_readonly_impl(name, d, doc BOOST_PYTHON_DATA_MEMBER_HELPER(D));
     }
 
     template <class D>
-    self& def_readwrite(char const* name, D const& d, char const* doc=0)
+    self& def_readwrite(char const* name, D const& d, char const* doc = BOOST_NULLPTR)
     {
         return this->def_readwrite_impl(name, d, doc BOOST_PYTHON_DATA_MEMBER_HELPER(D));
     }
     
     template <class D>
-    self& def_readonly(char const* name, D& d, char const* doc=0)
+    self& def_readonly(char const* name, D& d, char const* doc = BOOST_NULLPTR)
     {
         return this->def_readonly_impl(name, d, doc BOOST_PYTHON_DATA_MEMBER_HELPER(D));
     }
 
     template <class D>
-    self& def_readwrite(char const* name, D& d, char const* doc=0)
+    self& def_readwrite(char const* name, D& d, char const* doc = BOOST_NULLPTR)
     {
         return this->def_readwrite_impl(name, d, doc BOOST_PYTHON_DATA_MEMBER_HELPER(D));
     }
 
     // Property creation
     template <class Get>
-    self& add_property(char const* name, Get fget, char const* docstr = 0)
+    self& add_property(char const* name, Get fget, char const* docstr = BOOST_NULLPTR)
     {
         base::add_property(name, this->make_getter(fget), docstr);
         return *this;
     }
 
     template <class Get, class Set>
-    self& add_property(char const* name, Get fget, Set fset, char const* docstr = 0)
+    self& add_property(char const* name, Get fget, Set fset, char const* docstr = BOOST_NULLPTR)
     {
         base::add_property(
             name, this->make_getter(fget), this->make_setter(fset), docstr);
@@ -374,9 +374,9 @@ class class_ : public objects::class_base
         
         return objects::add_doc(
             this->make_fn_impl(
-            detail::unwrap_wrapper((W*)0)
-          , f, is_obj_or_proxy(), (char*)0, detail::is_data_member_pointer<F>()
-        ), NULL);
+            detail::unwrap_wrapper((W*)BOOST_NULLPTR)
+          , f, is_obj_or_proxy(), (char*)BOOST_NULLPTR, detail::is_data_member_pointer<F>()
+        ), BOOST_NULLPTR);
     }
     
     template <class F>
@@ -386,15 +386,15 @@ class class_ : public objects::class_base
         
         return objects::add_doc(
             this->make_fn_impl(
-            detail::unwrap_wrapper((W*)0)
-          , f, is_obj_or_proxy(), (int*)0, detail::is_data_member_pointer<F>()
-        ), NULL);
+            detail::unwrap_wrapper((W*)BOOST_NULLPTR)
+          , f, is_obj_or_proxy(), (int*)BOOST_NULLPTR, detail::is_data_member_pointer<F>()
+        ), BOOST_NULLPTR);
     }
     
     template <class T, class F>
     object make_fn_impl(T*, F const& f, mpl::false_, void*, mpl::false_)
     {
-        return python::make_function(f, default_call_policies(), detail::get_signature(f, (T*)0));
+        return python::make_function(f, default_call_policies(), detail::get_signature(f, (T*)BOOST_NULLPTR));
     }
 
     template <class T, class D, class B>
@@ -496,7 +496,7 @@ class class_ : public objects::class_base
                 fn
               , helper.policies()
               , helper.keywords()
-              , detail::get_signature(fn, (T*)0)
+              , detail::get_signature(fn, (T*)BOOST_NULLPTR)
             )
           , helper.doc()
         );
@@ -562,7 +562,7 @@ class class_ : public objects::class_base
         , ...)
     {
         this->def_impl(
-            detail::unwrap_wrapper((W*)0)
+            detail::unwrap_wrapper((W*)BOOST_NULLPTR)
           , name
           , fn
           , detail::def_helper<A1>(a1)

@@ -473,7 +473,7 @@ namespace converter
           return python::detail::new_non_null_reference(x);
       }
 #ifndef BOOST_PYTHON_NO_PY_SIGNATURES
-      static PyTypeObject const *get_pytype() {return 0;}
+      static PyTypeObject const *get_pytype() {return BOOST_NULLPTR;}
 #endif
   };
 }

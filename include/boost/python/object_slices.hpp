@@ -57,7 +57,7 @@ object_slice
 object_operators<U>::slice(slice_nil, object_cref finish)
 {
     object_cref2 x = *static_cast<U*>(this);
-    return object_slice(x, api::slice_key(allow_null((PyObject*)0), borrowed(finish.ptr())));
+    return object_slice(x, api::slice_key(allow_null((PyObject*)BOOST_NULLPTR), borrowed(finish.ptr())));
 }
 
 template <class U>
@@ -65,7 +65,7 @@ const_object_slice
 object_operators<U>::slice(slice_nil, object_cref finish) const
 {
     object_cref2 x = *static_cast<U const*>(this);
-    return const_object_slice(x, api::slice_key(allow_null((PyObject*)0), borrowed(finish.ptr())));
+    return const_object_slice(x, api::slice_key(allow_null((PyObject*)BOOST_NULLPTR), borrowed(finish.ptr())));
 }
 
 template <class U>
@@ -73,7 +73,7 @@ object_slice
 object_operators<U>::slice(slice_nil, slice_nil)
 {
     object_cref2 x = *static_cast<U*>(this);
-    return object_slice(x, api::slice_key(allow_null((PyObject*)0), allow_null((PyObject*)0)));
+    return object_slice(x, api::slice_key(allow_null((PyObject*)BOOST_NULLPTR), allow_null((PyObject*)BOOST_NULLPTR)));
 }
 
 template <class U>
@@ -81,7 +81,7 @@ const_object_slice
 object_operators<U>::slice(slice_nil, slice_nil) const
 {
     object_cref2 x = *static_cast<U const*>(this);
-    return const_object_slice(x, api::slice_key(allow_null((PyObject*)0), allow_null((PyObject*)0)));
+    return const_object_slice(x, api::slice_key(allow_null((PyObject*)BOOST_NULLPTR), allow_null((PyObject*)BOOST_NULLPTR)));
 }
 
 template <class U>
@@ -89,7 +89,7 @@ object_slice
 object_operators<U>::slice(object_cref start, slice_nil)
 {
     object_cref2 x = *static_cast<U*>(this);
-    return object_slice(x, api::slice_key(borrowed(start.ptr()), allow_null((PyObject*)0)));
+    return object_slice(x, api::slice_key(borrowed(start.ptr()), allow_null((PyObject*)BOOST_NULLPTR)));
 }
 
 template <class U>
@@ -97,7 +97,7 @@ const_object_slice
 object_operators<U>::slice(object_cref start, slice_nil) const
 {
     object_cref2 x = *static_cast<U const*>(this);
-    return const_object_slice(x, api::slice_key(borrowed(start.ptr()), allow_null((PyObject*)0)));
+    return const_object_slice(x, api::slice_key(borrowed(start.ptr()), allow_null((PyObject*)BOOST_NULLPTR)));
 }
 
 template <class U>

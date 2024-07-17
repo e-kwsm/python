@@ -23,7 +23,7 @@ struct implicit
         // Target, and instantiating construct() below, ensures that
         // at compile-time.
         return implicit_rvalue_convertible_from_python(obj, registered<Source>::converters)
-            ? obj : 0;
+            ? obj : BOOST_NULLPTR;
     }
       
     static void construct(PyObject* obj, rvalue_from_python_stage1_data* data)

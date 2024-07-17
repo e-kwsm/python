@@ -18,7 +18,7 @@ namespace detail
 {
   struct keyword
   {
-      keyword(char const* name_=0)
+      keyword(char const* name_=BOOST_NULLPTR)
        : name(name_)
       {}
       

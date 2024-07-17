@@ -22,7 +22,7 @@ struct BOOST_PYTHON_DECL enum_base : python::api::object
         , converter::convertible_function
         , converter::constructor_function
         , type_info
-        , const char *doc = 0
+        , const char *doc = BOOST_NULLPTR
         );
 
     void add_value(char const* name, long value);

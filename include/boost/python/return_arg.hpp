@@ -85,7 +85,7 @@ struct return_arg : Base
 
         result = Base::postcall(args,result);
         if (!result)
-            return 0;
+            return BOOST_NULLPTR;
         Py_DECREF(result);
         return incref( detail::get(mpl::int_<arg_pos-1>(),args) );
     }

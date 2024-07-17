@@ -88,7 +88,7 @@ namespace detail
 template <class Fn>
 void def(char const* name, Fn fn)
 {
-    detail::scope_setattr_doc(name, detail::make_function1(fn, &fn), 0);
+    detail::scope_setattr_doc(name, detail::make_function1(fn, &fn), BOOST_NULLPTR);
 }
 
 template <class Arg1T, class Arg2T>

@@ -26,7 +26,7 @@ template <class T>
 typename unwrap_wrapper_<T>::type*
 unwrap_wrapper(T*)
 {
-    return 0;
+    return BOOST_NULLPTR;
 }
 
 }}} // namespace boost::python::detail

@@ -19,7 +19,7 @@ namespace detail
   struct get_prev
   {
       template <class ArgumentPackage>
-      static PyObject* execute(ArgumentPackage const& args, PyObject* = 0)
+      static PyObject* execute(ArgumentPackage const& args, PyObject* = BOOST_NULLPTR)
       {
           int const pre_n = static_cast<int>(N) - 1; // separate line is gcc-2.96 workaround
           return detail::get(mpl::int_<pre_n>(), args);
@@ -63,7 +63,7 @@ struct with_custodian_and_ward : BasePolicy_
         PyObject* nurse = detail::get_prev<custodian>::execute(args_);
 
         PyObject* life_support = python::objects::make_nurse_and_patient(nurse, patient);
-        if (life_support == 0)
+        if (life_support == BOOST_NULLPTR)
             return false;
     
         bool result = BasePolicy_::precall(args_);
@@ -94,22 +94,23 @@ struct with_custodian_and_ward_postcall : BasePolicy_
                 PyExc_IndexError
               , "boost::python::with_custodian_and_ward_postcall: argument index out of range"
             );
-            return 0;
+            return BOOST_NULLPTR;
         }
         
         PyObject* patient = detail::get_prev<ward>::execute(args_, result);
         PyObject* nurse = detail::get_prev<custodian>::execute(args_, result);
 
-        if (nurse == 0) return 0;
+        if (nurse == BOOST_NULLPTR)
+            return BOOST_NULLPTR;
     
         result = BasePolicy_::postcall(args_, result);
-        if (result == 0)
-            return 0;
+        if (result == BOOST_NULLPTR)
+            return BOOST_NULLPTR;
             
-        if (python::objects::make_nurse_and_patient(nurse, patient) == 0)
+        if (python::objects::make_nurse_and_patient(nurse, patient) == BOOST_NULLPTR)
         {
             Py_XDECREF(result);
-            return 0;
+            return BOOST_NULLPTR;
         }
         return result;
     }

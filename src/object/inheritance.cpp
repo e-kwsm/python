@@ -190,7 +190,7 @@ namespace
       
       return std::lower_bound(
           type_index().begin(), type_index().end()
-          , boost::make_tuple(type, vertex_t(), dynamic_id_function(0))
+          , boost::make_tuple(type, vertex_t(), dynamic_id_function(BOOST_NULLPTR))
           , boost::bind<bool>(std::less<class_id>()
                , boost::bind<class_id>(select1st<entry>(), _1)
                , boost::bind<class_id>(select1st<entry>(), _2)));
@@ -200,7 +200,7 @@ namespace
   {
       type_index_t::iterator p = type_position(type);
       if (p == type_index().end() || tuples::get<ksrc_static_t>(*p) != type)
-          return 0;
+          return BOOST_NULLPTR;
       else
           return &*p;
   }
@@ -217,7 +217,7 @@ namespace
       vertex_t v2 = add_vertex(up_graph().topology());
       unused_variable(v2);
       assert(v == v2);
-      return type_index().insert(p, boost::make_tuple(type, v, dynamic_id_function(0)));
+      return type_index().insert(p, boost::make_tuple(type, v, dynamic_id_function(BOOST_NULLPTR)));
   }
 
   // Map a two types to a vertex in the graph, inserting if necessary
@@ -295,7 +295,7 @@ namespace
       smart_graph::node_distance_map d(g.distances_to(dst));
 
       if (d[src] == (std::numeric_limits<std::size_t>::max)())
-          return 0;
+          return BOOST_NULLPTR;
 
       typedef property_map<cast_graph,edge_cast_t>::const_type cast_map;
       cast_map casts = get(edge_cast, g.topology());
@@ -313,7 +313,7 @@ namespace
           
           // Check to see if we have a real state
           void* dst_address = top.cast(top.src_address);
-          if (dst_address == 0)
+          if (dst_address == BOOST_NULLPTR)
               continue;
 
           if (top.target == dst)
@@ -346,7 +346,7 @@ namespace
                          , boost::get(casts, e)));
           }
       }
-      return 0;
+      return BOOST_NULLPTR;
   }
 
   struct cache_element
@@ -395,12 +395,12 @@ namespace
 
       // Quickly rule out unregistered types
       index_entry* src_p = seek_type(src_t);
-      if (src_p == 0)
-          return 0;
+      if (src_p == BOOST_NULLPTR)
+          return BOOST_NULLPTR;
 
       index_entry* dst_p = seek_type(dst_t);
-      if (dst_p == 0)
-          return 0;
+      if (dst_p == BOOST_NULLPTR)
+          return BOOST_NULLPTR;
     
       // Look up the dynamic_id function and call it to get the dynamic
       // info
@@ -421,7 +421,7 @@ namespace
       if (cache_pos != c.end() && cache_pos->key == seek.key)
       {
           return cache_pos->offset == cache_element::not_found
-              ? 0 : (char*)p + cache_pos->offset;
+              ? BOOST_NULLPTR : (char*)p + cache_pos->offset;
       }
 
       // If we are starting at the most-derived type, only look in the up graph
@@ -434,7 +434,7 @@ namespace
 
       // update the cache
       c.insert(cache_pos, seek)->offset
-          = (result == 0) ? cache_element::not_found : (char*)result - (char*)p;
+          = (result == BOOST_NULLPTR) ? cache_element::not_found : (char*)result - (char*)p;
 
       return result;
   }

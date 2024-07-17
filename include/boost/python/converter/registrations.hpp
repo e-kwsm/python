@@ -81,11 +81,11 @@ struct BOOST_PYTHON_DECL registration
 //
 inline registration::registration(type_info target_type, bool is_shared_ptr)
     : target_type(target_type)
-      , lvalue_chain(0)
-      , rvalue_chain(0)
-      , m_class_object(0)
-      , m_to_python(0)
-      , m_to_python_target_type(0)
+      , lvalue_chain(BOOST_NULLPTR)
+      , rvalue_chain(BOOST_NULLPTR)
+      , m_class_object(BOOST_NULLPTR)
+      , m_to_python(BOOST_NULLPTR)
+      , m_to_python_target_type(BOOST_NULLPTR)
       , is_shared_ptr(is_shared_ptr)
 {}
 

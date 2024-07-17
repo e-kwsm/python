@@ -213,7 +213,7 @@ class init : public init_base<init<BOOST_PYTHON_OVERLOAD_ARGS> >
  public:
     typedef init<BOOST_PYTHON_OVERLOAD_ARGS> self_t;
 
-    init(char const* doc_ = 0)
+    init(char const* doc_ = BOOST_NULLPTR)
         : base(doc_)
     {
     }
@@ -228,7 +228,7 @@ class init : public init_base<init<BOOST_PYTHON_OVERLOAD_ARGS> >
     }
 
     template <std::size_t N>
-    init(detail::keywords<N> const& kw, char const* doc_ = 0)
+    init(detail::keywords<N> const& kw, char const* doc_ = BOOST_NULLPTR)
         : base(doc_, kw.range())
     {
         typedef typename detail::error::more_keywords_than_init_arguments<
@@ -310,7 +310,7 @@ namespace detail
         , detail::make_keyword_range_constructor<Signature,NArgs>(
               policies
             , keywords_
-            , (typename ClassT::metadata::holder*)0
+            , (typename ClassT::metadata::holder*)BOOST_NULLPTR
           )
         , doc
       );

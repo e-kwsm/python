@@ -28,7 +28,7 @@ int useany(opaque op)
 
 opaque getnull()
 {
-    return 0;
+    return BOOST_NULLPTR;
 }
 
 void failuse (opaque op)

@@ -89,7 +89,7 @@ namespace detail
       handle<> class_obj(
           objects::registered_class_object(python::type_id<range_>()));
         
-      if (class_obj.get() != 0)
+      if (class_obj.get() != BOOST_NULLPTR)
           return object(class_obj);
 
       typedef typename range_::next_fn next_fn;
@@ -133,7 +133,7 @@ namespace detail
       operator()(back_reference<Target&> x) const
       {
           // Make sure the Python class is instantiated.
-          detail::demand_iterator_class("iterator", (Iterator*)0, NextPolicies());
+          detail::demand_iterator_class("iterator", (Iterator*)BOOST_NULLPTR, NextPolicies());
           
           return iterator_range<NextPolicies,Iterator>(
               x.source()
@@ -176,8 +176,8 @@ namespace detail
           get_start
         , get_finish
         , next_policies
-        , (Iterator const&(*)())0
-        , (boost::type<Target>*)0
+        , (Iterator const&(*)())BOOST_NULLPTR
+        , (boost::type<Target>*)BOOST_NULLPTR
         , 0
       );
   }
@@ -195,7 +195,7 @@ inline object make_iterator_function(
     Accessor1 const& get_start
   , Accessor2 const& get_finish
   , NextPolicies const& next_policies
-  , boost::type<Target>* = 0
+  , boost::type<Target>* = BOOST_NULLPTR
 )
 {
     typedef typename Accessor1::result_type iterator;
@@ -206,8 +206,8 @@ inline object make_iterator_function(
         get_start
       , get_finish
       , next_policies
-      , (iterator_cref(*)())0
-      , (boost::type<Target>*)0
+      , (iterator_cref(*)())BOOST_NULLPTR
+      , (boost::type<Target>*)BOOST_NULLPTR
       , 0
     );
 }

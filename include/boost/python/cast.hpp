@@ -29,7 +29,7 @@ namespace detail
   {
       typedef typename base_type_traits<Source>::type base;
       
-      return detail::upcast_impl((base*)p, (Target*)0);
+      return detail::upcast_impl((base*)p, (Target*)BOOST_NULLPTR);
   }
 
   template <bool is_same = true>
@@ -47,8 +47,8 @@ namespace detail
       {
           return detail::upcast(
               x, detail::convertible<Target*>::check(x)
-              , detail::convertible<Source*>::check((Target*)0)
-              , (Target*)0);
+              , detail::convertible<Source*>::check((Target*)BOOST_NULLPTR)
+              , (Target*)BOOST_NULLPTR);
       }
   };
 
@@ -60,14 +60,14 @@ namespace detail
   }
 
   template <class Target, class Source>
-  inline Target* downcast(Source* p, no_convertible, boost::type<Target>* = 0)
+  inline Target* downcast(Source* p, no_convertible, boost::type<Target>* = BOOST_NULLPTR)
   {
       typedef typename base_type_traits<Source>::type base;
-      return (Target*)detail::downcast<base>(p, convertible<Source*>::check((base*)0));
+      return (Target*)detail::downcast<base>(p, convertible<Source*>::check((base*)BOOST_NULLPTR));
   }
 
   template <class T>
-  inline void assert_castable(boost::type<T>* = 0)
+  inline void assert_castable(boost::type<T>* = BOOST_NULLPTR)
   {
       typedef char must_be_a_complete_type[sizeof(T)] BOOST_ATTRIBUTE_UNUSED;
   }
@@ -79,25 +79,25 @@ namespace detail
       typedef typename detail::add_cv<Target>::type target_t;
       bool const same = detail::is_same<src_t,target_t>::value;
       
-      return detail::upcaster<same>::execute(x, (Target*)0);
+      return detail::upcaster<same>::execute(x, (Target*)BOOST_NULLPTR);
   }
 }
 
 template <class Target, class Source>
-inline Target* upcast(Source* x, Target* = 0)
+inline Target* upcast(Source* x, Target* = BOOST_NULLPTR)
 {
     detail::assert_castable<Source>();
     detail::assert_castable<Target>();
-    return detail::upcast_impl(x, (Target*)0);
+    return detail::upcast_impl(x, (Target*)BOOST_NULLPTR);
     
 }
 
 template <class Target, class Source>
-inline Target* downcast(Source* x, Target* = 0)
+inline Target* downcast(Source* x, Target* = BOOST_NULLPTR)
 {
     detail::assert_castable<Source>();
     detail::assert_castable<Target>();
-    return detail::downcast<Target>(x, detail::convertible<Source*>::check((Target*)0));
+    return detail::downcast<Target>(x, detail::convertible<Source*>::check((Target*)BOOST_NULLPTR));
 }
 
 }} // namespace boost::python

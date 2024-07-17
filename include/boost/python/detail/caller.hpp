@@ -97,7 +97,7 @@ struct converter_target_type
 {
     static PyTypeObject const *get_pytype()
     {
-        return create_result_converter((PyObject*)0, (ResultConverter *)0, (ResultConverter *)0).get_pytype();
+        return create_result_converter((PyObject*)BOOST_NULLPTR, (ResultConverter *)BOOST_NULLPTR, (ResultConverter *)BOOST_NULLPTR).get_pytype();
     }
 };
 
@@ -106,7 +106,7 @@ struct converter_target_type <void_result_to_python >
 {
     static PyTypeObject const *get_pytype()
     {
-        return 0;
+        return BOOST_NULLPTR;
     }
 };
 
@@ -228,7 +228,7 @@ struct caller_arity<N>
             // all converters have been checked. Now we can do the
             // precall part of the policy
             if (!m_data.second().precall(inner_args))
-                return 0;
+                return BOOST_NULLPTR;
 
             PyObject* result = detail::invoke(
                 detail::invoke_tag<result_t,F>()

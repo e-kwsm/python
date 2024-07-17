@@ -47,13 +47,13 @@ class slice : public detail::slice_base
     typedef detail::slice_base base;
  public:
     // Equivalent to slice(::)
-    slice() : base(0,0,0) {}
+    slice() : base(BOOST_NULLPTR, BOOST_NULLPTR, BOOST_NULLPTR) {}
 
     // Each argument must be slice_nil, or implicitly convertable to object.
     // They should normally be integers.
     template<typename Integer1, typename Integer2>
     slice( Integer1 start, Integer2 stop)
-        : base( object(start).ptr(), object(stop).ptr(), 0 )
+        : base( object(start).ptr(), object(stop).ptr(), BOOST_NULLPTR )
     {}
     
     template<typename Integer1, typename Integer2, typename Integer3>

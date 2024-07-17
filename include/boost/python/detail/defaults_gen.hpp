@@ -204,7 +204,7 @@ namespace detail
     };
 
 #define BOOST_PYTHON_OVERLOAD_CONSTRUCTORS(fstubs_name, n_args, n_dflts)                    \
-    fstubs_name(char const* doc = 0)                                                        \
+    fstubs_name(char const* doc = BOOST_NULLPTR)                                            \
         : ::boost::python::detail::overloads_common<fstubs_name>(doc) {}                    \
     template <std::size_t N>                                                                \
     fstubs_name(char const* doc, ::boost::python::detail::keywords<N> const& keywords)      \
@@ -216,7 +216,7 @@ namespace detail
                 N,n_args>::too_many_keywords assertion BOOST_ATTRIBUTE_UNUSED;              \
     }                                                                                       \
     template <std::size_t N>                                                                \
-    fstubs_name(::boost::python::detail::keywords<N> const& keywords, char const* doc = 0)  \
+    fstubs_name(::boost::python::detail::keywords<N> const& keywords, char const* doc = BOOST_NULLPTR)  \
         : ::boost::python::detail::overloads_common<fstubs_name>(                           \
             doc, keywords.range())                                                          \
     {                                                                                       \

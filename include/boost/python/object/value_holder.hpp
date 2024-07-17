@@ -51,12 +51,12 @@ struct value_holder : instance_holder
     template <class T>
     inline void* holds_wrapped(type_info dst_t, wrapper<T>*,T* p)
     {
-        return python::type_id<T>() == dst_t ? p : 0;
+        return python::type_id<T>() == dst_t ? p : BOOST_NULLPTR;
     }
     
     inline void* holds_wrapped(type_info, ...)
     {
-        return 0;
+        return BOOST_NULLPTR;
     }
  private: // data members
     Value m_held;

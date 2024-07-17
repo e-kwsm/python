@@ -21,7 +21,7 @@ namespace detail
   // A metafunction returning true iff T is [derived from] wrapper<U> 
   template <class T>
   struct is_wrapper
-    : mpl::bool_<(sizeof(detail::is_wrapper_helper((T*)0)) == 1)>
+    : mpl::bool_<(sizeof(detail::is_wrapper_helper((T*)BOOST_NULLPTR)) == 1)>
   {};
 
 }}} // namespace boost::python::detail

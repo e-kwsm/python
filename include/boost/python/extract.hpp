@@ -197,23 +197,23 @@ namespace converter
   template <class Ref>
   inline bool extract_reference<Ref>::check() const
   {
-      return m_result != 0;
+      return m_result != BOOST_NULLPTR;
   }
 
   template <class Ref>
   inline Ref extract_reference<Ref>::operator()() const
   {
-      if (m_result == 0)
+      if (m_result == BOOST_NULLPTR)
           (throw_no_reference_from_python)(m_source, registered<Ref>::converters);
       
-      return python::detail::void_ptr_to_reference(m_result, (Ref(*)())0);
+      return python::detail::void_ptr_to_reference(m_result, (Ref(*)())BOOST_NULLPTR);
   }
 
   template <class Ptr>
   inline extract_pointer<Ptr>::extract_pointer(PyObject* obj)
       : m_source(obj)
       , m_result(
-          obj == Py_None ? 0 : (get_lvalue_from_python)(obj, registered_pointee<Ptr>::converters)
+          obj == Py_None ? BOOST_NULLPTR : (get_lvalue_from_python)(obj, registered_pointee<Ptr>::converters)
           )
   {
   }
@@ -221,13 +221,13 @@ namespace converter
   template <class Ptr>
   inline bool extract_pointer<Ptr>::check() const
   {
-      return m_source == Py_None || m_result != 0;
+      return m_source == Py_None || m_result != BOOST_NULLPTR;
   }
 
   template <class Ptr>
   inline Ptr extract_pointer<Ptr>::operator()() const
   {
-      if (m_result == 0 && m_source != Py_None)
+      if (m_result == BOOST_NULLPTR && m_source != Py_None)
           (throw_no_pointer_from_python)(m_source, registered_pointee<Ptr>::converters);
       
       return Ptr(m_result);

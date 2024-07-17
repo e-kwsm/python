@@ -106,14 +106,14 @@ template <class Ref>
 inline bool object_manager_ref_arg_from_python<Ref>::convertible() const
 {
     return detail::object_manager_ref_check(
-        python::detail::void_ptr_to_reference(this->m_result.bytes, (Ref(*)())0));
+        python::detail::void_ptr_to_reference(this->m_result.bytes, (Ref(*)())BOOST_NULLPTR));
 }
 
 template <class Ref>
 inline Ref object_manager_ref_arg_from_python<Ref>::operator()() const
 {
     return python::detail::void_ptr_to_reference(
-        this->m_result.bytes, (Ref(*)())0);
+        this->m_result.bytes, (Ref(*)())BOOST_NULLPTR);
 }
 
 }}} // namespace boost::python::converter

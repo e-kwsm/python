@@ -137,7 +137,7 @@ namespace detail
   {
       return python::detail::void_ptr_to_reference(
           (reference_result_from_python)(obj, registered<T>::converters)
-          , (T(*)())0);
+          , (T(*)())BOOST_NULLPTR);
   }
 
   template <class T>

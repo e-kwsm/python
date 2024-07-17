@@ -65,7 +65,7 @@ function::function(
     : m_fn(implementation)
     , m_nkeyword_values(0)
 {
-    if (names_and_defaults != 0)
+    if (names_and_defaults != BOOST_NULLPTR)
     {
         unsigned int max_arity = m_fn.max_arity();
         unsigned int keyword_offset
@@ -105,7 +105,7 @@ function::function(
     }
     
     PyObject* p = this;
-    if (Py_TYPE(&function_type) == 0)
+    if (Py_TYPE(&function_type) == BOOST_NULLPTR)
     {
         Py_SET_TYPE(&function_type, &PyType_Type);
         ::PyType_Ready(&function_type);
@@ -181,7 +181,7 @@ PyObject* function::call(PyObject* args, PyObject* keywords) const
                             // argument position
                             PyObject* value = n_keyword_actual
                                 ? PyDict_GetItem(keywords, PyTuple_GET_ITEM(kv, 0))
-                                : 0;
+                                : BOOST_NULLPTR;
 
                             if (!value)
                             {
@@ -217,7 +217,7 @@ PyObject* function::call(PyObject* args, PyObject* keywords) const
             
             // Call the function.  Pass keywords in case it's a
             // function accepting any number of keywords
-            PyObject* result = inner_args ? f->m_fn(inner_args.get(), keywords) : 0;
+            PyObject* result = inner_args ? f->m_fn(inner_args.get(), keywords) : BOOST_NULLPTR;
             
             // If the result is NULL but no error was set, m_fn failed
             // the argument-matching test.
@@ -225,7 +225,7 @@ PyObject* function::call(PyObject* args, PyObject* keywords) const
             // This assumes that all other error-reporters are
             // well-behaved and never return NULL to python without
             // setting an error.
-            if (result != 0 || PyErr_Occurred())
+            if (result != BOOST_NULLPTR || PyErr_Occurred())
                 return result;
         }
         f = f->m_overloads.get();
@@ -233,7 +233,7 @@ PyObject* function::call(PyObject* args, PyObject* keywords) const
     while (f);
     // None of the overloads matched; time to generate the error message
     argument_error(args, keywords);
-    return 0;
+    return BOOST_NULLPTR;
 }
 
 object function::signature(bool show_return_type) const
@@ -249,7 +249,7 @@ object function::signature(bool show_return_type) const
 
     for (unsigned n = 0; n < impl.max_arity(); ++n)
     {
-        if (s[n].basename == 0)
+        if (s[n].basename == BOOST_NULLPTR)
         {
             formal_params.append("...");
             break;
@@ -291,7 +291,7 @@ object function::signatures(bool show_return_type) const
 void function::argument_error(PyObject* args, PyObject* /*keywords*/) const
 {
     static handle<> exception(
-        PyErr_NewException(const_cast<char*>("Boost.Python.ArgumentError"), PyExc_TypeError, 0));
+        PyErr_NewException(const_cast<char*>("Boost.Python.ArgumentError"), PyExc_TypeError, BOOST_NULLPTR));
 
     object message = "Python argument types in\n    %s.%s("
         % make_tuple(this->m_namespace, this->m_name);
@@ -409,7 +409,7 @@ namespace
 void function::add_to_namespace(
     object const& name_space, char const* name_, object const& attribute)
 {
-    add_to_namespace(name_space, name_, attribute, 0);
+    add_to_namespace(name_space, name_, attribute, BOOST_NULLPTR);
 }
 
 namespace detail
@@ -426,7 +426,7 @@ object const& function::add_doc(object const& attribute, char const* doc)
     {
         _doc += str(const_cast<const char*>(detail::py_signature_tag));
     }
-    if (doc != 0 && docstring_options::show_user_defined_)
+    if (doc != BOOST_NULLPTR && docstring_options::show_user_defined_)
         _doc += doc;
 
     if (docstring_options::show_cpp_signatures_)
@@ -464,7 +464,7 @@ void function::add_to_namespace(
         else    
             dict = handle<>(PyObject_GetAttrString(ns, const_cast<char*>("__dict__")));
 
-        if (dict == 0)
+        if (dict == BOOST_NULLPTR)
             throw_error_already_set();
 
         assert(!PyErr_Occurred());
@@ -574,7 +574,7 @@ void function::add_to_namespace(
 BOOST_PYTHON_DECL void add_to_namespace(
     object const& name_space, char const* name, object const& attribute)
 {
-    function::add_to_namespace(name_space, name, attribute, 0);
+    function::add_to_namespace(name_space, name, attribute, BOOST_NULLPTR);
 }
 
 BOOST_PYTHON_DECL void add_to_namespace(
@@ -628,7 +628,7 @@ extern "C"
     {
 #if PY_VERSION_HEX >= 0x03000000
         // The implement is different in Python 3 because of the removal of unbound method
-        if (obj == Py_None || obj == NULL) {
+        if (obj == Py_None || obj == BOOST_NULLPTR) {
             Py_INCREF(func);
             return func;
         }
@@ -649,7 +649,7 @@ extern "C"
     static PyObject *
     function_call(PyObject *func, PyObject *args, PyObject *kw)
     {
-        PyObject* result = 0;
+        PyObject* result = BOOST_NULLPTR;
         handle_exception(bind_return(result, static_cast<function*>(func), args, kw));
         return result;
     }
@@ -708,19 +708,19 @@ extern "C"
         PyErr_SetString(
             PyExc_AttributeError, const_cast<char*>(
                 "Boost.Python function __module__ unknown."));
-        return 0;
+        return BOOST_NULLPTR;
     }
 }
 
 static PyGetSetDef function_getsetlist[] = {
-    {const_cast<char*>("__name__"), (getter)function_get_name, 0, 0, 0 },
-    {const_cast<char*>("func_name"), (getter)function_get_name, 0, 0, 0 },
-    {const_cast<char*>("__module__"), (getter)function_get_module, 0, 0, 0 },
-    {const_cast<char*>("func_module"), (getter)function_get_module, 0, 0, 0 },
-    {const_cast<char*>("__class__"), (getter)function_get_class, 0, 0, 0 },    // see note above
-    {const_cast<char*>("__doc__"), (getter)function_get_doc, (setter)function_set_doc, 0, 0},
-    {const_cast<char*>("func_doc"), (getter)function_get_doc, (setter)function_set_doc, 0, 0},
-    {NULL, 0, 0, 0, 0} /* Sentinel */
+    {const_cast<char*>("__name__"), (getter)function_get_name, BOOST_NULLPTR, BOOST_NULLPTR, BOOST_NULLPTR },
+    {const_cast<char*>("func_name"), (getter)function_get_name, BOOST_NULLPTR, BOOST_NULLPTR, BOOST_NULLPTR },
+    {const_cast<char*>("__module__"), (getter)function_get_module, BOOST_NULLPTR, BOOST_NULLPTR, BOOST_NULLPTR },
+    {const_cast<char*>("func_module"), (getter)function_get_module, BOOST_NULLPTR, BOOST_NULLPTR, BOOST_NULLPTR },
+    {const_cast<char*>("__class__"), (getter)function_get_class, BOOST_NULLPTR, BOOST_NULLPTR, BOOST_NULLPTR },    // see note above
+    {const_cast<char*>("__doc__"), (getter)function_get_doc, (setter)function_set_doc, BOOST_NULLPTR, BOOST_NULLPTR},
+    {const_cast<char*>("func_doc"), (getter)function_get_doc, (setter)function_set_doc, BOOST_NULLPTR, BOOST_NULLPTR},
+    {BOOST_NULLPTR, BOOST_NULLPTR, BOOST_NULLPTR, BOOST_NULLPTR, BOOST_NULLPTR} /* Sentinel */
 };
 
 PyTypeObject function_type = {
@@ -730,47 +730,47 @@ PyTypeObject function_type = {
     0,
     (destructor)function_dealloc,               /* tp_dealloc */
     0,                                  /* tp_print */
-    0,                                  /* tp_getattr */
-    0,                                  /* tp_setattr */
-    0,                                  /* tp_compare */
-    0, //(reprfunc)func_repr,                   /* tp_repr */
-    0,                                  /* tp_as_number */
-    0,                                  /* tp_as_sequence */
-    0,                                  /* tp_as_mapping */
-    0,                                  /* tp_hash */
+    BOOST_NULLPTR,                            /* tp_getattr */
+    BOOST_NULLPTR,                            /* tp_setattr */
+    BOOST_NULLPTR,                            /* tp_compare */
+    BOOST_NULLPTR, //(reprfunc)func_repr,     /* tp_repr */
+    BOOST_NULLPTR,                            /* tp_as_number */
+    BOOST_NULLPTR,                            /* tp_as_sequence */
+    BOOST_NULLPTR,                            /* tp_as_mapping */
+    BOOST_NULLPTR,                            /* tp_hash */
     function_call,                              /* tp_call */
-    0,                                  /* tp_str */
-    0, // PyObject_GenericGetAttr,            /* tp_getattro */
-    0, // PyObject_GenericSetAttr,            /* tp_setattro */
-    0,                                  /* tp_as_buffer */
+    BOOST_NULLPTR,                                  /* tp_str */
+    BOOST_NULLPTR, // PyObject_GenericGetAttr,      /* tp_getattro */
+    BOOST_NULLPTR, // PyObject_GenericSetAttr,      /* tp_setattro */
+    BOOST_NULLPTR,                                  /* tp_as_buffer */
     Py_TPFLAGS_DEFAULT /* | Py_TPFLAGS_HAVE_GC */,/* tp_flags */
-    0,                                  /* tp_doc */
-    0, // (traverseproc)func_traverse,          /* tp_traverse */
-    0,                                  /* tp_clear */
-    0,                                  /* tp_richcompare */
+    BOOST_NULLPTR,                                  /* tp_doc */
+    BOOST_NULLPTR, // (traverseproc)func_traverse,  /* tp_traverse */
+    BOOST_NULLPTR,                                  /* tp_clear */
+    BOOST_NULLPTR,                                  /* tp_richcompare */
     0, //offsetof(PyFunctionObject, func_weakreflist), /* tp_weaklistoffset */
-    0,                                  /* tp_iter */
-    0,                                  /* tp_iternext */
-    0,                                  /* tp_methods */
-    0, // func_memberlist,              /* tp_members */
+    BOOST_NULLPTR,                            /* tp_iter */
+    BOOST_NULLPTR,                            /* tp_iternext */
+    BOOST_NULLPTR,                            /* tp_methods */
+    BOOST_NULLPTR, // func_memberlist,        /* tp_members */
     function_getsetlist,                /* tp_getset */
-    0,                                  /* tp_base */
-    0,                                  /* tp_dict */
+    BOOST_NULLPTR,                            /* tp_base */
+    BOOST_NULLPTR,                            /* tp_dict */
     function_descr_get,                 /* tp_descr_get */
-    0,                                  /* tp_descr_set */
+    BOOST_NULLPTR,                            /* tp_descr_set */
     0, //offsetof(PyFunctionObject, func_dict),      /* tp_dictoffset */
-    0,                                      /* tp_init */
-    0,                                      /* tp_alloc */
-    0,                                      /* tp_new */
-    0,                                      /* tp_free */
-    0,                                      /* tp_is_gc */
-    0,                                      /* tp_bases */
-    0,                                      /* tp_mro */
-    0,                                      /* tp_cache */
-    0,                                      /* tp_subclasses */
-    0,                                      /* tp_weaklist */
+    BOOST_NULLPTR,                            /* tp_init */
+    BOOST_NULLPTR,                            /* tp_alloc */
+    BOOST_NULLPTR,                            /* tp_new */
+    BOOST_NULLPTR,                            /* tp_free */
+    BOOST_NULLPTR,                            /* tp_is_gc */
+    BOOST_NULLPTR,                            /* tp_bases */
+    BOOST_NULLPTR,                            /* tp_mro */
+    BOOST_NULLPTR,                            /* tp_cache */
+    BOOST_NULLPTR,                            /* tp_subclasses */
+    BOOST_NULLPTR,                            /* tp_weaklist */
 #if PYTHON_API_VERSION >= 1012
-    0                                       /* tp_del */
+    BOOST_NULLPTR                             /* tp_del */
 #endif
 };
 
@@ -794,7 +794,7 @@ handle<> function_handle_impl(py_function const& f)
 {
     return python::handle<>(
         allow_null(
-            new function(f, 0, 0)));
+            new function(f, BOOST_NULLPTR, 0)));
 }
 
 } // namespace objects
