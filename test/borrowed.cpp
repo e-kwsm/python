@@ -22,12 +22,12 @@ void assert_not_borrowed_ptr(T const&)
     
 int main()
 {
-    assert_borrowed_ptr(borrowed((PyObject*)0));
-    assert_borrowed_ptr(borrowed((PyTypeObject*)0));
-    assert_borrowed_ptr((detail::borrowed<PyObject> const*)0);
-    assert_borrowed_ptr((detail::borrowed<PyObject> volatile*)0);
-    assert_borrowed_ptr((detail::borrowed<PyObject> const volatile*)0);
-    assert_not_borrowed_ptr((PyObject*)0);
+    assert_borrowed_ptr(borrowed((PyObject*)nullptr));
+    assert_borrowed_ptr(borrowed((PyTypeObject*)nullptr));
+    assert_borrowed_ptr((detail::borrowed<PyObject> const*)nullptr);
+    assert_borrowed_ptr((detail::borrowed<PyObject> volatile*)nullptr);
+    assert_borrowed_ptr((detail::borrowed<PyObject> const volatile*)nullptr);
+    assert_not_borrowed_ptr((PyObject*)nullptr);
     assert_not_borrowed_ptr(0);
     return 0;
 }
