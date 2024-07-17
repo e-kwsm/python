@@ -96,7 +96,7 @@ bool cxxabi_cxa_demangle_is_broken()
     static bool is_broken = false;
     if (!was_tested) {
         int status;
-        free_mem keeper(cxxabi::__cxa_demangle("b", 0, 0, &status));
+        free_mem keeper(cxxabi::__cxa_demangle("b", nullptr, nullptr, &status));
         was_tested = true;
         if (status == -2 || strcmp(keeper.p, "bool") != 0) {
           is_broken = true;
@@ -117,14 +117,14 @@ namespace detail
       mangling_map::iterator p
           = std::lower_bound(
               demangler.begin(), demangler.end()
-            , std::make_pair(mangled, (char const*)0)
+            , std::make_pair(mangled, (char const*)nullptr)
             , compare_first_cstring());
       
       if (p == demangler.end() || strcmp(p->first, mangled))
       {
           int status;
           free_mem keeper(
-              cxxabi::__cxa_demangle(mangled, 0, 0, &status)
+              cxxabi::__cxa_demangle(mangled, nullptr, nullptr, &status)
               );
     
           assert(status != -3); // invalid argument error
@@ -181,7 +181,7 @@ namespace detail
               }
 
               p = demangler.insert(p, std::make_pair(mangled, demangled));
-              keeper.p = 0;
+              keeper.p = nullptr;
           }
       }
       

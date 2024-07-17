@@ -44,15 +44,15 @@ BOOST_PYTHON_DECL rvalue_from_python_stage1_data rvalue_from_python_stage1(
     // First check to see if it's embedded in an extension class
     // instance, as a special case.
     data.convertible = objects::find_instance_impl(source, converters.target_type, converters.is_shared_ptr);
-        data.construct = 0;
+        data.construct = nullptr;
     if (!data.convertible)
     {
         for (rvalue_from_python_chain const* chain = converters.rvalue_chain;
-             chain != 0;
+             chain != nullptr;
              chain = chain->next)
         {
             void* r = chain->convertible(source);
-            if (r != 0)
+            if (r != nullptr)
             {
                 data.convertible = r;
                 data.construct = chain->construct;
@@ -110,7 +110,7 @@ BOOST_PYTHON_DECL void* rvalue_from_python_stage2(
 
     // If a construct function was registered (i.e. we found an
     // rvalue conversion), call it now.
-    if (data.construct != 0)
+    if (data.construct != nullptr)
         data.construct(source, &data);
 
     // Return the address of the resulting C++ object
@@ -127,13 +127,13 @@ BOOST_PYTHON_DECL void* get_lvalue_from_python(
         return x;
 
     lvalue_from_python_chain const* chain = converters.lvalue_chain;
-    for (;chain != 0; chain = chain->next)
+    for (;chain != nullptr; chain = chain->next)
     {
         void* r = chain->convert(source);
-        if (r != 0)
+        if (r != nullptr)
             return r;
     }
-    return 0;
+    return nullptr;
 }
 
 namespace
@@ -184,7 +184,7 @@ BOOST_PYTHON_DECL bool implicit_rvalue_convertible_from_python(
 
     unvisit protect(chain);
     
-    for (;chain != 0; chain = chain->next)
+    for (;chain != nullptr; chain = chain->next)
     {
         if (chain->convertible(source))
             return true;
@@ -272,7 +272,7 @@ BOOST_PYTHON_DECL void* pointer_result_from_python(
     if (source == Py_None)
     {
         Py_DECREF(source);
-        return 0;
+        return nullptr;
     }
     return (lvalue_result_from_python)(source, converters, "pointer");
 }
