@@ -18,65 +18,65 @@ int main()
 {
     // Test the usage which works for functions, member functions, and data members
     expect_int(
-        result((int(*)())0)
+        result((int(*)())nullptr)
         );
 
     expect_int(
-        result((int(*)(char))0)
+        result((int(*)(char))nullptr)
         );
 
     expect_int(
-        result((int(X::*)())0)
+        result((int(X::*)())nullptr)
         );
 
     expect_int(
-        result((int(X::*)(char))0)
+        result((int(X::*)(char))nullptr)
         );
 
     expect_int(
-        result((int(X::*))0)
+        result((int(X::*))nullptr)
         );
 
     expect_string(
-        result((char*(*)())0)
+        result((char*(*)())nullptr)
         );
     
     expect_string(
-        result((char*(*)(char))0)
+        result((char*(*)(char))nullptr)
         );
     
     expect_string(
-        result((char*(X::*)())0)
+        result((char*(X::*)())nullptr)
         );
     
     expect_string(
-        result((char*(X::*)(char))0)
+        result((char*(X::*)(char))nullptr)
         );
     
     expect_string(
-        result((char*(X::*))0)
+        result((char*(X::*))nullptr)
         );
     
     // Show that we can use the general version that works for
     // AdaptableFunctions
     expect_int(
-        result((int(*)())0,0)
+        result((int(*)())nullptr, 0)
         );
 
     expect_int(
-        result((int(*)(char))0,0)
+        result((int(*)(char))nullptr, 0)
         );
 
     expect_int(
-        result((int(X::*)())0,0)
+        result((int(X::*)())nullptr, 0)
         );
 
     expect_int(
-        result((int(X::*)(char))0,0)
+        result((int(X::*)(char))nullptr, 0)
         );
 
     expect_int(
-        result((int(X::*))0,0)
+        result((int(X::*))nullptr, 0)
         );
     
     expect_int(
@@ -84,23 +84,23 @@ int main()
         );
 
     expect_string(
-        result((char*(*)())0,0)
+        result((char*(*)())nullptr, 0)
         );
     
     expect_string(
-        result((char*(*)(char))0,0)
+        result((char*(*)(char))nullptr, 0)
         );
     
     expect_string(
-        result((char*(X::*)())0,0)
+        result((char*(X::*)())nullptr, 0)
         );
     
     expect_string(
-        result((char*(X::*)(char))0,0)
+        result((char*(X::*)(char))nullptr, 0)
         );
     
     expect_string(
-        result((char*(X::*))0,0)
+        result((char*(X::*))nullptr, 0)
         );
     
     expect_string(

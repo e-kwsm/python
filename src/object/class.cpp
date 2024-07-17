@@ -38,7 +38,7 @@ namespace self_ns
 # endif 
 
 instance_holder::instance_holder()
-    : m_next(0)
+    : m_next(nullptr)
 {
 }
 
@@ -76,8 +76,8 @@ extern "C"
   // cause the init fail.
   static int property_init(PyObject *self, PyObject *args, PyObject *kwds)
   {
-      PyObject *get = NULL, *set = NULL, *del = NULL, *doc = NULL;
-      static const char *kwlist[] = {"fget", "fset", "fdel", "doc", 0};
+      PyObject *get = nullptr, *set = nullptr, *del = nullptr, *doc = nullptr;
+      static const char *kwlist[] = {"fget", "fset", "fdel", "doc", nullptr};
       propertyobject *prop = (propertyobject *)self;
 
       if (!PyArg_ParseTupleAndKeywords(args, kwds, "|OOOO:property",
@@ -85,11 +85,11 @@ extern "C"
           return -1;
 
       if (get == Py_None)
-          get = NULL;
+          get = nullptr;
       if (set == Py_None)
-          set = NULL;
+          set = nullptr;
       if (del == Py_None)
-          del = NULL;
+          del = nullptr;
 
       Py_XINCREF(get);
       Py_XINCREF(set);
@@ -120,22 +120,22 @@ extern "C"
       propertyobject *gs = (propertyobject *)self;
       PyObject *func, *res;
 
-      if (value == NULL)
+      if (value == nullptr)
           func = gs->prop_del;
       else
           func = gs->prop_set;
-      if (func == NULL) {
+      if (func == nullptr) {
           PyErr_SetString(PyExc_AttributeError,
-                          value == NULL ?
+                          value == nullptr ?
                           "can't delete attribute" :
                           "can't set attribute");
           return -1;
       }
-      if (value == NULL)
+      if (value == nullptr)
           res = PyObject_CallFunction(func, const_cast<char*>("()"));
       else
           res = PyObject_CallFunction(func, const_cast<char*>("(O)"), value);
-      if (res == NULL)
+      if (res == nullptr)
           return -1;
       Py_DECREF(res);
       return 0;
@@ -147,50 +147,50 @@ static PyTypeObject static_data_object = {
     const_cast<char*>("Boost.Python.StaticProperty"),
     sizeof(propertyobject),
     0,
-    0,                                      /* tp_dealloc */
+    nullptr,                                /* tp_dealloc */
     0,                                      /* tp_print */
-    0,                                      /* tp_getattr */
-    0,                                      /* tp_setattr */
-    0,                                      /* tp_compare */
-    0,                                      /* tp_repr */
-    0,                                      /* tp_as_number */
-    0,                                      /* tp_as_sequence */
-    0,                                      /* tp_as_mapping */
-    0,                                      /* tp_hash */
-    0,                                      /* tp_call */
-    0,                                      /* tp_str */
-    0,                                      /* tp_getattro */
-    0,                                      /* tp_setattro */
-    0,                                      /* tp_as_buffer */
+    nullptr,                                /* tp_getattr */
+    nullptr,                                /* tp_setattr */
+    nullptr,                                /* tp_compare */
+    nullptr,                                /* tp_repr */
+    nullptr,                                /* tp_as_number */
+    nullptr,                                /* tp_as_sequence */
+    nullptr,                                /* tp_as_mapping */
+    nullptr,                                /* tp_hash */
+    nullptr,                                /* tp_call */
+    nullptr,                                /* tp_str */
+    nullptr,                                /* tp_getattro */
+    nullptr,                                /* tp_setattro */
+    nullptr,                                /* tp_as_buffer */
     Py_TPFLAGS_DEFAULT // | Py_TPFLAGS_HAVE_GC
     | Py_TPFLAGS_BASETYPE,          /* tp_flags */
-    0,                                      /* tp_doc */
-    0,                                      /* tp_traverse */
-    0,                                      /* tp_clear */
-    0,                                      /* tp_richcompare */
+    nullptr,                                /* tp_doc */
+    nullptr,                                /* tp_traverse */
+    nullptr,                                /* tp_clear */
+    nullptr,                                /* tp_richcompare */
     0,                                      /* tp_weaklistoffset */
-    0,                                      /* tp_iter */
-    0,                                      /* tp_iternext */
-    0,                                      /* tp_methods */
-    0,                                      /* tp_members */
-    0,                                      /* tp_getset */
-    0, //&PyProperty_Type,                           /* tp_base */
-    0,                                      /* tp_dict */
+    nullptr,                                /* tp_iter */
+    nullptr,                                /* tp_iternext */
+    nullptr,                                /* tp_methods */
+    nullptr,                                /* tp_members */
+    nullptr,                                /* tp_getset */
+    nullptr, //&PyProperty_Type,            /* tp_base */
+    nullptr,                                /* tp_dict */
     static_data_descr_get,                                      /* tp_descr_get */
     static_data_descr_set,                                      /* tp_descr_set */
     0,                                      /* tp_dictoffset */
     property_init,                                      /* tp_init */
-    0,                                      /* tp_alloc */
-    0, // filled in with type_new           /* tp_new */
-    0, // filled in with __PyObject_GC_Del  /* tp_free */
-    0,                                      /* tp_is_gc */
-    0,                                      /* tp_bases */
-    0,                                      /* tp_mro */
-    0,                                      /* tp_cache */
-    0,                                      /* tp_subclasses */
-    0,                                      /* tp_weaklist */
+    nullptr,                                      /* tp_alloc */
+    nullptr, // filled in with type_new           /* tp_new */
+    nullptr, // filled in with __PyObject_GC_Del  /* tp_free */
+    nullptr,                                      /* tp_is_gc */
+    nullptr,                                      /* tp_bases */
+    nullptr,                                      /* tp_mro */
+    nullptr,                                      /* tp_cache */
+    nullptr,                                      /* tp_subclasses */
+    nullptr,                                      /* tp_weaklist */
 #if PYTHON_API_VERSION >= 1012
-    0                                       /* tp_del */
+    nullptr                                       /* tp_del */
 #endif
 };
 
@@ -207,12 +207,12 @@ namespace objects
 
   BOOST_PYTHON_DECL PyObject* static_data()
   {
-      if (static_data_object.tp_dict == 0)
+      if (static_data_object.tp_dict == nullptr)
       {
           Py_SET_TYPE(&static_data_object, &PyType_Type);
           static_data_object.tp_base = &PyProperty_Type;
           if (PyType_Ready(&static_data_object))
-              return 0;
+              return nullptr;
       }
       return upcast<PyObject>(&static_data_object);
   }
@@ -241,7 +241,7 @@ extern "C"
         
         // If we found a static data descriptor, call it directly to
         // force it to set the static data member
-        if (a != 0 && PyObject_IsInstance(a, objects::static_data()))
+        if (a != nullptr && PyObject_IsInstance(a, objects::static_data()))
             return Py_TYPE(a)->tp_descr_set(a, obj, value);
         else
             return PyType_Type.tp_setattro(obj, name, value);
@@ -253,50 +253,50 @@ static PyTypeObject class_metatype_object = {
     const_cast<char*>("Boost.Python.class"),
     PyType_Type.tp_basicsize,
     0,
-    0,                                      /* tp_dealloc */
+    nullptr,                                /* tp_dealloc */
     0,                                      /* tp_print */
-    0,                                      /* tp_getattr */
-    0,                                      /* tp_setattr */
-    0,                                      /* tp_compare */
-    0,                                      /* tp_repr */
-    0,                                      /* tp_as_number */
-    0,                                      /* tp_as_sequence */
-    0,                                      /* tp_as_mapping */
-    0,                                      /* tp_hash */
-    0,                                      /* tp_call */
-    0,                                      /* tp_str */
-    0,                                      /* tp_getattro */
+    nullptr,                                /* tp_getattr */
+    nullptr,                                /* tp_setattr */
+    nullptr,                                /* tp_compare */
+    nullptr,                                /* tp_repr */
+    nullptr,                                /* tp_as_number */
+    nullptr,                                /* tp_as_sequence */
+    nullptr,                                /* tp_as_mapping */
+    nullptr,                                /* tp_hash */
+    nullptr,                                /* tp_call */
+    nullptr,                                /* tp_str */
+    nullptr,                                /* tp_getattro */
     class_setattro,                         /* tp_setattro */
-    0,                                      /* tp_as_buffer */
+    nullptr,                                /* tp_as_buffer */
     Py_TPFLAGS_DEFAULT // | Py_TPFLAGS_HAVE_GC
     | Py_TPFLAGS_BASETYPE,          /* tp_flags */
-    0,                                      /* tp_doc */
-    0,                                      /* tp_traverse */
-    0,                                      /* tp_clear */
-    0,                                      /* tp_richcompare */
+    nullptr,                                /* tp_doc */
+    nullptr,                                /* tp_traverse */
+    nullptr,                                /* tp_clear */
+    nullptr,                                /* tp_richcompare */
     0,                                      /* tp_weaklistoffset */
-    0,                                      /* tp_iter */
-    0,                                      /* tp_iternext */
-    0,                                      /* tp_methods */
-    0,                                      /* tp_members */
-    0,                                      /* tp_getset */
-    0, //&PyType_Type,                           /* tp_base */
-    0,                                      /* tp_dict */
-    0,                                      /* tp_descr_get */
-    0,                                      /* tp_descr_set */
+    nullptr,                                /* tp_iter */
+    nullptr,                                /* tp_iternext */
+    nullptr,                                /* tp_methods */
+    nullptr,                                /* tp_members */
+    nullptr,                                /* tp_getset */
+    nullptr, //&PyType_Type,                /* tp_base */
+    nullptr,                                /* tp_dict */
+    nullptr,                                /* tp_descr_get */
+    nullptr,                                /* tp_descr_set */
     0,                                      /* tp_dictoffset */
-    0,                                      /* tp_init */
-    0,                                      /* tp_alloc */
-    0, // filled in with type_new           /* tp_new */
-    0, // filled in with __PyObject_GC_Del  /* tp_free */
+    nullptr,                                /* tp_init */
+    nullptr,                                /* tp_alloc */
+    nullptr, // filled in with type_new     /* tp_new */
+    nullptr, // filled in with __PyObject_GC_Del  /* tp_free */
     (inquiry)type_is_gc,                    /* tp_is_gc */
-    0,                                      /* tp_bases */
-    0,                                      /* tp_mro */
-    0,                                      /* tp_cache */
-    0,                                      /* tp_subclasses */
-    0,                                      /* tp_weaklist */
+    nullptr,                                /* tp_bases */
+    nullptr,                                /* tp_mro */
+    nullptr,                                /* tp_cache */
+    nullptr,                                /* tp_subclasses */
+    nullptr,                                /* tp_weaklist */
 #if PYTHON_API_VERSION >= 1012
-    0                                       /* tp_del */
+    nullptr                                 /* tp_del */
 #endif
 };
 
@@ -315,7 +315,7 @@ namespace objects
 // Get the metatype object for all extension classes.
   BOOST_PYTHON_DECL type_handle class_metatype()
   {
-      if (class_metatype_object.tp_dict == 0)
+      if (class_metatype_object.tp_dict == nullptr)
       {
           Py_SET_TYPE(&class_metatype_object, &PyType_Type);
           class_metatype_object.tp_base = &PyType_Type;
@@ -330,7 +330,7 @@ namespace objects
       {
           instance<>* kill_me = (instance<>*)inst;
 
-          for (instance_holder* p = kill_me->objects, *next; p != 0; p = next)
+          for (instance_holder* p = kill_me->objects, *next; p != nullptr; p = next)
           {
               next = p->next();
               void* q = dynamic_cast<void*>(p);
@@ -342,7 +342,7 @@ namespace objects
           // tp_itemsize > 0, so we need to manage that
           // ourselves. Accordingly, we also have to clean up the
           // weakrefs ourselves.
-          if (kill_me->weakrefs != NULL)
+          if (kill_me->weakrefs != nullptr)
             PyObject_ClearWeakRefs(inst);
 
           Py_XDECREF(kill_me->dict);
@@ -384,7 +384,7 @@ namespace objects
       static PyObject* instance_get_dict(PyObject* op, void*)
       {
           instance<>* inst = downcast<instance<> >(op);
-          if (inst->dict == 0)
+          if (inst->dict == nullptr)
               inst->dict = PyDict_New();
           return python::xincref(inst->dict);
       }
@@ -401,14 +401,14 @@ namespace objects
 
 
   static PyGetSetDef instance_getsets[] = {
-      {const_cast<char*>("__dict__"),  instance_get_dict,  instance_set_dict, NULL, 0},
-      {0, 0, 0, 0, 0}
+      {const_cast<char*>("__dict__"),  instance_get_dict,  instance_set_dict, nullptr, nullptr},
+      {nullptr, nullptr, nullptr, nullptr, nullptr}
   };
 
   
   static PyMemberDef instance_members[] = {
-      {const_cast<char*>("__weakref__"), T_OBJECT, offsetof(instance<>, weakrefs), 0, 0},
-      {0, 0, 0, 0, 0}
+      {const_cast<char*>("__weakref__"), T_OBJECT, offsetof(instance<>, weakrefs), 0, nullptr},
+      {nullptr, 0, 0, 0, nullptr}
   };
 
   static PyTypeObject class_type_object = {
@@ -418,54 +418,54 @@ namespace objects
       1,                                      /* tp_itemsize */
       instance_dealloc,                       /* tp_dealloc */
       0,                                      /* tp_print */
-      0,                                      /* tp_getattr */
-      0,                                      /* tp_setattr */
-      0,                                      /* tp_compare */
-      0,                                      /* tp_repr */
-      0,                                      /* tp_as_number */
-      0,                                      /* tp_as_sequence */
-      0,                                      /* tp_as_mapping */
-      0,                                      /* tp_hash */
-      0,                                      /* tp_call */
-      0,                                      /* tp_str */
-      0,                                      /* tp_getattro */
-      0,                                      /* tp_setattro */
-      0,                                      /* tp_as_buffer */
+      nullptr,                                /* tp_getattr */
+      nullptr,                                /* tp_setattr */
+      nullptr,                                /* tp_compare */
+      nullptr,                                /* tp_repr */
+      nullptr,                                /* tp_as_number */
+      nullptr,                                /* tp_as_sequence */
+      nullptr,                                /* tp_as_mapping */
+      nullptr,                                /* tp_hash */
+      nullptr,                                /* tp_call */
+      nullptr,                                /* tp_str */
+      nullptr,                                /* tp_getattro */
+      nullptr,                                /* tp_setattro */
+      nullptr,                                /* tp_as_buffer */
       Py_TPFLAGS_DEFAULT // | Py_TPFLAGS_HAVE_GC
       | Py_TPFLAGS_BASETYPE,          /* tp_flags */
-      0,                                      /* tp_doc */
-      0,                                      /* tp_traverse */
-      0,                                      /* tp_clear */
-      0,                                      /* tp_richcompare */
+      nullptr,                                /* tp_doc */
+      nullptr,                                /* tp_traverse */
+      nullptr,                                /* tp_clear */
+      nullptr,                                /* tp_richcompare */
       offsetof(instance<>,weakrefs),          /* tp_weaklistoffset */
-      0,                                      /* tp_iter */
-      0,                                      /* tp_iternext */
-      0,                                      /* tp_methods */
+      nullptr,                                /* tp_iter */
+      nullptr,                                /* tp_iternext */
+      nullptr,                                /* tp_methods */
       instance_members,                       /* tp_members */
       instance_getsets,                       /* tp_getset */
-      0, //&PyBaseObject_Type,                /* tp_base */
-      0,                                      /* tp_dict */
-      0,                                      /* tp_descr_get */
-      0,                                      /* tp_descr_set */
+      nullptr, //&PyBaseObject_Type,          /* tp_base */
+      nullptr,                                /* tp_dict */
+      nullptr,                                /* tp_descr_get */
+      nullptr,                                /* tp_descr_set */
       offsetof(instance<>,dict),              /* tp_dictoffset */
-      0,                                      /* tp_init */
+      nullptr,                                /* tp_init */
       PyType_GenericAlloc,                    /* tp_alloc */
       instance_new,                           /* tp_new */
-      0,                                      /* tp_free */
-      0,                                      /* tp_is_gc */
-      0,                                      /* tp_bases */
-      0,                                      /* tp_mro */
-      0,                                      /* tp_cache */
-      0,                                      /* tp_subclasses */
-      0,                                      /* tp_weaklist */
+      nullptr,                                /* tp_free */
+      nullptr,                                /* tp_is_gc */
+      nullptr,                                /* tp_bases */
+      nullptr,                                /* tp_mro */
+      nullptr,                                /* tp_cache */
+      nullptr,                                /* tp_subclasses */
+      nullptr,                                /* tp_weaklist */
 #if PYTHON_API_VERSION >= 1012
-      0                                       /* tp_del */
+      nullptr                                 /* tp_del */
 #endif
   };
 
   BOOST_PYTHON_DECL type_handle class_type()
   {
-      if (class_type_object.tp_dict == 0)
+      if (class_type_object.tp_dict == nullptr)
       {
           Py_SET_TYPE(&class_type_object, incref(class_metatype().get()));
           class_type_object.tp_base = &PyBaseObject_Type;
@@ -481,17 +481,17 @@ namespace objects
   {
       if (!Py_TYPE(Py_TYPE(inst)) ||
               !PyType_IsSubtype(Py_TYPE(Py_TYPE(inst)), &class_metatype_object))
-          return 0;
+          return nullptr;
     
       instance<>* self = reinterpret_cast<instance<>*>(inst);
 
-      for (instance_holder* match = self->objects; match != 0; match = match->next())
+      for (instance_holder* match = self->objects; match != nullptr; match = match->next())
       {
           void* const found = match->holds(type, null_shared_ptr_only);
           if (found)
               return found;
       }
-      return 0;
+      return nullptr;
   }
 
   object module_prefix()
@@ -522,7 +522,7 @@ namespace objects
         converter::registration const* p = converter::registry::query(id);
         return type_handle(
             python::borrowed(
-                python::allow_null(p ? p->m_class_object : 0))
+                python::allow_null(p ? p->m_class_object : nullptr))
             );
     }
 
@@ -532,7 +532,7 @@ namespace objects
     {
         type_handle result(query_class(id));
 
-        if (result.get() == 0)
+        if (result.get() == nullptr)
         {
             object report("extension class wrapper for base class ");
             report = report + id.name() + " has not been created yet";
@@ -579,7 +579,7 @@ namespace objects
       d["__qualname__"] = qualname(name);
 #endif
 
-      if (doc != 0)
+      if (doc != nullptr)
           d["__doc__"] = doc;
       
       object result = object(class_metatype())(name, bases, d);
@@ -628,7 +628,7 @@ namespace objects
   {
       object property(
           (python::detail::new_reference)
-          PyObject_CallFunction((PyObject*)&PyProperty_Type, const_cast<char*>("Osss"), fget.ptr(), (char*)NULL, (char*)NULL, docstr));
+          PyObject_CallFunction((PyObject*)&PyProperty_Type, const_cast<char*>("Osss"), fget.ptr(), (char*)nullptr, (char*)nullptr, docstr));
       
       this->setattr(name, property);
   }
@@ -638,7 +638,7 @@ namespace objects
   {
       object property(
           (python::detail::new_reference)
-          PyObject_CallFunction((PyObject*)&PyProperty_Type, const_cast<char*>("OOss"), fget.ptr(), fset.ptr(), (char*)NULL, docstr));
+          PyObject_CallFunction((PyObject*)&PyProperty_Type, const_cast<char*>("OOss"), fget.ptr(), fset.ptr(), (char*)nullptr, docstr));
       
       this->setattr(name, property);
   }
@@ -673,7 +673,7 @@ namespace objects
     extern "C" PyObject* no_init(PyObject*, PyObject*)
     {
         ::PyErr_SetString(::PyExc_RuntimeError, const_cast<char*>("This class cannot be instantiated from Python"));
-        return NULL;
+        return nullptr;
     }
     static ::PyMethodDef no_init_def = {
         const_cast<char*>("__init__"), no_init, METH_VARARGS,
@@ -712,7 +712,7 @@ namespace objects
             );
         
         throw_error_already_set();
-        return 0;
+        return nullptr;
     }
   }
   
@@ -763,7 +763,7 @@ void* instance_holder::allocate(PyObject* self_, std::size_t holder_offset, std:
     {
         const size_t base_allocation = sizeof(alignment_marker_t) + holder_size + alignment - 1;
         void* const base_storage = PyMem_Malloc(base_allocation);
-        if (base_storage == 0)
+        if (base_storage == nullptr)
             throw std::bad_alloc();
 
         const uintptr_t x = reinterpret_cast<uintptr_t>(base_storage) + sizeof(alignment_marker_t);

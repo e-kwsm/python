@@ -131,7 +131,7 @@ ndarray from_data_impl(void * data,
 			  const_cast<Py_intptr_t*>(&strides.front()),
 			  data,
 			  flags,
-			  NULL)));
+			  nullptr)));
     r.set_base(owner);
     return r;
 }
@@ -187,7 +187,7 @@ dtype ndarray::get_dtype() const
 
 python::object ndarray::get_base() const 
 {
-  if (get_struct()->base == NULL) return object();
+  if (get_struct()->base == nullptr) return object();
   return python::object(python::detail::borrowed_reference(get_struct()->base));
 }
 
@@ -201,7 +201,7 @@ void ndarray::set_base(object const & base)
   }
   else
   {
-    get_struct()->base = NULL;
+    get_struct()->base = nullptr;
   }
 }
 
@@ -213,7 +213,7 @@ ndarray::bitflag ndarray::get_flags() const
 ndarray ndarray::transpose() const 
 {
   return ndarray(python::detail::new_reference
-    (PyArray_Transpose(reinterpret_cast<PyArrayObject*>(this->ptr()), NULL)));
+    (PyArray_Transpose(reinterpret_cast<PyArrayObject*>(this->ptr()), nullptr)));
 }
 
 ndarray ndarray::squeeze() const 
@@ -267,13 +267,13 @@ ndarray empty(int nd, Py_intptr_t const * shape, dtype const & dt)
 ndarray array(python::object const & obj) 
 {
   return ndarray(python::detail::new_reference
-    (PyArray_FromAny(obj.ptr(), NULL, 0, 0, NPY_ARRAY_ENSUREARRAY, NULL)));
+    (PyArray_FromAny(obj.ptr(), nullptr, 0, 0, NPY_ARRAY_ENSUREARRAY, nullptr)));
 }
 
 ndarray array(python::object const & obj, dtype const & dt) 
 {
   return ndarray(python::detail::new_reference
-    (PyArray_FromAny(obj.ptr(), detail::incref_dtype(dt), 0, 0, NPY_ARRAY_ENSUREARRAY, NULL)));
+    (PyArray_FromAny(obj.ptr(), detail::incref_dtype(dt), 0, 0, NPY_ARRAY_ENSUREARRAY, nullptr)));
 }
 
 ndarray from_object(python::object const & obj, dtype const & dt, int nd_min, int nd_max, ndarray::bitflag flags)
@@ -284,7 +284,7 @@ ndarray from_object(python::object const & obj, dtype const & dt, int nd_min, in
 		     detail::incref_dtype(dt),
 		     nd_min, nd_max,
 		     requirements,
-		     NULL)));
+		     nullptr)));
 }
 
 ndarray from_object(python::object const & obj, int nd_min, int nd_max, ndarray::bitflag flags) 
@@ -292,10 +292,10 @@ ndarray from_object(python::object const & obj, int nd_min, int nd_max, ndarray:
   int requirements = detail::bitflag_to_numpy(flags);
   return ndarray(python::detail::new_reference
     (PyArray_FromAny(obj.ptr(),
-		     NULL,
+		     nullptr,
 		     nd_min, nd_max,
 		     requirements,
-		     NULL)));
+		     nullptr)));
 }
 
 }}} // namespace boost::python::numpy

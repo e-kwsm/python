@@ -21,12 +21,12 @@ namespace detail
                           this->m_self, const_cast<char*>(name))))
           )
           {
-              PyObject* borrowed_f = 0;
+              PyObject* borrowed_f = nullptr;
             
               if (
                   PyMethod_Check(m.get())
                   && PyMethod_GET_SELF(m.get()) == this->m_self
-                  && class_object->tp_dict != 0
+                  && class_object->tp_dict != nullptr
               )
               {
                   borrowed_f = ::PyDict_GetItemString(

@@ -130,7 +130,7 @@ namespace boost { namespace python { namespace objects {
             return str(none);
         }
 
-        PyTypeObject const * py_type = s.pytype_f?s.pytype_f():0;
+        PyTypeObject const * py_type = s.pytype_f?s.pytype_f():nullptr;
         if ( py_type ) {
             str name(get_qualname(py_type));
             if ( py_type->tp_flags & Py_TPFLAGS_HEAPTYPE ) {
@@ -163,7 +163,7 @@ namespace boost { namespace python { namespace objects {
         {
             if(!n)
                 s = &f.get_return_type();
-            if (s[n].basename == 0)
+            if (s[n].basename == nullptr)
             {
                 return str("...");
             }

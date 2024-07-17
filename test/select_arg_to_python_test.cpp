@@ -23,7 +23,7 @@ int result;
 #define ASSERT_SAME(T1,T2) assert_same< T1,T2 >()
 
 template <class T, class U>
-void assert_same(U* = 0, T* = 0)
+void assert_same(U* = nullptr, T* = nullptr)
 {
     BOOST_STATIC_ASSERT((boost::is_same<T,U>::value));
     

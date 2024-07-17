@@ -17,7 +17,7 @@ void *get()
 
 void *getnull()
 {
-    return 0;
+    return nullptr;
 }
 
 void use(void *a)

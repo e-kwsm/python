@@ -27,14 +27,14 @@ namespace boost { namespace python
 }} // namespace boost::python
 
 template <class T, class U>
-void assert_same(U* = 0, T* = 0)
+void assert_same(U* = 0, T* = nullptr)
 {
     BOOST_STATIC_ASSERT((boost::python::detail::is_same<T,U>::value));
     
 }
 
 template <class T, class Held, class Holder>
-void assert_holder(T* = 0, Held* = 0, Holder* = 0)
+void assert_holder(T* = nullptr, Held* = nullptr, Holder* = nullptr)
 {
     using namespace boost::python::detail;
     using namespace boost::python::objects;
@@ -44,7 +44,7 @@ void assert_holder(T* = 0, Held* = 0, Holder* = 0)
            >::holder h;
     
     assert_same<Holder>(
-        (h*)0
+        (h*)nullptr
     );
 }
 
