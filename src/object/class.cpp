@@ -38,7 +38,7 @@ namespace self_ns
 # endif 
 
 instance_holder::instance_holder()
-    : m_next(0)
+    : m_next(nullptr)
 {
 }
 
@@ -76,8 +76,8 @@ extern "C"
   // cause the init fail.
   static int property_init(PyObject *self, PyObject *args, PyObject *kwds)
   {
-      PyObject *get = NULL, *set = NULL, *del = NULL, *doc = NULL;
-      static const char *kwlist[] = {"fget", "fset", "fdel", "doc", 0};
+      PyObject *get = nullptr, *set = nullptr, *del = nullptr, *doc = nullptr;
+      static const char *kwlist[] = {"fget", "fset", "fdel", "doc", nullptr};
       propertyobject *prop = (propertyobject *)self;
 
       if (!PyArg_ParseTupleAndKeywords(args, kwds, "|OOOO:property",
@@ -85,11 +85,11 @@ extern "C"
           return -1;
 
       if (get == Py_None)
-          get = NULL;
+          get = nullptr;
       if (set == Py_None)
-          set = NULL;
+          set = nullptr;
       if (del == Py_None)
-          del = NULL;
+          del = nullptr;
 
       Py_XINCREF(get);
       Py_XINCREF(set);
@@ -120,22 +120,22 @@ extern "C"
       propertyobject *gs = (propertyobject *)self;
       PyObject *func, *res;
 
-      if (value == NULL)
+      if (value == nullptr)
           func = gs->prop_del;
       else
           func = gs->prop_set;
-      if (func == NULL) {
+      if (func == nullptr) {
           PyErr_SetString(PyExc_AttributeError,
-                          value == NULL ?
+                          value == nullptr ?
                           "can't delete attribute" :
                           "can't set attribute");
           return -1;
       }
-      if (value == NULL)
+      if (value == nullptr)
           res = PyObject_CallFunction(func, const_cast<char*>("()"));
       else
           res = PyObject_CallFunction(func, const_cast<char*>("(O)"), value);
-      if (res == NULL)
+      if (res == nullptr)
           return -1;
       Py_DECREF(res);
       return 0;
@@ -147,50 +147,50 @@ static PyTypeObject static_data_object = {
     const_cast<char*>("Boost.Python.StaticProperty"),
     sizeof(propertyobject),
     0,
-    0,                                      /* tp_dealloc */
+    nullptr,                                /* tp_dealloc */
     0,                                      /* tp_print */
-    0,                                      /* tp_getattr */
-    0,                                      /* tp_setattr */
-    0,                                      /* tp_compare */
-    0,                                      /* tp_repr */
-    0,                                      /* tp_as_number */
-    0,                                      /* tp_as_sequence */
-    0,                                      /* tp_as_mapping */
-    0,                                      /* tp_hash */
-    0,                                      /* tp_call */
-    0,                                      /* tp_str */
-    0,                                      /* tp_getattro */
-    0,                                      /* tp_setattro */
-    0,                                      /* tp_as_buffer */
+    nullptr,                                /* tp_getattr */
+    nullptr,                                /* tp_setattr */
+    nullptr,                                /* tp_compare */
+    nullptr,                                /* tp_repr */
+    nullptr,                                /* tp_as_number */
+    nullptr,                                /* tp_as_sequence */
+    nullptr,                                /* tp_as_mapping */
+    nullptr,                                /* tp_hash */
+    nullptr,                                /* tp_call */
+    nullptr,                                /* tp_str */
+    nullptr,                                /* tp_getattro */
+    nullptr,                                /* tp_setattro */
+    nullptr,                                /* tp_as_buffer */
     Py_TPFLAGS_DEFAULT // | Py_TPFLAGS_HAVE_GC
     | Py_TPFLAGS_BASETYPE,          /* tp_flags */
-    0,                                      /* tp_doc */
-    0,                                      /* tp_traverse */
-    0,                                      /* tp_clear */
-    0,                                      /* tp_richcompare */
+    nullptr,                                /* tp_doc */
+    nullptr,                                /* tp_traverse */
+    nullptr,                                /* tp_clear */
+    nullptr,                                /* tp_richcompare */
     0,                                      /* tp_weaklistoffset */
-    0,                                      /* tp_iter */
-    0,                                      /* tp_iternext */
-    0,                                      /* tp_methods */
-    0,                                      /* tp_members */
-    0,                                      /* tp_getset */
-    0, //&PyProperty_Type,                           /* tp_base */
-    0,                                      /* tp_dict */
+    nullptr,                                /* tp_iter */
+    nullptr,                                /* tp_iternext */
+    nullptr,                                /* tp_methods */
+    nullptr,                                /* tp_members */
+    nullptr,                                /* tp_getset */
+    nullptr, //&PyProperty_Type,            /* tp_base */
+    nullptr,                                /* tp_dict */
     static_data_descr_get,                                      /* tp_descr_get */
     static_data_descr_set,                                      /* tp_descr_set */
     0,                                      /* tp_dictoffset */
     property_init,                                      /* tp_init */
-    0,                                      /* tp_alloc */
-    0, // filled in with type_new           /* tp_new */
-    0, // filled in with __PyObject_GC_Del  /* tp_free */
-    0,                                      /* tp_is_gc */
-    0,                                      /* tp_bases */
-    0,                                      /* tp_mro */
-    0,                                      /* tp_cache */
-    0,                                      /* tp_subclasses */
-    0,                                      /* tp_weaklist */
+    nullptr,                                      /* tp_alloc */
+    nullptr, // filled in with type_new           /* tp_new */
+    nullptr, // filled in with __PyObject_GC_Del  /* tp_free */
+    nullptr,                                      /* tp_is_gc */
+    nullptr,                                      /* tp_bases */
+    nullptr,                                      /* tp_mro */
+    nullptr,                                      /* tp_cache */
+    nullptr,                                      /* tp_subclasses */
+    nullptr,                                      /* tp_weaklist */
 #if PYTHON_API_VERSION >= 1012
-    0                                       /* tp_del */
+    nullptr                                       /* tp_del */
 #endif
 };
 
@@ -207,12 +207,12 @@ namespace objects
 
   BOOST_PYTHON_DECL PyObject* static_data()
   {
-      if (static_data_object.tp_dict == 0)
+      if (static_data_object.tp_dict == nullptr)
       {
           Py_SET_TYPE(&static_data_object, &PyType_Type);
           static_data_object.tp_base = &PyProperty_Type;
           if (PyType_Ready(&static_data_object))
-              return 0;
+              return nullptr;
       }
       return upcast<PyObject>(&static_data_object);
   }
@@ -241,7 +241,7 @@ extern "C"
         
         // If we found a static data descriptor, call it directly to
         // force it to set the static data member
-        if (a != 0 && PyObject_IsInstance(a, objects::static_data()))
+        if (a != nullptr && PyObject_IsInstance(a, objects::static_data()))
             return Py_TYPE(a)->tp_descr_set(a, obj, value);
         else
             return PyType_Type.tp_setattro(obj, name, value);

@@ -65,7 +65,7 @@ function::function(
     : m_fn(implementation)
     , m_nkeyword_values(0)
 {
-    if (names_and_defaults != 0)
+    if (names_and_defaults != nullptr)
     {
         unsigned int max_arity = m_fn.max_arity();
         unsigned int keyword_offset
@@ -105,7 +105,7 @@ function::function(
     }
     
     PyObject* p = this;
-    if (Py_TYPE(&function_type) == 0)
+    if (Py_TYPE(&function_type) == nullptr)
     {
         Py_SET_TYPE(&function_type, &PyType_Type);
         ::PyType_Ready(&function_type);
@@ -182,7 +182,7 @@ PyObject* function::call(PyObject* args, PyObject* keywords) const
                             // argument position
                             PyObject* value = n_keyword_actual
                                 ? PyDict_GetItem(keywords, PyTuple_GET_ITEM(kv, 0))
-                                : 0;
+                                : nullptr;
 
                             if (!value)
                             {
@@ -218,7 +218,7 @@ PyObject* function::call(PyObject* args, PyObject* keywords) const
             
             // Call the function.  Pass keywords in case it's a
             // function accepting any number of keywords
-            PyObject* result = inner_args ? f->m_fn(inner_args.get(), keywords) : 0;
+            PyObject* result = inner_args ? f->m_fn(inner_args.get(), keywords) : nullptr;
             
             // If the result is NULL but no error was set, m_fn failed
             // the argument-matching test.
@@ -226,7 +226,7 @@ PyObject* function::call(PyObject* args, PyObject* keywords) const
             // This assumes that all other error-reporters are
             // well-behaved and never return NULL to python without
             // setting an error.
-            if (result != 0 || PyErr_Occurred())
+            if (result != nullptr || PyErr_Occurred())
                 return result;
         }
         f = f->m_overloads.get();

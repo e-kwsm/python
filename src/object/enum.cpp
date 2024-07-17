@@ -27,8 +27,8 @@ struct enum_object
 };
 
 static PyMemberDef enum_members[] = {
-    {const_cast<char*>("name"), T_OBJECT_EX, offsetof(enum_object,name),READONLY, 0},
-    {0, 0, 0, 0, 0}
+    {const_cast<char*>("name"), T_OBJECT_EX, offsetof(enum_object, name), READONLY, nullptr},
+    {nullptr, 0, 0, 0, nullptr}
 };
 
 
@@ -60,8 +60,8 @@ extern "C"
         else
         {
             PyObject* name = self->name;
-            if (name == 0)
-                return 0;
+            if (name == nullptr)
+                return nullptr;
 
             return
 #if PY_VERSION_HEX >= 0x03030000
