@@ -84,7 +84,7 @@ template dtype get_complex_dtype< 2 * NPY_BITSOF_LONGDOUBLE >();
 
 python::detail::new_reference dtype::convert(object const & arg, bool align)
 {
-  PyArray_Descr* obj=NULL;
+  PyArray_Descr* obj=nullptr;
   if (align)
   {
     if (PyArray_DescrAlignConverter(arg.ptr(), &obj) < 0)
@@ -145,7 +145,7 @@ public:
 	return obj;
       }
     }
-    return 0;
+    return nullptr;
   }
 
   static void convert(PyObject * obj, pyconv::rvalue_from_python_stage1_data* data)
