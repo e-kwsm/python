@@ -18,7 +18,7 @@ BOOST_PYTHON_DECL object getattr(object const& target, object const& key)
 BOOST_PYTHON_DECL object getattr(object const& target, object const& key, object const& default_)
 {
     PyObject* result = PyObject_GetAttr(target.ptr(), key.ptr());
-    if (result == NULL && PyErr_ExceptionMatches(PyExc_AttributeError))
+    if (result == nullptr && PyErr_ExceptionMatches(PyExc_AttributeError))
     {
         PyErr_Clear();
         return default_;
@@ -49,7 +49,7 @@ BOOST_PYTHON_DECL object getattr(object const& target, char const* key)
 BOOST_PYTHON_DECL object getattr(object const& target, char const* key, object const& default_)
 {
     PyObject* result = PyObject_GetAttrString(target.ptr(), const_cast<char*>(key));
-    if (result == NULL && PyErr_ExceptionMatches(PyExc_AttributeError))
+    if (result == nullptr && PyErr_ExceptionMatches(PyExc_AttributeError))
     {
         PyErr_Clear();
         return default_;
@@ -118,14 +118,14 @@ namespace // slicing code copied directly out of the Python implementation
       else 
 #endif
       {
-          PyObject *slice = PySlice_New(v, w, NULL);
-          if (slice != NULL) {
+          PyObject *slice = PySlice_New(v, w, nullptr);
+          if (slice != nullptr) {
               PyObject *res = PyObject_GetItem(u, slice);
               Py_DECREF(slice);
               return res;
           }
           else
-              return NULL;
+              return nullptr;
       }
   }
 
@@ -151,10 +151,10 @@ namespace // slicing code copied directly out of the Python implementation
       else 
 #endif
       {
-          PyObject *slice = PySlice_New(v, w, NULL);
-          if (slice != NULL) {
+          PyObject *slice = PySlice_New(v, w, nullptr);
+          if (slice != nullptr) {
               int res;
-              if (x != NULL)
+              if (x != nullptr)
                   res = PyObject_SetItem(u, slice, x);
               else
                   res = PyObject_DelItem(u, slice);
@@ -187,7 +187,7 @@ BOOST_PYTHON_DECL void setslice(object const& target, handle<> const& begin, han
 BOOST_PYTHON_DECL void delslice(object const& target, handle<> const& begin, handle<> const& end)
 {
     if (assign_slice(
-            target.ptr(), begin.get(), end.get(), 0) == -1
+            target.ptr(), begin.get(), end.get(), nullptr) == -1
         )
     {
         throw_error_already_set();

@@ -78,9 +78,9 @@ bool exception_handler::operator()(function0<void> const& f) const
 
 exception_handler::exception_handler(handler_function const& impl)
     : m_impl(impl)
-    , m_next(0)
+    , m_next(nullptr)
 {
-    if (chain != 0)
+    if (chain != nullptr)
         tail->m_next = this;
     else
         chain = this;
