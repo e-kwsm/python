@@ -62,7 +62,7 @@ struct A : Base
 
 struct B
 {
-    B() : x(0) {}
+    B() : x(nullptr) {}
     B(A* x_) : x(x_) {}
 
     inner const* adopt(A* _x) { this->x = _x; return &_x->get_inner(); }
