@@ -163,7 +163,7 @@ namespace boost { namespace python { namespace objects {
         {
             if(!n)
                 s = &f.get_return_type();
-            if (s[n].basename == 0)
+            if (s[n].basename == nullptr)
             {
                 return str("...");
             }
