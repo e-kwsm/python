@@ -427,7 +427,7 @@ object const& function::add_doc(object const& attribute, char const* doc)
     {
         _doc += str(const_cast<const char*>(detail::py_signature_tag));
     }
-    if (doc != 0 && docstring_options::show_user_defined_)
+    if (doc != nullptr && docstring_options::show_user_defined_)
         _doc += doc;
 
     if (docstring_options::show_cpp_signatures_)
