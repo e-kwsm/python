@@ -18,7 +18,7 @@ struct as_to_python_function
     // the first overload ensures it isn't used in case T is a
     // reference.
     template <class U>
-    static void convert_function_must_take_value_or_const_reference(U(*)(T), int, T* = 0) {}
+    static void convert_function_must_take_value_or_const_reference(U(*)(T), int, T* = nullptr) {}
     template <class U>
     static void convert_function_must_take_value_or_const_reference(U(*)(T const&), long ...) {}
         
