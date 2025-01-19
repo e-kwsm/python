@@ -43,8 +43,7 @@ namespace boost { namespace python {
 namespace boost { namespace python { namespace objects { 
 
 py_function_impl_base::~py_function_impl_base()
-{
-}
+= default;
 
 unsigned py_function_impl_base::max_arity() const
 {
@@ -117,8 +116,7 @@ function::function(
 }
 
 function::~function()
-{
-}
+= default;
 
 PyObject* function::call(PyObject* args, PyObject* keywords) const
 {

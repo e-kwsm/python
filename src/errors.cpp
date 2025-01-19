@@ -13,7 +13,7 @@
 
 namespace boost { namespace python {
 
-error_already_set::~error_already_set() {}
+error_already_set::~error_already_set() = default;
 
 // IMPORTANT: this function may only be called from within a catch block!
 BOOST_PYTHON_DECL bool handle_exception_impl(function0<void> f)
