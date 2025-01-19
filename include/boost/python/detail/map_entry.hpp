@@ -12,7 +12,7 @@ namespace boost { namespace python { namespace detail {
 template <class Key, class Value>
 struct map_entry
 {
-    map_entry() {}
+    map_entry() = default;
     map_entry(Key k) : key(k), value() {}
     map_entry(Key k, Value v) : key(k), value(v) {}
     

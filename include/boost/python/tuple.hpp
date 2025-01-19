@@ -33,7 +33,7 @@ class tuple : public detail::tuple_base
 {
     typedef detail::tuple_base base;
  public:
-    tuple() {}
+    tuple() = default;
 
     template <class T>
     explicit tuple(T const& sequence)

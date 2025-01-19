@@ -145,7 +145,7 @@ class str : public detail::str_base
 {
     typedef detail::str_base base;
  public:
-    str() {} // new str
+    str() = default; // new str
     
     str(const char* s) : base(s) {} // new str
     

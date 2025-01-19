@@ -71,7 +71,7 @@ BOOST_PYTHON_FUNCTION_OVERLOADS(foo_stubs, foo, 1, 4)
 ///////////////////////////////////////////////////////////////////////////////
 struct Y {
 
-    Y() {}
+    Y() = default;
 
     object
     get_state() const
@@ -85,7 +85,7 @@ struct Y {
 
 struct X {
 
-    X() {}
+    X() = default;
 
     X(int a, char b = 'D', std::string c = "constructor", double d = 0.0)
     : state(format % bpl::make_tuple(a, b, c, d))

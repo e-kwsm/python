@@ -12,7 +12,7 @@ typedef shared_ptr<Product> ProductPtr;
 
 struct Creator
 {
-   virtual ~Creator() {}
+   virtual ~Creator() = default;
    virtual ProductPtr create() = 0;
 };
 

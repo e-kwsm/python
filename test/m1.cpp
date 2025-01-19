@@ -228,7 +228,7 @@ simple const& g(simple const& x)
 struct A
 {
     A() : x(0) {}
-    virtual ~A() {}
+    virtual ~A() = default;
     char const* name() { return "A"; }
     int x;
 };
@@ -244,7 +244,7 @@ struct C : A
 {
     C() : x(2) {}
     char const* name() { return "C"; }
-    virtual ~C() {}
+    virtual ~C() = default;
     int x;
 };
 

@@ -22,7 +22,7 @@ struct Callback
 
 struct P
 {
-    virtual ~P(){}
+    virtual ~P() = default;
     virtual std::string f() = 0;
     std::string g() { return "P::g()"; }
 };
@@ -44,7 +44,7 @@ struct Q : virtual P
 
 struct A
 {
-    virtual ~A(){}
+    virtual ~A() = default;
     virtual std::string f() { return "A::f()"; }
 };
 

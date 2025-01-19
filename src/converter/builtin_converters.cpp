@@ -28,7 +28,7 @@ shared_ptr_deleter::shared_ptr_deleter(handle<> owner)
     : owner(owner)
 {}
 
-shared_ptr_deleter::~shared_ptr_deleter() {}
+shared_ptr_deleter::~shared_ptr_deleter() = default;
 
 void shared_ptr_deleter::operator()(void const*)
 {

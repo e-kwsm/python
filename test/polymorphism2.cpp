@@ -25,7 +25,7 @@ using namespace boost::python;
 
 struct P
 {
-    virtual ~P(){}
+    virtual ~P() = default;
     virtual char const* f() = 0;
     char const* g() { return "P::g()"; }
 };
@@ -49,7 +49,7 @@ struct Q : virtual P
 
 struct A
 {
-    virtual ~A(){}
+    virtual ~A() = default;
     virtual char const* f() { return "A::f()"; }
 };
 

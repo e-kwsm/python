@@ -42,9 +42,7 @@ instance_holder::instance_holder()
 {
 }
 
-instance_holder::~instance_holder()
-{
-}
+instance_holder::~instance_holder() = default;
 
 extern "C"
 {

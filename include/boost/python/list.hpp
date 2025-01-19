@@ -58,7 +58,7 @@ class list : public detail::list_base
 {
     typedef detail::list_base base;
  public:
-    list() {} // new list
+    list() = default; // new list
 
     template <class T>
     explicit list(T const& sequence)

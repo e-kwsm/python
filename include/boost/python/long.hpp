@@ -33,7 +33,7 @@ class long_ : public detail::long_base
 {
     typedef detail::long_base base;
  public:
-    long_() {} // new long_
+    long_() = default; // new long_
 
     template <class T>
     explicit long_(T const& rhs)

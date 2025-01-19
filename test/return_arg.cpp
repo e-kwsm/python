@@ -30,7 +30,7 @@ struct Widget
 
 struct Label : Widget
 {
-    Label() {}
+    Label() = default;
 
     std::string  get_label() const
     {

@@ -86,7 +86,7 @@ class dict : public detail::dict_base
     // dict(mapping) -> new dictionary initialized from a mapping object's
     //     (key, value) pairs.
     // dict(seq) -> new dictionary initialized as if via:
-    dict() {}   // new dict
+    dict() = default;   // new dict
 
     template <class T>
     explicit dict(T const& data)

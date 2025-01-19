@@ -3,7 +3,7 @@
 
 struct vector
 {
-    virtual ~vector() {}
+    virtual ~vector() = default;
     
     vector operator+( const vector& ) const
     { return vector(); }
@@ -24,7 +24,7 @@ struct vector_wrapper
   : vector, wrapper< vector >
 {
     vector_wrapper(vector const&) {}
-    vector_wrapper() {}
+    vector_wrapper() = default;
 };
 
 BOOST_PYTHON_MODULE( operators_wrapper_ext )

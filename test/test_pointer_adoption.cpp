@@ -31,7 +31,7 @@ struct inner
 
 struct Base
 {
-    virtual ~Base() {}
+    virtual ~Base() = default;
 };
 
 struct A : Base

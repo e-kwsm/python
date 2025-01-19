@@ -10,7 +10,7 @@ using namespace boost::python;
 class Abstract
 {
 public:   
-    virtual ~Abstract() {}; // silence compiler warningsa
+    virtual ~Abstract() = default; // silence compiler warnings
     virtual std::string    f() =0;
 };
 
@@ -25,7 +25,7 @@ typedef std::vector<Abstract*>   ListOfObjects;
 class DoesSomething
 {
 public:
-    DoesSomething()    {}
+    DoesSomething() = default;
    
     ListOfObjects   returnList()    
     {
