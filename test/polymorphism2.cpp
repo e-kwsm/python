@@ -32,7 +32,7 @@ struct P
 
 struct PCallback : P, wrapper<P>
 {
-    char const* f()
+    char const* f() override
     {
 #if BOOST_WORKAROUND(BOOST_MSVC, <= 1300)
         return call<char const*>(this->get_override("f").ptr());
@@ -44,7 +44,7 @@ struct PCallback : P, wrapper<P>
 
 struct Q : virtual P
 {
-    char const* f() { return "Q::f()"; } 
+    char const* f() override { return "Q::f()"; }
 };
 
 struct A
@@ -55,7 +55,7 @@ struct A
 
 struct ACallback :  A, wrapper<A>
 {
-    char const* f()
+    char const* f() override
     {
         if (override f = this->get_override("f"))
 #if BOOST_WORKAROUND(BOOST_MSVC, <= 1300)
@@ -72,23 +72,23 @@ struct ACallback :  A, wrapper<A>
 
 struct B : A
 {
-    virtual char const* f() { return "B::f()"; } 
+    char const* f() override { return "B::f()"; }
 };
 
 struct C : A
 {
-    virtual char const* f() { return "C::f()"; }
+    char const* f() override { return "C::f()"; }
 };
 
 struct D : A
 {
-    virtual char const* f() { return "D::f()"; }
+    char const* f() override { return "D::f()"; }
     char const* g() { return "D::g()"; }
 };
 
 struct DCallback :  D,  wrapper<D>
 {
-    char const* f()
+    char const* f() override
     {
         if (override f = this->get_override("f"))
 #if BOOST_WORKAROUND(BOOST_MSVC, <= 1300)

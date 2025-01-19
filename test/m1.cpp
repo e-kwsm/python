@@ -244,7 +244,7 @@ struct C : A
 {
     C() : x(2) {}
     char const* name() { return "C"; }
-    virtual ~C() {}
+    ~C() override {}
     int x;
 };
 

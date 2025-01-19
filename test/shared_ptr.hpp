@@ -96,7 +96,7 @@ struct ZWrap : Z
         : Z(x), m_self(self) {}
 
     
-    virtual int v() { return call_method<int>(m_self, "v"); }
+    int v() override { return call_method<int>(m_self, "v"); }
     int default_v() { return Z::v(); }
     
 
@@ -128,7 +128,7 @@ shared_ptr<Y> factory(int n)
 
     struct B: A
     {
-        int f() { return 1; }
+        int f() override { return 1; }
     };
 
     shared_ptr<A> New(bool make)
@@ -141,7 +141,7 @@ shared_ptr<Y> factory(int n)
         A_Wrapper(PyObject* self_):
             A(), self(self_) {}
 
-        int f() {
+        int f() override {
             return call_method< int >(self, "f");
         }
 

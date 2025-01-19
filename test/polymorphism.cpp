@@ -31,7 +31,7 @@ struct PCallback : P, Callback
 {
     PCallback (PyObject* self) : Callback(self) {}
     
-    std::string f()
+    std::string f() override
     {
         return call_method<std::string>(mSelf, "f");
     }
@@ -39,7 +39,7 @@ struct PCallback : P, Callback
 
 struct Q : virtual P
 {
-    std::string f() { return "Q::f()"; } 
+    std::string f() override { return "Q::f()"; }
 };
 
 struct A
@@ -53,7 +53,7 @@ struct ACallback :  A,  Callback
     ACallback (PyObject* self) : Callback(self) {}
     
     
-    std::string f()
+    std::string f() override
     {
         return call_method<std::string>(mSelf, "f");
     }
@@ -66,17 +66,17 @@ struct ACallback :  A,  Callback
 
 struct B : A
 {
-    virtual std::string f() { return "B::f()"; } 
+    std::string f() override { return "B::f()"; }
 };
 
 struct C : A
 {
-    virtual std::string f() { return "C::f()"; }
+    std::string f() override { return "C::f()"; }
 };
 
 struct D : A
 {
-    virtual std::string f() { return "D::f()"; }
+    std::string f() override { return "D::f()"; }
     std::string g() { return "D::g()"; }
 };
 
@@ -84,7 +84,7 @@ struct DCallback :  D,  Callback
 {
     DCallback (PyObject* self) : Callback(self) {}
      
-    std::string f()
+    std::string f() override
     {
         return call_method<std::string>(mSelf, "f");
     }

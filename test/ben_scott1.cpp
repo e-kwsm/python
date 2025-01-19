@@ -33,7 +33,7 @@ private:
 struct CreatorWrap : public Creator
 {
    CreatorWrap(PyObject* self) : mSelf(self) {}
-   ProductPtr create() { return call_method<ProductPtr>(mSelf, "create"); }
+   ProductPtr create() override { return call_method<ProductPtr>(mSelf, "create"); }
    PyObject* mSelf;
 };
 

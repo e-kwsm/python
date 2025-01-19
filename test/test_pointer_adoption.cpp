@@ -42,7 +42,7 @@ struct A : Base
         ++a_instances;
     }
 
-    ~A()
+    ~A() override
     {
         --a_instances;
     }

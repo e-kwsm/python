@@ -60,12 +60,12 @@ struct abstract_callback : abstract
         : abstract(x), self(p)
     {}
 
-    int f(Y const& y)
+    int f(Y const& y) override
     {
         return call_method<int>(self, "f", boost::ref(y));
     }
 
-    abstract& g(Y const& y)
+    abstract& g(Y const& y) override
     {
         return call_method<abstract&>(self, "g", boost::ref(y));
     }
@@ -83,7 +83,7 @@ struct concrete_callback : concrete
         : concrete(x), self(p)
     {}
 
-    int f(Y const& y)
+    int f(Y const& y) override
     {
         return call_method<int>(self, "f", boost::ref(y));
     }

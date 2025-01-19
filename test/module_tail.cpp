@@ -37,9 +37,9 @@ struct test_failure : std::exception
       : msg(file + boost::python::str(":%s:") % line + ": Boost.Python assertion failure: " + expr)
     {}
 
-    ~test_failure() throw() {}
+    ~test_failure() throw() override {}
     
-    char const* what() const throw()
+    char const* what() const throw() override
     {
         return boost::python::extract<char const*>(msg)();
     }

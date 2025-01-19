@@ -17,7 +17,7 @@ public:
 class Concrete1 : public Abstract
 {
 public:   
-    virtual std::string    f()    { return "harru"; }
+    std::string f() override { return "harru"; }
 };
 
 typedef std::vector<Abstract*>   ListOfObjects;
