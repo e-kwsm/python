@@ -42,13 +42,13 @@ BOOST_INSTALL_PROPERTY(edge, cast);
 
 namespace
 {
-  typedef void*(*cast_function)(void*);
+  using cast_function = void*(*)(void*);
   
   //
   // Here we put together the low-level data structures of the
   // casting graph representation.
   //
-  typedef python::type_info class_id;
+  using class_id = python::type_info;
 
   // represents a graph of available casts
   
@@ -56,7 +56,7 @@ namespace
   struct cast_graph
       :
 #else
-        typedef
+        using cast_graph =
 #endif 
         adjacency_list<vecS,vecS, bidirectionalS, no_property
 
@@ -69,18 +69,18 @@ namespace
 #if 0
   {};
 #else
-  cast_graph;
+  ;
 #endif 
 
-  typedef cast_graph::vertex_descriptor vertex_t;
-  typedef cast_graph::edge_descriptor edge_t;
+  using vertex_t = cast_graph::vertex_descriptor;
+  using edge_t = cast_graph::edge_descriptor;
   
   struct smart_graph
   {
-      typedef std::vector<std::size_t>::const_iterator node_distance_map;
+      using node_distance_map = std::vector<std::size_t>::const_iterator;
       
-      typedef std::pair<cast_graph::out_edge_iterator
-                        , cast_graph::out_edge_iterator> out_edges_t;
+      using out_edges_t = std::pair<cast_graph::out_edge_iterator
+                        , cast_graph::out_edge_iterator>;
       
       // Return a map of the distances from any node to the given
       // target node
@@ -99,7 +99,7 @@ namespace
           // this node hasn't been used as a target yet
           if (to_target[target] != 0)
           {
-              typedef reverse_graph<cast_graph> reverse_cast_graph;
+              using reverse_cast_graph = reverse_graph<cast_graph>;
               reverse_cast_graph reverse_topology(m_topology);
               
               to_target[target] = 0;
@@ -152,16 +152,15 @@ namespace
   // Our index of class types
   //
   using boost::python::objects::dynamic_id_function;
-  typedef tuples::tuple<
+  using index_entry_interface = tuples::tuple<
       class_id               // static type
       , vertex_t             // corresponding vertex 
       , dynamic_id_function  // dynamic_id if polymorphic, or 0
-      >
-  index_entry_interface;
-  typedef index_entry_interface::inherited index_entry;
+      >;
+  using index_entry = index_entry_interface::inherited;
   enum { ksrc_static_t, kvertex, kdynamic_id };
   
-  typedef std::vector<index_entry> type_index_t;
+  using type_index_t = std::vector<index_entry>;
 
   
   type_index_t& type_index()
@@ -173,7 +172,7 @@ namespace
   template <class Tuple>
   struct select1st
   {
-      typedef typename tuples::element<0, Tuple>::type result_type;
+      using result_type = typename tuples::element<0, Tuple>::type;
       
       result_type const& operator()(Tuple const& x) const
       {
@@ -185,7 +184,7 @@ namespace
   inline type_index_t::iterator type_position(class_id type)
   {
       using namespace boost::placeholders;
-      typedef index_entry entry;
+      using entry = index_entry;
       
       return std::lower_bound(
           type_index().begin(), type_index().end()
@@ -220,8 +219,7 @@ namespace
   }
 
   // Map a two types to a vertex in the graph, inserting if necessary
-  typedef std::pair<type_index_t::iterator, type_index_t::iterator>
-        type_index_iterator_pair;
+  using type_index_iterator_pair = std::pair<type_index_t::iterator, type_index_t::iterator>;
   
   inline type_index_iterator_pair
   demand_types(class_id t1, class_id t2)
@@ -296,11 +294,11 @@ namespace
       if (d[src] == (std::numeric_limits<std::size_t>::max)())
           return 0;
 
-      typedef property_map<cast_graph,edge_cast_t>::const_type cast_map;
+      using cast_map = property_map<cast_graph, edge_cast_t>::const_type;
       cast_map casts = get(edge_cast, g.topology());
       
-      typedef std::pair<vertex_t,void*> search_state;
-      typedef std::vector<search_state> visited_t;
+      using search_state = std::pair<vertex_t, void*>;
+      using visited_t = std::vector<search_state>;
       visited_t visited;
       std::priority_queue<q_elt> q;
       
@@ -350,12 +348,12 @@ namespace
 
   struct cache_element
   {
-      typedef tuples::tuple<
+      using key_type = tuples::tuple<
           class_id              // source static type
           , class_id            // target type
           , std::ptrdiff_t      // offset within source object
           , class_id            // source dynamic type
-          >::inherited key_type;
+          >::inherited;
 
       cache_element(key_type const& k)
           : key(k)
@@ -380,7 +378,7 @@ namespace
   };
   
   enum { kdst_t = ksrc_static_t + 1, koffset, ksrc_dynamic_t };
-  typedef std::vector<cache_element> cache_t;
+  using cache_t = std::vector<cache_element>;
 
   cache_t& cache()
   {

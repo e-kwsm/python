@@ -109,9 +109,9 @@ namespace detail
 {
   BOOST_PYTHON_DECL char const* gcc_demangle(char const* mangled)
   {
-      typedef std::vector<
+      using mangling_map = std::vector<
           std::pair<char const*, char const*>
-      > mangling_map;
+      >;
       
       static mangling_map demangler;
       mangling_map::iterator p

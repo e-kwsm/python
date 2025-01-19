@@ -111,9 +111,9 @@ registration::~registration()
 
 namespace // <unnamed>
 {
-  typedef registration entry;
+  using entry = registration;
   
-  typedef std::set<entry> registry_t;
+  using registry_t = std::set<entry>;
   
 #ifndef BOOST_PYTHON_CONVERTER_REGISTRY_APPLE_MACH_WORKAROUND
   registry_t& entries()

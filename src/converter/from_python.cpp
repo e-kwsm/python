@@ -140,7 +140,7 @@ namespace
 {
   // Prevent looping in implicit conversions. This could/should be
   // much more efficient, but will work for now.
-  typedef std::vector<rvalue_from_python_chain const*> visited_t;
+  using visited_t = std::vector<const rvalue_from_python_chain*>;
   static visited_t visited;
 
   inline bool visit(rvalue_from_python_chain const* chain)

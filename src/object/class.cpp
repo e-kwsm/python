@@ -62,14 +62,14 @@ extern "C"
 
   // This is also copied from the Python sources.  We can't implement
   // static_data as a subclass property effectively without it.
-  typedef struct {
+  struct propertyobject{
       PyObject_HEAD
       PyObject *prop_get;
       PyObject *prop_set;
       PyObject *prop_del;
       PyObject *prop_doc;
       int getter_doc;
-  } propertyobject;
+  };
 
   // Copied from Python source and removed the part for setting docstring,
   // since we don't have a setter for __doc__ and trying to set it will
@@ -736,7 +736,7 @@ namespace objects
 } // namespace objects
 
 
-typedef unsigned int alignment_marker_t;
+using alignment_marker_t = unsigned int;
 
 void* instance_holder::allocate(PyObject* self_, std::size_t holder_offset, std::size_t holder_size, std::size_t alignment)
 {
