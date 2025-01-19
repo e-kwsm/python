@@ -557,7 +557,7 @@ This message is triggered by code like the following:
   class FXThread
   {
   public:
-    bool setAutoDelete(bool doso) throw();
+    bool setAutoDelete(bool doso) noexcept;
   };
 
   void Export_FXThread()
@@ -567,7 +567,7 @@ This message is triggered by code like the following:
     ;
   }
 ``
-The bug is related to the `throw()` modifier.
+The bug is related to the `noexcept` modifier.
 As a workaround cast off the modifier. E.g.:
 ``
    .def("setAutoDelete", (bool (FXThread::*)(bool)) &FXThread::setAutoDelete)

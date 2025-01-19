@@ -302,7 +302,7 @@ static PyTypeObject class_metatype_object = {
 
 // Install the instance data for a C++ object into a Python instance
 // object.
-void instance_holder::install(PyObject* self) throw()
+void instance_holder::install(PyObject* self) noexcept
 {
     assert(PyType_IsSubtype(Py_TYPE(Py_TYPE(self)), &class_metatype_object));
     m_next = ((objects::instance<>*)self)->objects;
@@ -779,7 +779,7 @@ void* instance_holder::allocate(PyObject* self_, std::size_t holder_offset, std:
     }
 }
 
-void instance_holder::deallocate(PyObject* self_, void* storage) throw()
+void instance_holder::deallocate(PyObject* self_, void* storage) noexcept
 {
     assert(PyType_IsSubtype(Py_TYPE(Py_TYPE(self_)), &class_metatype_object));
     objects::instance<>* self = (objects::instance<>*)self_;

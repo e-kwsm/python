@@ -14,7 +14,7 @@ namespace boost { namespace python
       virtual ~instance_holder();
 
       // instance_holder modifiers
-      void install(PyObject* inst) throw();
+      void install(PyObject* inst) noexcept;
 
       // instance_holder observers
       virtual void* holds(type_info) = 0;
@@ -28,7 +28,7 @@ namespace boost { namespace python
 ]
 [endsect]
 [section Class `intance_holder` modifiers]
-``void install(PyObject* inst) throw();``
+``void install(PyObject* inst) noexcept;``
 [variablelist
 [[Requires][`inst` is a Python instance of a wrapped C++ class type, or is a type derived from a wrapped C++ class type. ]]
 [[Effects][installs the new instance at the head of the Python object's chain of held instances. ]]
