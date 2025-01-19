@@ -13,8 +13,8 @@ namespace boost { namespace python
 [endsect]
 [section Functions]
 ``
-template <class T> bool handle_exception(T f) throw();
-void handle_exception() throw();
+template <class T> bool handle_exception(T f) noexcept;
+void handle_exception() noexcept;
 ``
 [variablelist
 [[Requires][The first form requires that the expression function0<void>(f) is valid. The second form requires that a C++ exception is currently being handled (see section 15.1 in the C++ standard).]]

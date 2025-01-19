@@ -23,7 +23,7 @@ The expression `translate(x)` must either throw a C++ exception, or a subsequent
 
 struct my_exception : std::exception
 {
-  char const* what() throw() { return "One of my exceptions"; }
+  char const* what() noexcept { return "One of my exceptions"; }
 };
 
 void translate(my_exception const& e)
