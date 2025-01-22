@@ -45,8 +45,8 @@ constructors
 
   struct example_unary_ufunc
   {
-    typedef any_valid_type argument_type;
-    typedef any_valid_type result_type;
+    using argument_type = any_valid_type;
+    using result_type = any_valid_type;
   };
 
 :Requirements: The ``any_valid`` type must be defined using typedef as a valid C++ type in order to use the struct methods correctly
@@ -92,8 +92,8 @@ Example(s)
 
   struct UnarySquare 
   {
-    typedef double argument_type;
-    typedef double result_type;
+    using argument_type = double;
+    using result_type = double;
     double operator()(double r) const { return r * r;}
   };
 

@@ -43,7 +43,7 @@ This example replicates the functionality of [link function_invocation_and_creat
 ``
 struct make_reference_holder
 {
-   typedef boost::python::objects::instance_holder* result_type;
+   using result_type = boost::python::objects::instance_holder*;
    template <class T>
    static result_type execute(T* p)
    {
@@ -57,7 +57,7 @@ struct reference_existing_object
    template <class T>
    struct apply
    {
-      typedef boost::python::to_python_indirect<T,make_reference_holder> type;
+      using type = boost::python::to_python_indirect<T,make_reference_holder>;
    };
 };
 ``

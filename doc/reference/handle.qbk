@@ -13,10 +13,10 @@ namespace boost { namespace python
   template <class T>
   class handle
   {
-      typedef unspecified-member-function-pointer bool_type;
+      using bool_type = unspecified-member-function-pointer;
 
    public: // types
-      typedef T element_type;
+      using element_type = T;
 
    public: // member functions
       ~handle();

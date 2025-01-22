@@ -48,9 +48,9 @@ constructors
 
   struct example_binary_ufunc
   {
-    typedef any_valid first_argument_type;
-    typedef any_valid second_argument_type;
-    typedef any_valid result_type;
+    using first_argument_type = any_valid;
+    using second_argument_type = any_valid;
+    using result_type = any_valid;
   };
 
 :Requirements: The ``any_valid`` type must be defined using typedef as a valid C++ type in order to use the struct methods correctly
@@ -96,9 +96,9 @@ Example(s)
 
   struct BinarySquare
   {
-    typedef double first_argument_type;
-    typedef double second_argument_type;
-    typedef double result_type;
+    using first_argument_type = double;
+    using second_argument_type = double;
+    using result_type = double;
 
     double operator()(double a,double b) const { return (a*a + b*b) ; }
   };

@@ -7,7 +7,7 @@
 
 If what you're trying to do is something like this:
 ``
-  typedef boost::function<void (string s) > funcptr;
+  using funcptr = boost::function<void (string s) >;
 
   void foo(funcptr fp)
   {

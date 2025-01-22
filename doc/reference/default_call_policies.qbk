@@ -8,7 +8,7 @@ namespace boost { namespace python
     {
         static bool precall(PyObject*);
         static PyObject* postcall(PyObject*, PyObject* result);
-        typedef default_result_converter result_converter;
+        using result_converter = default_result_converter;
         template <class Sig> struct extract_return_type : mpl::front<Sig>{};
     };
 }}
@@ -51,7 +51,7 @@ This example comes from the Boost.Python implementation itself. Because the retu
 template <class Handler, class Base = default_call_policies>
 struct return_value_policy : Base
 {
-   typedef Handler result_converter;
+   using result_converter = Handler;
 };
 ``
 [endsect]

@@ -14,11 +14,11 @@ namespace boost { namespace python
   template <class ValueType>
   struct stl_input_iterator
   {
-      typedef std::ptrdiff_t difference_type;
-      typedef ValueType value_type;
-      typedef ValueType* pointer;
-      typedef ValueType reference;
-      typedef std::input_iterator_tag iterator_category;
+      using difference_type = std::ptrdiff_t;
+      using value_type = ValueType;
+      using pointer = ValueType*;
+      using reference = ValueType;
+      using iterator_category = std::input_iterator_tag;
 
       stl_input_iterator();
       stl_input_iterator(object const& ob);
