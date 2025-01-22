@@ -4,17 +4,12 @@
 //  Hello World Example from the tutorial
 //  [Joel de Guzman 10/9/2002]
 
-#include <boost/python/module.hpp>
 #include <boost/python/def.hpp>
+#include <boost/python/module.hpp>
 
-char const* greet()
-{
-   return "hello, world";
+char const *greet() { return "hello, world"; }
+
+BOOST_PYTHON_MODULE(hello_ext) {
+  using namespace boost::python;
+  def("greet", greet);
 }
-
-BOOST_PYTHON_MODULE(hello_ext)
-{
-    using namespace boost::python;
-    def("greet", greet);
-}
-

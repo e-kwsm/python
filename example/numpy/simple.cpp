@@ -9,8 +9,7 @@
 namespace p = boost::python;
 namespace np = boost::python::numpy;
 
-int main(int argc, char **argv)
-{
+int main(int argc, char **argv) {
   // Initialize the Python runtime.
   Py_Initialize();
   // Initialize NumPy
@@ -22,11 +21,13 @@ int main(int argc, char **argv)
   // Construct an array with the above shape and type
   np::ndarray a = np::zeros(shape, dtype);
   // Construct an empty array with the above shape and dtype as well
-  np::ndarray b = np::empty(shape,dtype);
+  np::ndarray b = np::empty(shape, dtype);
   // Print the array
-  std::cout << "Original array:\n" << p::extract<char const *>(p::str(a)) << std::endl;
+  std::cout << "Original array:\n"
+            << p::extract<char const *>(p::str(a)) << std::endl;
   // Reshape the array into a 1D array
   a = a.reshape(p::make_tuple(9));
   // Print it again.
-  std::cout << "Reshaped array:\n" << p::extract<char const *>(p::str(a)) << std::endl;
+  std::cout << "Reshaped array:\n"
+            << p::extract<char const *>(p::str(a)) << std::endl;
 }
