@@ -4,8 +4,7 @@
 // http://www.boost.org/LICENSE_1_0.txt)
 #include <boost/python/converter/arg_to_python.hpp>
 
-int main()
-{
-    boost::python::converter::arg_to_python<PyTypeObject*> x(0);
-    return 0;
+int main() {
+  boost::python::converter::arg_to_python<PyTypeObject *> x(0);
+  return 0;
 }

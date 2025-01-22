@@ -4,8 +4,7 @@
 // http://www.boost.org/LICENSE_1_0.txt)
 #include <boost/python/object.hpp>
 
-int f(boost::python::object const& x)
-{
-    x._("hello") = 1;
-    return 0;
+int f(boost::python::object const &x) {
+  x._("hello") = 1;
+  return 0;
 }

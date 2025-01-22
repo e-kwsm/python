@@ -9,13 +9,14 @@
 namespace p = boost::python;
 namespace np = boost::python::numpy;
 
-np::ndarray zeros(p::tuple shape, np::dtype dt) { return np::zeros(shape, dt);}
-np::ndarray array2(p::object obj, np::dtype dt) { return np::array(obj,dt);}
-np::ndarray array1(p::object obj) { return np::array(obj);}
-np::ndarray empty1(p::tuple shape, np::dtype dt) { return np::empty(shape,dt);}
+np::ndarray zeros(p::tuple shape, np::dtype dt) { return np::zeros(shape, dt); }
+np::ndarray array2(p::object obj, np::dtype dt) { return np::array(obj, dt); }
+np::ndarray array1(p::object obj) { return np::array(obj); }
+np::ndarray empty1(p::tuple shape, np::dtype dt) {
+  return np::empty(shape, dt);
+}
 
-np::ndarray c_empty(p::tuple shape, np::dtype dt)
-{
+np::ndarray c_empty(p::tuple shape, np::dtype dt) {
   // convert 'shape' to a C array so we can test the corresponding
   // version of the constructor
   unsigned len = p::len(shape);
@@ -23,19 +24,18 @@ np::ndarray c_empty(p::tuple shape, np::dtype dt)
   for (unsigned i = 0; i != len; ++i)
     c_shape[i] = p::extract<Py_intptr_t>(shape[i]);
   np::ndarray result = np::empty(len, c_shape, dt);
-  delete [] c_shape;
+  delete[] c_shape;
   return result;
 }
 
-np::ndarray transpose(np::ndarray arr) { return arr.transpose();}
-np::ndarray squeeze(np::ndarray arr) { return arr.squeeze();}
-np::ndarray reshape(np::ndarray arr,p::tuple tup) { return arr.reshape(tup);}
+np::ndarray transpose(np::ndarray arr) { return arr.transpose(); }
+np::ndarray squeeze(np::ndarray arr) { return arr.squeeze(); }
+np::ndarray reshape(np::ndarray arr, p::tuple tup) { return arr.reshape(tup); }
 
-Py_intptr_t shape_index(np::ndarray arr,int k) { return arr.shape(k); }
-Py_intptr_t strides_index(np::ndarray arr,int k) { return arr.strides(k); }
+Py_intptr_t shape_index(np::ndarray arr, int k) { return arr.shape(k); }
+Py_intptr_t strides_index(np::ndarray arr, int k) { return arr.strides(k); }
 
-BOOST_PYTHON_MODULE(ndarray_ext)
-{
+BOOST_PYTHON_MODULE(ndarray_ext) {
   np::initialize();
   p::def("zeros", zeros);
   p::def("zeros_matrix", zeros, np::as_matrix<>());

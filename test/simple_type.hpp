@@ -3,11 +3,10 @@
 // accompanying file LICENSE_1_0.txt or copy at
 // http://www.boost.org/LICENSE_1_0.txt)
 #ifndef SIMPLE_TYPE_DWA2001128_HPP
-# define SIMPLE_TYPE_DWA2001128_HPP
+#define SIMPLE_TYPE_DWA2001128_HPP
 
-struct simple
-{
-    char* s;
+struct simple {
+  char *s;
 };
 
 #endif // SIMPLE_TYPE_DWA2001128_HPP

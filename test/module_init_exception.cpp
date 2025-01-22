@@ -8,7 +8,6 @@
 
 using namespace boost::python;
 
-BOOST_PYTHON_MODULE(module_init_exception_ext)
-{
-    throw std::runtime_error("Module init failed");
+BOOST_PYTHON_MODULE(module_init_exception_ext) {
+  throw std::runtime_error("Module init failed");
 }

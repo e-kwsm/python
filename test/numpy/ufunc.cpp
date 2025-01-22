@@ -9,28 +9,25 @@
 namespace p = boost::python;
 namespace np = boost::python::numpy;
 
-struct UnaryCallable
-{
+struct UnaryCallable {
   typedef double argument_type;
   typedef double result_type;
 
-  double operator()(double r) const { return r * 2;}
+  double operator()(double r) const { return r * 2; }
 };
 
-struct BinaryCallable
-{
+struct BinaryCallable {
   typedef double first_argument_type;
   typedef double second_argument_type;
   typedef double result_type;
 
-  double operator()(double a, double b) const { return a * 2 + b * 3;}
+  double operator()(double a, double b) const { return a * 2 + b * 3; }
 };
 
-BOOST_PYTHON_MODULE(ufunc_ext)
-{
+BOOST_PYTHON_MODULE(ufunc_ext) {
   np::initialize();
   p::class_<UnaryCallable>("UnaryCallable")
-    .def("__call__", np::unary_ufunc<UnaryCallable>::make());
-  p::class_< BinaryCallable>("BinaryCallable")
-    .def("__call__", np::binary_ufunc<BinaryCallable>::make());
+      .def("__call__", np::unary_ufunc<UnaryCallable>::make());
+  p::class_<BinaryCallable>("BinaryCallable")
+      .def("__call__", np::binary_ufunc<BinaryCallable>::make());
 }

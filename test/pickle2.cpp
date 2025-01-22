@@ -22,76 +22,63 @@
     For more information refer to boost/libs/python/doc/pickle.html.
  */
 
-#include <boost/python/module.hpp>
-#include <boost/python/def.hpp>
 #include <boost/python/class.hpp>
-#include <boost/python/tuple.hpp>
+#include <boost/python/def.hpp>
 #include <boost/python/extract.hpp>
+#include <boost/python/module.hpp>
+#include <boost/python/tuple.hpp>
 
 namespace boost_python_test {
 
-  // A friendly class.
-  class world
-  {
-    public:
-      world(const std::string& _country) : secret_number(0) {
-        this->country = _country;
-      }
-      std::string greet() const { return "Hello from " + country + "!"; }
-      std::string get_country() const { return country; }
-      void set_secret_number(int number) { secret_number = number; }
-      int get_secret_number() const { return secret_number; }
-    private:
-      std::string country;
-      int secret_number;
-  };
+// A friendly class.
+class world {
+public:
+  world(const std::string &_country) : secret_number(0) {
+    this->country = _country;
+  }
+  std::string greet() const { return "Hello from " + country + "!"; }
+  std::string get_country() const { return country; }
+  void set_secret_number(int number) { secret_number = number; }
+  int get_secret_number() const { return secret_number; }
 
-  struct world_pickle_suite : boost::python::pickle_suite
-  {
-    static
-    boost::python::tuple
-    getinitargs(const world& w)
-    {
-        return boost::python::make_tuple(w.get_country());
+private:
+  std::string country;
+  int secret_number;
+};
+
+struct world_pickle_suite : boost::python::pickle_suite {
+  static boost::python::tuple getinitargs(const world &w) {
+    return boost::python::make_tuple(w.get_country());
+  }
+
+  static boost::python::tuple getstate(const world &w) {
+    return boost::python::make_tuple(w.get_secret_number());
+  }
+
+  static void setstate(world &w, boost::python::tuple state) {
+    using namespace boost::python;
+    if (len(state) != 1) {
+      PyErr_SetObject(
+          PyExc_ValueError,
+          ("expected 1-item tuple in call to __setstate__; got %s" % state)
+              .ptr());
+      throw_error_already_set();
     }
 
-    static
-    boost::python::tuple
-    getstate(const world& w)
-    {
-        return boost::python::make_tuple(w.get_secret_number());
-    }
+    long number = extract<long>(state[0]);
+    if (number != 42)
+      w.set_secret_number(number);
+  }
+};
 
-    static
-    void
-    setstate(world& w, boost::python::tuple state)
-    {
-        using namespace boost::python;
-        if (len(state) != 1)
-        {
-          PyErr_SetObject(PyExc_ValueError,
-                          ("expected 1-item tuple in call to __setstate__; got %s"
-                           % state).ptr()
-              );
-          throw_error_already_set();
-        }
+} // namespace boost_python_test
 
-        long number = extract<long>(state[0]);
-        if (number != 42)
-            w.set_secret_number(number);
-    }
-  };
-
-}
-
-BOOST_PYTHON_MODULE(pickle2_ext)
-{
-    using namespace boost_python_test;
-    boost::python::class_<world>(
-        "world", boost::python::init<const std::string&>())
-        .def("greet", &world::greet)
-        .def("get_secret_number", &world::get_secret_number)
-        .def("set_secret_number", &world::set_secret_number)
-        .def_pickle(world_pickle_suite())
-        ;
+BOOST_PYTHON_MODULE(pickle2_ext) {
+  using namespace boost_python_test;
+  boost::python::class_<world>("world",
+                               boost::python::init<const std::string &>())
+      .def("greet", &world::greet)
+      .def("get_secret_number", &world::get_secret_number)
+      .def("set_secret_number", &world::set_secret_number)
+      .def_pickle(world_pickle_suite());
 }

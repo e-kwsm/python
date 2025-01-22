@@ -5,7 +5,7 @@
 //
 //
 //  example that shows problems with overloading and automatic conversion.
-//  if you call one of the below functions from python with bool/int/double, 
+//  if you call one of the below functions from python with bool/int/double,
 //  you'll see that the overload called is first match, not best match.
 //  See overload matching in luabind for an example of how to do this better.
 //
@@ -14,26 +14,24 @@
 //
 //  This test isn't called by the cmake/jamfiles.  For future use.
 //
-#include <boost/python/module.hpp>
-#include <boost/python/def.hpp>
-#include <complex>
-#include <boost/python/handle.hpp>
 #include <boost/python/cast.hpp>
-#include <boost/python/object.hpp>
+#include <boost/python/def.hpp>
 #include <boost/python/detail/wrap_python.hpp>
+#include <boost/python/handle.hpp>
+#include <boost/python/module.hpp>
+#include <boost/python/object.hpp>
+#include <complex>
 
+using boost::python::borrowed;
 using boost::python::def;
 using boost::python::handle;
 using boost::python::object;
-using boost::python::borrowed;
 
 std::string takes_bool(bool b) { return "bool"; }
 std::string takes_int(int b) { return "int"; }
 std::string takes_double(double b) { return "double"; }
 
-
-BOOST_PYTHON_MODULE(overload_resolution)
-{    
+BOOST_PYTHON_MODULE(overload_resolution) {
   def("bid", takes_bool);
   def("bid", takes_int);
   def("bid", takes_double);
@@ -50,4 +48,3 @@ BOOST_PYTHON_MODULE(overload_resolution)
   def("bdi", takes_double);
   def("bdi", takes_int);
 }
-

@@ -4,19 +4,17 @@
 // (See accompanying file LICENSE_1_0.txt or copy at
 // http://www.boost.org/LICENSE_1_0.txt)
 
-#include <boost/python/numpy.hpp>
 #include <boost/cstdint.hpp>
+#include <boost/python/numpy.hpp>
 
 namespace p = boost::python;
 namespace np = boost::python::numpy;
 
-template <typename T>
-np::dtype accept(T) {
+template <typename T> np::dtype accept(T) {
   return np::dtype::get_builtin<T>();
 }
 
-BOOST_PYTHON_MODULE(dtype_ext)
-{
+BOOST_PYTHON_MODULE(dtype_ext) {
   np::initialize();
   // wrap dtype equivalence test, since it isn't available in Python API.
   p::def("equivalent", np::equivalent);
@@ -39,11 +37,11 @@ BOOST_PYTHON_MODULE(dtype_ext)
   p::def("accept_uintc", accept<unsigned int>);
   // floats and complex
   p::def("accept_float32", accept<float>);
-  p::def("accept_complex64", accept< std::complex<float> >);
+  p::def("accept_complex64", accept<std::complex<float>>);
   p::def("accept_float64", accept<double>);
-  p::def("accept_complex128", accept< std::complex<double> >);
+  p::def("accept_complex128", accept<std::complex<double>>);
   if (sizeof(long double) > sizeof(double)) {
-      p::def("accept_longdouble", accept<long double>);
-      p::def("accept_clongdouble", accept< std::complex<long double> >);
+    p::def("accept_longdouble", accept<long double>);
+    p::def("accept_clongdouble", accept<std::complex<long double>>);
   }
 }
