@@ -45,7 +45,7 @@ int main()
     BOOST_STATIC_ASSERT((boost::python::detail::is_same<collected1::type,boost::python::bases<> >::value));
     BOOST_STATIC_ASSERT((boost::python::detail::is_same<choose_bases<int,char*,long>::type,boost::python::bases<> >::value));
     
-    typedef boost::python::detail::select_bases<
+    using collected2 = boost::python::detail::select_bases<
         int
         , boost::python::detail::select_bases<
                 boost::python::bases<A,B>
@@ -53,7 +53,7 @@ int main()
                         A
             >::type
          >::type
-     > collected2;
+     >;
 
     BOOST_STATIC_ASSERT((boost::python::detail::is_same<collected2::type,boost::python::bases<A,B> >::value));
     BOOST_STATIC_ASSERT((boost::python::detail::is_same<choose_bases<int,boost::python::bases<A,B>,long>::type,boost::python::bases<A,B> >::value));
