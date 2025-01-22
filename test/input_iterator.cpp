@@ -11,12 +11,12 @@
 
 using namespace boost::python;
 
-typedef std::list<int> list_int;
+using list_int = std::list<int>;
 
 // Prove that we can handle InputIterators which return rvalues.
 struct doubler
 {
-    typedef int result_type;
+    using result_type = int;
     int operator()(int x) const { return x * 2; }
 };
 

@@ -6,7 +6,7 @@
 #include <boost/python/detail/if_else.hpp>
 #include <boost/python/detail/type_traits.hpp>
 
-    typedef char c1;
+    using c1 = char;
     typedef char c2[2];
     typedef char c3[3];
     typedef char c4[4];

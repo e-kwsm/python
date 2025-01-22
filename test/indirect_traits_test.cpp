@@ -15,7 +15,7 @@ struct X {};
 
 using namespace boost::python::indirect_traits;
 
-typedef void (X::*pmf)();
+using pmf = void (X::*)();
 
 BOOST_MPL_ASSERT((is_reference_to_function<int (&)()>));
 BOOST_MPL_ASSERT_NOT((is_reference_to_function<int (*)()>));

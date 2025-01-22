@@ -19,7 +19,7 @@
 
 using namespace boost::python;
 
-typedef test_class<> X;
+using X = test_class<>;
 
 bool extract_bool(object x) { return extract<bool>(x); }
 

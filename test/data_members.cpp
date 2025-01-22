@@ -15,7 +15,7 @@
 
 using namespace boost::python;
 
-typedef test_class<> X;
+using X = test_class<>;
 
 struct Y : test_class<1>
 {

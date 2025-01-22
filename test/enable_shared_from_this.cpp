@@ -18,7 +18,7 @@ using namespace boost::python;
 using boost::shared_ptr;
 
 class Test;
-typedef shared_ptr<Test> TestPtr;
+using TestPtr = shared_ptr<Test>;
 
 class Test : public boost::enable_shared_from_this<Test> {
 public:

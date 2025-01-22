@@ -10,7 +10,7 @@
 
 using namespace boost::python;
 
-typedef test_class<> X;
+using X = test_class<>;
 
 int x_value(X const& x)
 {

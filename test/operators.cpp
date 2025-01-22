@@ -29,7 +29,7 @@ using namespace boost::python;
 
 struct X : test_class<>
 {
-    typedef test_class<> base_t;
+    using base_t = test_class<>;
     
     X(int x) : base_t(x) {}
     X const operator+(X const& r) const { return X(value() + r.value()); }

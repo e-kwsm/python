@@ -16,8 +16,8 @@
 
 using namespace boost::python;
 
-typedef std::list<int> list_int;
-typedef std::list<list_int> list_list;
+using list_int = std::list<int>;
+using list_list = std::list<list_int>;
 
 
 void push_back(list_int& x, int y)
@@ -35,7 +35,7 @@ int back(list_int& x)
     return x.back();
 }
 
-typedef std::pair<list_int::iterator,list_int::iterator> list_range;
+using list_range = std::pair<list_int::iterator, list_int::iterator>;
 
 struct list_range2 : list_range
 {
@@ -60,7 +60,7 @@ struct two_lists
 
     struct two_start
     {
-        typedef list_int::iterator result_type;
+        using result_type = list_int::iterator;
         result_type operator()(two_lists& ll) const { return ll.two.begin(); }
     };
     friend struct two_start;
