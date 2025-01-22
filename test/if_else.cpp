@@ -14,7 +14,7 @@
 template <unsigned size>
 struct choose
 {
-    typedef typename boost::python::detail::if_<
+    using type = typename boost::python::detail::if_<
         (sizeof(c1) == size)
     >::template then<
         c1
@@ -30,7 +30,7 @@ struct choose
         (sizeof(c4) == size)
     >::template then<
         c4
-    >::template else_<void*>::type type;
+    >::template else_<void*>::type;
 };
 
 int main()
