@@ -69,8 +69,7 @@ static void name_space_def(object &name_space, char const *name, Func f,
 // For backward compatibility -- is this obsolete?
 template <class Func, class CallPolicies, class NameSpaceT>
 static void name_space_def(NameSpaceT &name_space, char const *name, Func f,
-                           keyword_range const &kw // ignored
-                           ,
+                           keyword_range const &kw, // ignored
                            CallPolicies const &policies, char const *doc,
                            module *) {
   name_space.def(name, f, policies, doc);

@@ -46,12 +46,10 @@ object make_keyword_range_function(F f, Policies const &policies,
 // Holder and ArgList are intended to be explicitly specified.
 template <class ArgList, class Arity, class Holder, class CallPolicies>
 object make_keyword_range_constructor(
-    CallPolicies const &policies // The CallPolicies with which to invoke the
-                                 // Holder's constructor
-    ,
+    CallPolicies const &policies, // The CallPolicies with which to invoke the
+                                  // Holder's constructor
     detail::keyword_range const
-        &kw // The (possibly empty) set of associated argument keywords
-    ,
+        &kw, // The (possibly empty) set of associated argument keywords
     Holder * = 0, ArgList * = 0, Arity * = 0) {
 #if !defined(BOOST_PYTHON_NO_PY_SIGNATURES) &&                                 \
     defined(BOOST_PYTHON_PY_SIGNATURES_PROPER_INIT_SELF_TYPE)

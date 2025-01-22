@@ -128,11 +128,9 @@ template <> struct outer_constructor_signature<int> {
 // @group make_constructor_aux {
 template <class F, class CallPolicies, class Sig>
 object make_constructor_aux(
-    F f // An object that can be invoked by detail::invoke()
-    ,
-    CallPolicies const &p // CallPolicies to use in the invocation
-    ,
-    Sig const & // An MPL sequence of argument types expected by F
+    F f,                   // An object that can be invoked by detail::invoke()
+    CallPolicies const &p, // CallPolicies to use in the invocation
+    Sig const &            // An MPL sequence of argument types expected by F
 ) {
   typedef typename outer_constructor_signature<Sig>::type outer_signature;
 
@@ -151,8 +149,7 @@ template <class F, class CallPolicies, class Sig, class NumKeywords>
 object make_constructor_aux(
     F f, CallPolicies const &p, Sig const &,
     detail::keyword_range const
-        &kw // a [begin,end) pair of iterators over keyword names
-    ,
+        &kw,    // a [begin,end) pair of iterators over keyword names
     NumKeywords // An MPL integral type wrapper: the size of kw
 ) {
   enum { arity = mpl::size<Sig>::value - 1 };
