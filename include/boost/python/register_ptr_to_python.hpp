@@ -5,27 +5,20 @@
 #ifndef REGISTER_PTR_TO_PYTHON_HPP
 #define REGISTER_PTR_TO_PYTHON_HPP
 
-#include <boost/python/pointee.hpp>
 #include <boost/python/object.hpp>
 #include <boost/python/object/class_wrapper.hpp>
+#include <boost/python/pointee.hpp>
 
-namespace boost { namespace python {
-    
-template <class P>
-void register_ptr_to_python()
-{
-    typedef typename boost::python::pointee<P>::type X;
-    objects::class_value_wrapper<
-        P
-      , objects::make_ptr_instance<
-            X
-          , objects::pointer_holder<P,X>
-        >
-    >();
-}           
+namespace boost {
+namespace python {
 
-}} // namespace boost::python
+template <class P> void register_ptr_to_python() {
+  typedef typename boost::python::pointee<P>::type X;
+  objects::class_value_wrapper<
+      P, objects::make_ptr_instance<X, objects::pointer_holder<P, X>>>();
+}
+
+} // namespace python
+} // namespace boost
 
 #endif // REGISTER_PTR_TO_PYTHON_HPP
-
-

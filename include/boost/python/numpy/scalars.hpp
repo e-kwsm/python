@@ -8,25 +8,27 @@
 #define boost_python_numpy_scalars_hpp_
 
 /**
- *  @brief Object managers for array scalars (currently only numpy.void is implemented).
+ *  @brief Object managers for array scalars (currently only numpy.void is
+ *         implemented).
  */
 
 #include <boost/python.hpp>
-#include <boost/python/numpy/numpy_object_mgr_traits.hpp>
 #include <boost/python/numpy/dtype.hpp>
+#include <boost/python/numpy/numpy_object_mgr_traits.hpp>
 
-namespace boost { namespace python { namespace numpy {
+namespace boost {
+namespace python {
+namespace numpy {
 
 /**
  *  @brief A boost.python "object manager" (subclass of object) for numpy.void.
  *
  *  @todo This could have a lot more functionality.
  */
-class BOOST_NUMPY_DECL void_ : public object
-{
+class BOOST_NUMPY_DECL void_ : public object {
   static python::detail::new_reference convert(object_cref arg, bool align);
-public:
 
+public:
   /**
    *  @brief Construct a new array scalar with the given size and void dtype.
    *
@@ -41,18 +43,18 @@ public:
   BOOST_PYTHON_FORWARD_OBJECT_CONSTRUCTORS(void_, object);
 
   /// @brief Return a view of the scalar with the given dtype.
-  void_ view(dtype const & dt) const;
+  void_ view(dtype const &dt) const;
 
   /// @brief Copy the scalar (deep for all non-object fields).
   void_ copy() const;
-
 };
 
-} // namespace boost::python::numpy
+} // namespace numpy
 
-namespace converter 
-{
+namespace converter {
 NUMPY_OBJECT_MANAGER_TRAITS(numpy::void_);
-}}} // namespace boost::python::converter
+}
+} // namespace python
+} // namespace boost
 
 #endif

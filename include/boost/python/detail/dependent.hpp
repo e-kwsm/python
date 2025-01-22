@@ -3,9 +3,11 @@
 // accompanying file LICENSE_1_0.txt or copy at
 // http://www.boost.org/LICENSE_1_0.txt)
 #ifndef DEPENDENT_DWA200286_HPP
-# define DEPENDENT_DWA200286_HPP
+#define DEPENDENT_DWA200286_HPP
 
-namespace boost { namespace python { namespace detail { 
+namespace boost {
+namespace python {
+namespace detail {
 
 // A way to turn a concrete type T into a type dependent on U. This
 // keeps conforming compilers (those implementing proper 2-phase
@@ -16,12 +18,12 @@ namespace boost { namespace python { namespace detail {
 // One such use is when we must return an incomplete T from a member
 // function template (which must be defined in the class body to
 // keep MSVC happy).
-template <class T, class U>
-struct dependent
-{
-    typedef T type;
+template <class T, class U> struct dependent {
+  typedef T type;
 };
 
-}}} // namespace boost::python::detail
+} // namespace detail
+} // namespace python
+} // namespace boost
 
 #endif // DEPENDENT_DWA200286_HPP
