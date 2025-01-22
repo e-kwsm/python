@@ -11,7 +11,7 @@ class A : public enable_shared_from_this<A> {
  public:
    A() : val(0) {};
    int val;
-   typedef shared_ptr<A> A_ptr;
+   using A_ptr = shared_ptr<A>;
    A_ptr self() {
       A_ptr self;
       self = shared_from_this();

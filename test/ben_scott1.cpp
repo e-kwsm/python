@@ -7,7 +7,7 @@ using namespace boost::python;
 using namespace boost;
 
 struct Product {};
-typedef shared_ptr<Product> ProductPtr;
+using ProductPtr = shared_ptr<Product>;
 
 
 struct Creator

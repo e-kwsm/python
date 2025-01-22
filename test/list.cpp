@@ -57,7 +57,7 @@ void append_list(list& x, list const& y)
     x.append(y);
 }
 
-typedef test_class<> X;
+using X = test_class<>;
 
 int notcmp(object const& x, object const& y)
 {

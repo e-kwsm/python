@@ -15,8 +15,8 @@
 # include <ostream.h>
 #endif
 
-typedef test_class<> X;
-typedef test_class<1> Y;
+using X = test_class<>;
+using Y = test_class<1>;
 
 enum color { red = 0, blue = 1, green = 2 };
 

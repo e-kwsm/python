@@ -13,7 +13,7 @@
 
 using namespace boost::python;
 
-typedef test_class<> X;
+using X = test_class<>;
 
 X* empty() { return new X(1000); }
 

@@ -6,15 +6,15 @@
 #include <boost/python/detail/if_else.hpp>
 #include <boost/python/detail/type_traits.hpp>
 
-    typedef char c1;
-    typedef char c2[2];
-    typedef char c3[3];
-    typedef char c4[4];
+    using c1 = char;
+    using c2 = char[2];
+    using c3 = char[3];
+    using c4 = char[4];
 
 template <unsigned size>
 struct choose
 {
-    typedef typename boost::python::detail::if_<
+    using type = typename boost::python::detail::if_<
         (sizeof(c1) == size)
     >::template then<
         c1
@@ -30,7 +30,7 @@ struct choose
         (sizeof(c4) == size)
     >::template then<
         c4
-    >::template else_<void*>::type type;
+    >::template else_<void*>::type;
 };
 
 int main()

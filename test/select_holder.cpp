@@ -39,9 +39,9 @@ void assert_holder(T* = 0, Held* = 0, Holder* = 0)
     using namespace boost::python::detail;
     using namespace boost::python::objects;
     
-    typedef typename class_metadata<
+    using h = typename class_metadata<
        T,Held,not_specified,not_specified
-           >::holder h;
+           >::holder;
     
     assert_same<Holder>(
         (h*)0

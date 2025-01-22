@@ -7,7 +7,7 @@
 # include <boost/python/module.hpp>
 # include <boost/python/return_value_policy.hpp>
 
-typedef struct opaque_ *opaque;
+using opaque = struct opaque_ *;
 
 opaque the_op   = ((opaque) 0x47110815);
 

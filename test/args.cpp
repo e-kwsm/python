@@ -25,7 +25,7 @@ tuple f(int x = 1, double y = 4.25, char const* z = "wow")
 
 BOOST_PYTHON_FUNCTION_OVERLOADS(f_overloads, f, 0, 3)
     
-typedef test_class<> Y;
+using Y = test_class<>;
 
 struct X
 {
