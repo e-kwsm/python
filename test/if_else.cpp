@@ -7,9 +7,9 @@
 #include <boost/python/detail/type_traits.hpp>
 
     using c1 = char;
-    typedef char c2[2];
-    typedef char c3[3];
-    typedef char c4[4];
+    using c2 = char[2];
+    using c3 = char[3];
+    using c4 = char[4];
 
 template <unsigned size>
 struct choose
