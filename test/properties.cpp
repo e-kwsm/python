@@ -59,8 +59,8 @@ int get_X_instance_count()
 
 BOOST_PYTHON_MODULE(properties_ext)
 {
-    typedef return_value_policy<return_by_value> return_by_value_t;
-    typedef return_internal_reference<> return_by_internal_reference_t;
+    using return_by_value_t = return_value_policy<return_by_value>;
+    using return_by_internal_reference_t = return_internal_reference<>;
     class_<X>("X", init<int>() )
         //defining read only property
         .add_property( "value_r", &X::get_value )

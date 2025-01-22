@@ -10,7 +10,7 @@
 
 using namespace boost::python;
 
-typedef std::list<int> list_int;
+using list_int = std::list<int>;
 
 void assign(list_int& x, object const& y)
 {

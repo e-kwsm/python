@@ -20,7 +20,7 @@ public:
     virtual std::string    f()    { return "harru"; }
 };
 
-typedef std::vector<Abstract*>   ListOfObjects;
+using ListOfObjects = std::vector<Abstract*>;
 
 class DoesSomething
 {
