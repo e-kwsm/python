@@ -77,9 +77,9 @@ In C++:
 #include <boost/python/lvalue_from_pytype.hpp>
 
 // definition lifted from the Python docs
-typedef struct {
+struct noddy_NoddyObject {
    PyObject_HEAD
-} noddy_NoddyObject;
+};
 
 using namespace boost::python;
 static handle<noddy_NoddyObject> cache;

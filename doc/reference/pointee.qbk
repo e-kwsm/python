@@ -9,13 +9,13 @@ namespace boost { namespace python
 {
    template <class T> struct pointee
    {
-      typedef T::element_type type;
+      using type = T::element_type;
    };
 
    // specialization for pointers
    template <T> struct pointee<T*>
    {
-      typedef T type;
+      using type = T;
    };
 }
 ``
@@ -31,7 +31,7 @@ namespace boost { namespace python
 {
   template <class T> struct pointee<smart_pointer<T> >
   {
-     typedef T type;
+     using type = T;
   };
 }}
 

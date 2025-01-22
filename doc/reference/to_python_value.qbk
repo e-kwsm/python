@@ -9,9 +9,9 @@ namespace boost { namespace python
    template <class T>
    struct to_python_value
    {
-      typedef typename add_reference<
+      using argument_type = typename add_reference<
          typename add_const<T>::type
-      >::type argument_type;
+      >::type;
 
       static bool convertible();
       PyObject* operator()(argument_type) const;

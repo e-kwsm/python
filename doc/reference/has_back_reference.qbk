@@ -9,7 +9,7 @@ namespace boost { namespace python
 {
     template<class WrappedClass> class has_back_reference
     { 
-        typedef mpl::false_ type;
+        using type = mpl::false_;
     };
 }}
 ``

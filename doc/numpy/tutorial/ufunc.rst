@@ -17,17 +17,17 @@ Now we create the structs necessary to implement the ufuncs. The typedefs *must*
 
   struct UnarySquare 
   {
-    typedef double argument_type;
-    typedef double result_type;
+    using argument_type = double;
+    using result_type = double;
   
     double operator()(double r) const { return r * r;}
   };
  
   struct BinarySquare
   {
-    typedef double first_argument_type;
-    typedef double second_argument_type;
-    typedef double result_type;
+    using first_argument_type = double;
+    using second_argument_type = double;
+    using result_type = double;
   
     double operator()(double a,double b) const { return (a*a + b*b) ; }
   };

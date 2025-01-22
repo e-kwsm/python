@@ -14,7 +14,7 @@ namespace boost { namespace python
   template <class T>
   struct extract
   {
-      typedef unspecified result_type;
+      using result_type = unspecified;
 
       extract(PyObject*);
       extract(object const&);

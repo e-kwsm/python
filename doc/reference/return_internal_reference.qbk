@@ -15,7 +15,7 @@ namespace boost { namespace python
    struct return_internal_reference : Base
    {
       static PyObject* postcall(PyObject*, PyObject* result);
-      typedef reference_existing_object result_converter;
+      using result_converter = reference_existing_object;
    };
 }}
 ``

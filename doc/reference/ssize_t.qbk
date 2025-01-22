@@ -6,9 +6,9 @@ Python 2.5 introduces a new `Py_ssize_t` typedef and two related macros ([@http:
 Imports `Py_ssize_t` into the `boost::python` namespace if available, or provides an appropriate typedef for backward compatibility:
 ``
 #if PY_VERSION_HEX >= 0x02050000
-typedef Py_ssize_t ssize_t;
+using ssize_t = Py_ssize_t;
 #else
-typedef int ssize_t;
+using ssize_t = int;
 #endif
 ``
 [endsect]
