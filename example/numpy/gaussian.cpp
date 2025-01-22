@@ -252,7 +252,7 @@ struct mv2_from_python {
     static void * convertible(PyObject * p) {
         try {
             bp::object obj(bp::handle<>(bp::borrowed(p)));
-            std::auto_ptr<bn::ndarray> array(
+            std::unique_ptr<bn::ndarray> array(
                 new bn::ndarray(
                     bn::from_object(obj, bn::dtype::get_builtin<double>(), N, N, bn::ndarray::V_CONTIGUOUS)
                 )
@@ -271,7 +271,7 @@ struct mv2_from_python {
      */
     static void construct(PyObject * obj, bp::converter::rvalue_from_python_stage1_data * data) {
         // Extract the array we passed out of the convertible() member function.
-        std::auto_ptr<bn::ndarray> array(reinterpret_cast<bn::ndarray*>(data->convertible));
+        std::unique_ptr<bn::ndarray> array(reinterpret_cast<bn::ndarray*>(data->convertible));
         // Find the memory block Boost.Python has prepared for the result.
         typedef bp::converter::rvalue_from_python_storage<T> storage_t;
         storage_t * storage = reinterpret_cast<storage_t*>(data);

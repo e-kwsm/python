@@ -507,22 +507,22 @@ Is there a way to accomplish a 'transfer-of-ownership' of a wrapped C++ object?
 
 --Bruce Lowery
 
-Yes: Make sure the C++ object is held by auto_ptr:
+Yes: Make sure the C++ object is held by unique_ptr:
 ``
-  class_<A, std::auto_ptr<A> >("A")
+  class_<A, std::unique_ptr<A> >("A")
     ...
     ;
 ``
-Then make a thin wrapper function which takes an auto_ptr parameter:
+Then make a thin wrapper function which takes an unique_ptr parameter:
 ``
-  void b_insert(B &b, std::auto_ptr<A> a)
+  void b_insert(B &b, std::unique_ptr<A> &a)
   {
     b.insert(a.get());
     a.release();
   }
 ``
 Wrap that as B.add. Note that pointers returned via `manage_new_object`
-will also be held by `auto_ptr`, so this transfer-of-ownership
+will also be held by `unique_ptr`, so this transfer-of-ownership
 will also work correctly.
 
 [endsect]
