@@ -5,30 +5,29 @@
 // http://www.boost.org/LICENSE_1_0.txt)
 
 #define BOOST_PYTHON_NUMPY_INTERNAL_MAIN
-#include <boost/python/numpy/internal.hpp>
 #include <boost/python/numpy/dtype.hpp>
+#include <boost/python/numpy/internal.hpp>
 
-namespace boost { namespace python { namespace numpy {
+namespace boost {
+namespace python {
+namespace numpy {
 
 #if PY_MAJOR_VERSION == 2
-static void wrap_import_array()
-{
-  import_array();
-}
+static void wrap_import_array() { import_array(); }
 #else
-static void * wrap_import_array()
-{
+static void *wrap_import_array() {
   import_array();
   return NULL;
 }
 #endif
 
-void initialize(bool register_scalar_converters) 
-{
+void initialize(bool register_scalar_converters) {
   wrap_import_array();
   import_ufunc();
   if (register_scalar_converters)
-	dtype::register_scalar_converters();
+    dtype::register_scalar_converters();
 }
 
-}}} // namespace boost::python::numpy
+} // namespace numpy
+} // namespace python
+} // namespace boost

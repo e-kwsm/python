@@ -4,43 +4,30 @@
 
 #include <boost/python/wrapper.hpp>
 
-namespace boost { namespace python {
+namespace boost {
+namespace python {
 
-namespace detail
-{
-  override wrapper_base::get_override(
-      char const* name
-    , PyTypeObject* class_object
-  ) const
-  {
-      if (this->m_self)
-      {
-          if (handle<> m = handle<>(
-                  python::allow_null(
-                      ::PyObject_GetAttrString(
-                          this->m_self, const_cast<char*>(name))))
-          )
-          {
-              PyObject* borrowed_f = 0;
-            
-              if (
-                  PyMethod_Check(m.get())
-                  && PyMethod_GET_SELF(m.get()) == this->m_self
-                  && class_object->tp_dict != 0
-              )
-              {
-                  borrowed_f = ::PyDict_GetItemString(
-                      class_object->tp_dict, const_cast<char*>(name));
+namespace detail {
+override wrapper_base::get_override(char const *name,
+                                    PyTypeObject *class_object) const {
+  if (this->m_self) {
+    if (handle<> m = handle<>(python::allow_null(::PyObject_GetAttrString(
+            this->m_self, const_cast<char *>(name))))) {
+      PyObject *borrowed_f = 0;
 
-
-              }
-              if (borrowed_f != PyMethod_GET_FUNCTION(m.get()))
-                  return override(m);
-          }
+      if (PyMethod_Check(m.get()) &&
+          PyMethod_GET_SELF(m.get()) == this->m_self &&
+          class_object->tp_dict != 0) {
+        borrowed_f = ::PyDict_GetItemString(class_object->tp_dict,
+                                            const_cast<char *>(name));
       }
-      return override(handle<>(detail::none()));
+      if (borrowed_f != PyMethod_GET_FUNCTION(m.get()))
+        return override(m);
+    }
   }
+  return override(handle<>(detail::none()));
 }
+} // namespace detail
 
 #if 0
 namespace converter
@@ -61,6 +48,7 @@ namespace converter
   }
   
 }
-#endif 
+#endif
 
-}} // namespace boost::python::detail
+} // namespace python
+} // namespace boost
