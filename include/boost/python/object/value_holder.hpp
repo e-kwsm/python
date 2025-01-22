@@ -45,7 +45,7 @@ template <class Value> struct value_holder : instance_holder {
   // Forward construction to the held object
 #define BOOST_PP_ITERATION_PARAMS_1                                            \
   (4, (0, BOOST_PYTHON_MAX_ARITY,                                              \
-       <boost / python / object / value_holder.hpp>, 1))
+       <boost/python/object/value_holder.hpp>, 1))
 #include BOOST_PP_ITERATE()
 
 private: // required holder implementation
@@ -70,7 +70,7 @@ struct value_holder_back_reference : instance_holder {
   // Forward construction to the held object
 #define BOOST_PP_ITERATION_PARAMS_1                                            \
   (4, (0, BOOST_PYTHON_MAX_ARITY,                                              \
-       <boost / python / object / value_holder.hpp>, 2))
+       <boost/python/object/value_holder.hpp>, 2))
 #include BOOST_PP_ITERATE()
 
 private: // required holder implementation

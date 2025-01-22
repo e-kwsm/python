@@ -55,7 +55,7 @@ struct object_manager_traits<tuple>
 inline tuple make_tuple() { return tuple(); }
 
 #define BOOST_PP_ITERATION_PARAMS_1                                            \
-  (3, (1, BOOST_PYTHON_MAX_ARITY, <boost / python / detail / make_tuple.hpp>))
+  (3, (1, BOOST_PYTHON_MAX_ARITY, <boost/python/detail/make_tuple.hpp>))
 #include BOOST_PP_ITERATE()
 
 } // namespace python

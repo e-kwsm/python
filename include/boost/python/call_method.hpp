@@ -30,7 +30,7 @@ namespace python {
   , converter::arg_to_python<A##n>(a##n).get()
 
 #define BOOST_PP_ITERATION_PARAMS_1                                            \
-  (3, (0, BOOST_PYTHON_MAX_ARITY, <boost / python / call_method.hpp>))
+  (3, (0, BOOST_PYTHON_MAX_ARITY, <boost/python/call_method.hpp>))
 #include BOOST_PP_ITERATE()
 
 #undef BOOST_PYTHON_FAST_ARG_TO_PYTHON_GET

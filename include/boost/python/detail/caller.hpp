@@ -127,7 +127,7 @@ template <class F, class CallPolicies, class Sig> struct caller;
     return 0;
 
 #define BOOST_PP_ITERATION_PARAMS_1                                            \
-  (3, (0, BOOST_PYTHON_MAX_ARITY + 1, <boost / python / detail / caller.hpp>))
+  (3, (0, BOOST_PYTHON_MAX_ARITY + 1, <boost/python/detail/caller.hpp>))
 #include BOOST_PP_ITERATE()
 
 #undef BOOST_PYTHON_ARG_CONVERTER

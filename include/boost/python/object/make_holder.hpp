@@ -42,7 +42,7 @@ template <int nargs> struct make_holder;
 
 // specializations...
 #define BOOST_PP_ITERATION_PARAMS_1                                            \
-  (3, (0, BOOST_PYTHON_MAX_ARITY, <boost / python / object / make_holder.hpp>))
+  (3, (0, BOOST_PYTHON_MAX_ARITY, <boost/python/object/make_holder.hpp>))
 #include BOOST_PP_ITERATE()
 
 #undef BOOST_PYTHON_DO_FORWARD_ARG

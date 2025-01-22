@@ -39,7 +39,7 @@ template <unsigned> struct signature_arity;
 
 #define BOOST_PP_ITERATION_PARAMS_1                                            \
   (3,                                                                          \
-   (0, BOOST_PYTHON_MAX_ARITY + 1, <boost / python / detail / signature.hpp>))
+   (0, BOOST_PYTHON_MAX_ARITY + 1, <boost/python/detail/signature.hpp>))
 #include BOOST_PP_ITERATE()
 
 // A metafunction returning the base class used for

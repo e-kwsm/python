@@ -59,7 +59,7 @@ template <class Pointer, class Value> struct pointer_holder : instance_holder {
 
 #define BOOST_PP_ITERATION_PARAMS_1                                            \
   (4, (0, BOOST_PYTHON_MAX_ARITY,                                              \
-       <boost / python / object / pointer_holder.hpp>, 1))
+       <boost/python/object/pointer_holder.hpp>, 1))
 #include BOOST_PP_ITERATE()
 
 private: // types
@@ -92,7 +92,7 @@ public:
   // Forward construction to the held object
 #define BOOST_PP_ITERATION_PARAMS_1                                            \
   (4, (0, BOOST_PYTHON_MAX_ARITY,                                              \
-       <boost / python / object / pointer_holder.hpp>, 2))
+       <boost/python/object/pointer_holder.hpp>, 2))
 #include BOOST_PP_ITERATE()
 
 private: // required holder implementation

@@ -27,7 +27,7 @@ struct type_list : BOOST_PP_CAT(mpl::vector, BOOST_PYTHON_LIST_SIZE)<
 
 #define BOOST_PP_ITERATION_PARAMS_1                                            \
   (3, (0, BOOST_PP_DEC(BOOST_PYTHON_LIST_SIZE),                                \
-       <boost / python / detail / type_list_impl.hpp>))
+       <boost/python/detail/type_list_impl.hpp>))
 #include BOOST_PP_ITERATE()
 
 } // namespace detail

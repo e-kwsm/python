@@ -109,7 +109,7 @@ template <class C1, class C2> struct most_derived {
 #define BOOST_PYTHON_FN_CC
 
 #define BOOST_PP_ITERATION_PARAMS_1                                            \
-  (3, (0, BOOST_PYTHON_MAX_ARITY, <boost / python / signature.hpp>))
+  (3, (0, BOOST_PYTHON_MAX_ARITY, <boost/python/signature.hpp>))
 
 #include BOOST_PP_ITERATE()
 
@@ -123,7 +123,7 @@ template <class C1, class C2> struct most_derived {
 #define BOOST_PYTHON_FN_CC_IS_CDECL
 
 #define BOOST_PP_ITERATION_PARAMS_1                                            \
-  (3, (0, BOOST_PYTHON_MAX_ARITY, <boost / python / signature.hpp>))
+  (3, (0, BOOST_PYTHON_MAX_ARITY, <boost/python/signature.hpp>))
 
 #include BOOST_PP_ITERATE()
 
@@ -139,7 +139,7 @@ template <class C1, class C2> struct most_derived {
 #define BOOST_PYTHON_FN_CC __stdcall
 
 #define BOOST_PP_ITERATION_PARAMS_1                                            \
-  (3, (0, BOOST_PYTHON_MAX_ARITY, <boost / python / signature.hpp>))
+  (3, (0, BOOST_PYTHON_MAX_ARITY, <boost/python/signature.hpp>))
 
 #include BOOST_PP_ITERATE()
 
@@ -154,7 +154,7 @@ template <class C1, class C2> struct most_derived {
 #define BOOST_PYTHON_FN_CC __fastcall
 
 #define BOOST_PP_ITERATION_PARAMS_1                                            \
-  (3, (0, BOOST_PYTHON_MAX_ARITY, <boost / python / signature.hpp>))
+  (3, (0, BOOST_PYTHON_MAX_ARITY, <boost/python/signature.hpp>))
 
 #include BOOST_PP_ITERATE()
 
@@ -199,7 +199,7 @@ inline BOOST_PYTHON_LIST_INC(N)<RT BOOST_PP_ENUM_TRAILING_PARAMS_Z(
 #undef N
 
 #define BOOST_PP_ITERATION_PARAMS_2                                            \
-  (3, (0, 3, <boost / python / signature.hpp>))
+  (3, (0, 3, <boost/python/signature.hpp>))
 #include BOOST_PP_ITERATE()
 
 #else

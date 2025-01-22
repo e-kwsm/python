@@ -89,7 +89,7 @@ public:
   , converter::arg_to_python<A##n>(a##n).get()
 
 #define BOOST_PP_ITERATION_PARAMS_1                                            \
-  (3, (1, BOOST_PYTHON_MAX_ARITY, <boost / python / override.hpp>))
+  (3, (1, BOOST_PYTHON_MAX_ARITY, <boost/python/override.hpp>))
 #include BOOST_PP_ITERATE()
 
 #undef BOOST_PYTHON_fast_arg_to_python_get

@@ -104,7 +104,7 @@ static void name_space_def(NameSpaceT &name_space, char const *name, Func f,
 template <int N> struct define_stub_function {};
 
 #define BOOST_PP_ITERATION_PARAMS_1                                            \
-  (3, (0, BOOST_PYTHON_MAX_ARITY, <boost / python / detail / defaults_def.hpp>))
+  (3, (0, BOOST_PYTHON_MAX_ARITY, <boost/python/detail/defaults_def.hpp>))
 
 #include BOOST_PP_ITERATE()
 
