@@ -67,7 +67,7 @@ int check_slice_get_indices(
 {
     // A vector of integers from [-5, 5].
     std::vector<int> coll(11);
-    typedef std::vector<int>::iterator coll_iterator;
+    using coll_iterator = std::vector<int>::iterator;
     
     for (coll_iterator i = coll.begin(); i != coll.end(); ++i) {
         *i = i - coll.begin() - 5;
