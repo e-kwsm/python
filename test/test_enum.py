@@ -74,7 +74,7 @@ def run(args=None):
     if args is not None:
         sys.argv = args
     self = sys.modules.get(__name__)
-    if (hasattr(pickle, "HIGHEST_PROTOCOL")):
+    if hasattr(pickle, "HIGHEST_PROTOCOL"):
         self.__doc__ += exercise_pickling
     return doctest.testmod(self)
 
@@ -83,5 +83,6 @@ if __name__ == '__main__':
     print("running...")
     import sys
     status = run()[0]
-    if (status == 0): print("Done.")
+    if status == 0:
+        print("Done.")
     sys.exit(status)

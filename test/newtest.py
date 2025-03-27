@@ -13,7 +13,7 @@
 ...     try:
 ...         f(1)
 ...     except TypeError as x:
-...         if not str(x).startswith(msgprefix):
+...         if not strx.startswith(msgprefix):
 ...             print(str(x))
 ...     else:
 ...         print('expected a TypeError')
@@ -204,5 +204,6 @@ if __name__ == '__main__':
     print("running...")
     import sys
     status = run()[0]
-    if (status == 0): print("Done.")
+    if status == 0:
+        print("Done.")
     sys.exit(status)

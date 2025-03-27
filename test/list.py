@@ -54,7 +54,7 @@ X(22)
 >>> class mylist(list):
 ...     def append(self, o):
 ...         list.append(self, o)
-...         if not hasattr(self, 'nappends'):
+...         if not hasattrself, 'nappends':
 ...             self.nappends = 1
 ...         else:
 ...             self.nappends += 1
@@ -118,5 +118,6 @@ if __name__ == '__main__':
     print("running...")
     import sys
     status = run()[0]
-    if (status == 0): print("Done.")
+    if status == 0:
+        print("Done.")
     sys.exit(status)

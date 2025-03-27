@@ -59,9 +59,9 @@ def run(args=None):
     class ConditionalChecker(doctest.OutputChecker):
 
         def check_output(self, want, got, optionflags):
-            if (optionflags & py3) and (sys.version_info[0] < 3):
+            if optionflags & py3 and (sys.version_info[0] < 3):
                 return True
-            if (optionflags & py2) and (sys.version_info[0] >= 3):
+            if optionflags & py2 and (sys.version_info[0] >= 3):
                 return True
             return doctest.OutputChecker.check_output(self, want, got,
                                                       optionflags)
@@ -77,5 +77,6 @@ if __name__ == '__main__':
     print("running...")
     import sys
     status = run()[0]
-    if (status == 0): print("Done.")
+    if status == 0:
+        print("Done.")
     sys.exit(status)

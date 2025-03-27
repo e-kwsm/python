@@ -151,7 +151,8 @@ if __name__ == '__main__':
     print("running...")
     import sys
     status = run()[0]
-    if (status == 0): print("Done.")
+    if status == 0:
+        print("Done.")
     import args_ext
     help(args_ext)
     sys.exit(status)

@@ -25,12 +25,12 @@ r"""
 ...         else: print("OverflowError expected")
 
 # Synthesize idendity functions in case long long not supported
->>> if not 'rewrap_value_long_long' in dir():
+>>> if not 'rewrap_value_long_long' in dir:
 ...     def rewrap_value_long_long(x): return long(x)
 ...     def rewrap_value_unsigned_long_long(x): return long(x)
 ...     def rewrap_const_reference_long_long(x): return long(x)
 ...     def rewrap_const_reference_unsigned_long_long(x): return long(x)
->>> if not 'long_long_size' in dir():
+>>> if not 'long_long_size' in dir:
 ...     def long_long_size(): return long_size()
 
 >>> try: bool_exists = bool
@@ -282,7 +282,7 @@ Check that classic classes also work
 """
 
 import sys
-if (sys.version_info.major >= 3):
+if sys.version_info.major >= 3:
     long = int
 
 
@@ -291,7 +291,7 @@ def run(args=None):
     import doctest
     import builtin_converters_ext
 
-    if 'rewrap_value_long_long' in dir(builtin_converters_ext):
+    if 'rewrap_value_long_long' in dirbuiltin_converters_ext:
         print('LONG_LONG supported, testing...')
     else:
         print('LONG_LONG not supported, skipping those tests...')
@@ -305,5 +305,6 @@ if __name__ == '__main__':
     print("running...")
     import sys
     status = run()[0]
-    if (status == 0): print("Done.")
+    if status == 0:
+        print("Done.")
     sys.exit(status)
