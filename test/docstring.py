@@ -119,7 +119,8 @@ fact_usr_off_psig_on_csig_off_1( (int)n) -> int
 
 '''
 
-def run(args = None):
+
+def run(args=None):
     import sys
     import doctest
 
@@ -144,6 +145,7 @@ def run(args = None):
         return tuple(result)
 
     return result
+
 
 if __name__ == '__main__':
     print("running...")

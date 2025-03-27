@@ -29,10 +29,10 @@ yc = (z * y).sum() / z.sum()
 print("y centroid (should be ~ %f): %f" % (mu[1], yc))
 
 xx = (z * (x - xc)**2).sum() / z.sum()
-print("xx moment (should be ~ %f): %f" % (sigma[0,0], xx))
+print("xx moment (should be ~ %f): %f" % (sigma[0, 0], xx))
 
 yy = (z * (y - yc)**2).sum() / z.sum()
-print("yy moment (should be ~ %f): %f" % (sigma[1,1], yy))
+print("yy moment (should be ~ %f): %f" % (sigma[1, 1], yy))
 
 xy = 0.5 * (z * (x - xc) * (y - yc)).sum() / z.sum()
-print("xy moment (should be ~ %f): %f" % (sigma[0,1], xy))
+print("xy moment (should be ~ %f): %f" % (sigma[0, 1], xy))

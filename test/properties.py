@@ -51,7 +51,7 @@ class instance count from object
 >>> x1.instance_count_direct
 1
 
-class instance count from object: 
+class instance count from object:
 >>> x1.instance_count_injected
 1
 
@@ -61,12 +61,12 @@ Traceback (most recent call last):
     ...
 AttributeError: ...
 
-setting value_rw to 2. value_direct: 
+setting value_rw to 2. value_direct:
 >>> x1.value_rw = 2
 >>> x1.value_rw
 2
 
-setting value_direct to 3. value_direct: 
+setting value_direct to 3. value_direct:
 >>> x1.value_direct = 3
 >>> x1.value_direct
 3
@@ -111,14 +111,15 @@ after creating second intstance of X instances count is 2
 import properties_ext as properties
 
 
-def run(args = None):
+def run(args=None):
     import sys
     import doctest
 
     if args is not None:
         sys.argv = args
     return doctest.testmod(sys.modules.get(__name__))
-    
+
+
 if __name__ == '__main__':
     print("running...")
     import sys
