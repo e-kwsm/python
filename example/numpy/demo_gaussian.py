@@ -19,7 +19,7 @@ x, y = numpy.meshgrid(r, r)
 
 z = g(x, y)
 
-s = z.sum() * (r[1] - r[0])**2
+s = z.sum() * (r[1] - r[0]) ** 2
 print("sum (should be ~ 1):", s)
 
 xc = (z * x).sum() / z.sum()
@@ -28,11 +28,11 @@ print("x centroid (should be ~ %f): %f" % (mu[0], xc))
 yc = (z * y).sum() / z.sum()
 print("y centroid (should be ~ %f): %f" % (mu[1], yc))
 
-xx = (z * (x - xc)**2).sum() / z.sum()
-print("xx moment (should be ~ %f): %f" % (sigma[0,0], xx))
+xx = (z * (x - xc) ** 2).sum() / z.sum()
+print("xx moment (should be ~ %f): %f" % (sigma[0, 0], xx))
 
-yy = (z * (y - yc)**2).sum() / z.sum()
-print("yy moment (should be ~ %f): %f" % (sigma[1,1], yy))
+yy = (z * (y - yc) ** 2).sum() / z.sum()
+print("yy moment (should be ~ %f): %f" % (sigma[1, 1], yy))
 
 xy = 0.5 * (z * (x - xc) * (y - yc)).sum() / z.sum()
-print("xy moment (should be ~ %f): %f" % (sigma[0,1], xy))
+print("xy moment (should be ~ %f): %f" % (sigma[0, 1], xy))

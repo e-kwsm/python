@@ -9,6 +9,7 @@ import templates_ext
 import unittest
 import numpy
 
+
 class TestTemplates(unittest.TestCase):
 
     def testTemplates(self):
@@ -21,8 +22,9 @@ class TestTemplates(unittest.TestCase):
                 self.assertTrue((a1 == a2).all())
         a1 = numpy.zeros((12,), dtype=numpy.float64)
         self.assertRaises(TypeError, templates_ext.fill, a1)
-        a1 = numpy.zeros((12,2,3), dtype=numpy.float32)
+        a1 = numpy.zeros((12, 2, 3), dtype=numpy.float32)
         self.assertRaises(TypeError, templates_ext.fill, a1)
 
-if __name__=="__main__":
+
+if __name__ == "__main__":
     unittest.main()

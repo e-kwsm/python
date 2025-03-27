@@ -1,7 +1,7 @@
 # Copyright David Abrahams 2004. Distributed under the Boost
 # Software License, Version 1.0. (See accompanying
 # file LICENSE_1_0.txt or copy at http://www.boost.org/LICENSE_1_0.txt)
-'''
+"""
     >>> from extract_ext import *
 
 Just about anything has a truth value in Python
@@ -29,7 +29,7 @@ case because they wrap Python objects instead of being wrapped by them.
 
 Can't extract a list from a tuple. Use list(x) to convert a sequence
 to a list:
-    
+
     >>> assert not check_list((1, 2, 3))
     >>> assert check_list([1, 2, 3])
     >>> extract_list([1, 2, 3])
@@ -42,7 +42,7 @@ Can get a char const* from a Python string:
     'hello'
 
 Can't get a char const* from a Python int:
-    
+
     >>> assert not check_cstring(1)
     >>> try: x = extract_cstring(1)
     ... except TypeError: pass
@@ -89,19 +89,23 @@ General check for cleanliness:
     >>> del x
     >>> count_Xs()
     0
-'''
+"""
 
-def run(args = None):
+
+def run(args=None):
     import sys
     import doctest
 
     if args is not None:
         sys.argv = args
     return doctest.testmod(sys.modules.get(__name__))
-    
-if __name__ == '__main__':
+
+
+if __name__ == "__main__":
     print("running...")
     import sys
+
     status = run()[0]
-    if (status == 0): print("Done.")
+    if status == 0:
+        print("Done.")
     sys.exit(status)

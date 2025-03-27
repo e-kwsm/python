@@ -1,7 +1,7 @@
 # Copyright David Abrahams 2004. Distributed under the Boost
 # Software License, Version 1.0. (See accompanying
 # file LICENSE_1_0.txt or copy at http://www.boost.org/LICENSE_1_0.txt)
-'''
+"""
 >>> from boost_shared_ptr_ext import *
 
    Test that shared_ptr<Derived> can be converted to shared_ptr<Base>
@@ -112,9 +112,10 @@ bye
 >>> Y.release()
 >>> Y.count()
 0
-'''
+"""
 
-def run(args = None):
+
+def run(args=None):
     import sys
     import doctest
 
@@ -122,9 +123,12 @@ def run(args = None):
         sys.argv = args
     return doctest.testmod(sys.modules.get(__name__))
 
-if __name__ == '__main__':
+
+if __name__ == "__main__":
     print("running...")
     import sys
+
     status = run()[0]
-    if (status == 0): print("Done.")
+    if status == 0:
+        print("Done.")
     sys.exit(status)

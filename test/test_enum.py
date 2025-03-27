@@ -1,7 +1,7 @@
 # Copyright David Abrahams 2004. Distributed under the Boost
 # Software License, Version 1.0. (See accompanying
 # file LICENSE_1_0.txt or copy at http://www.boost.org/LICENSE_1_0.txt)
-'''
+"""
 >>> from enum_ext import *
 
 >>> identity(color.red) # in case of duplicated enums it always take the last enum
@@ -54,18 +54,19 @@ False
 True
 >>> hash(red) == hash(green)
 False
-'''
+"""
 
 # pickling of enums only works with Python 2.3 or higher
-exercise_pickling = '''
+exercise_pickling = """
 >>> import pickle
 >>> p = pickle.dumps(color.green, pickle.HIGHEST_PROTOCOL)
 >>> l = pickle.loads(p)
 >>> identity(l)
 enum_ext.color.green
-'''
+"""
 
-def run(args = None):
+
+def run(args=None):
     import sys
     import doctest
     import pickle
@@ -73,13 +74,16 @@ def run(args = None):
     if args is not None:
         sys.argv = args
     self = sys.modules.get(__name__)
-    if (hasattr(pickle, "HIGHEST_PROTOCOL")):
-      self.__doc__ += exercise_pickling
+    if hasattr(pickle, "HIGHEST_PROTOCOL"):
+        self.__doc__ += exercise_pickling
     return doctest.testmod(self)
 
-if __name__ == '__main__':
+
+if __name__ == "__main__":
     print("running...")
     import sys
+
     status = run()[0]
-    if (status == 0): print("Done.")
+    if status == 0:
+        print("Done.")
     sys.exit(status)

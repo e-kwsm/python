@@ -282,26 +282,31 @@ Check that classic classes also work
 """
 
 import sys
-if (sys.version_info.major >= 3):
+
+if sys.version_info.major >= 3:
     long = int
 
-def run(args = None):
+
+def run(args=None):
     import sys
     import doctest
     import builtin_converters_ext
 
-    if 'rewrap_value_long_long' in dir(builtin_converters_ext):
-        print('LONG_LONG supported, testing...')
+    if "rewrap_value_long_long" in dir(builtin_converters_ext):
+        print("LONG_LONG supported, testing...")
     else:
-        print('LONG_LONG not supported, skipping those tests...')
+        print("LONG_LONG not supported, skipping those tests...")
 
     if args is not None:
         sys.argv = args
     return doctest.testmod(sys.modules.get(__name__))
 
-if __name__ == '__main__':
+
+if __name__ == "__main__":
     print("running...")
     import sys
+
     status = run()[0]
-    if (status == 0): print("Done.")
+    if status == 0:
+        print("Done.")
     sys.exit(status)

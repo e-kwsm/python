@@ -51,7 +51,7 @@ class instance count from object
 >>> x1.instance_count_direct
 1
 
-class instance count from object: 
+class instance count from object:
 >>> x1.instance_count_injected
 1
 
@@ -61,12 +61,12 @@ Traceback (most recent call last):
     ...
 AttributeError: ...
 
-setting value_rw to 2. value_direct: 
+setting value_rw to 2. value_direct:
 >>> x1.value_rw = 2
 >>> x1.value_rw
 2
 
-setting value_direct to 3. value_direct: 
+setting value_direct to 3. value_direct:
 >>> x1.value_direct = 3
 >>> x1.value_direct
 3
@@ -107,21 +107,24 @@ after creating second intstance of X instances count is 2
 
 # FIXME: cases to cover: pointer-to-member, preconstructed function
 
-#import sys; sys.path.append(r'P:\Actimize4.0\smart_const\py_smart_const___Win32_Debug')
+# import sys; sys.path.append(r'P:\Actimize4.0\smart_const\py_smart_const___Win32_Debug')
 import properties_ext as properties
 
 
-def run(args = None):
+def run(args=None):
     import sys
     import doctest
 
     if args is not None:
         sys.argv = args
     return doctest.testmod(sys.modules.get(__name__))
-    
-if __name__ == '__main__':
+
+
+if __name__ == "__main__":
     print("running...")
     import sys
+
     status = run()[0]
-    if (status == 0): print("Done.")
+    if status == 0:
+        print("Done.")
     sys.exit(status)

@@ -1,7 +1,7 @@
 # Copyright Joel de Guzman 2004. Distributed under the Boost
 # Software License, Version 1.0. (See accompanying
 # file LICENSE_1_0.txt or copy at http://www.boost.org/LICENSE_1_0.txt)
-'''
+"""
 
 #####################################################################
 # Check an object that we will use as container element
@@ -20,7 +20,7 @@ foo
 
 # test that a string is implicitly convertible
 # to an X
->>> x_value('bochi bochi') 
+>>> x_value('bochi bochi')
 'gotya bochi bochi'
 
 #####################################################################
@@ -28,9 +28,9 @@ foo
 #####################################################################
 >>> def print_xvec(xvec):
 ...     s = '[ '
-...     for x in xvec: 
+...     for x in xvec:
 ...         s += repr(x)
-...         s += ' ' 
+...         s += ' '
 ...     s += ']'
 ...     print(s)
 
@@ -171,19 +171,19 @@ reset
 [ trailing stuff ]
 
 #####################################################################
-# Slice: insert a tuple to [0:0] 
+# Slice: insert a tuple to [0:0]
 #####################################################################
 >>> v[0:0] = ('leading','stuff') # can also be a tuple
 >>> print_xvec(v)
 [ leading stuff trailing stuff ]
 
 #####################################################################
-# Reset the container again 
+# Reset the container again
 #####################################################################
 >>> v[:] = ['a','b','c','d','e']
 
 #####################################################################
-# Some references to the container elements 
+# Some references to the container elements
 #####################################################################
 >>> z0 = v[0]
 >>> z1 = v[1]
@@ -203,7 +203,7 @@ d
 e
 
 #####################################################################
-# Delete a container element 
+# Delete a container element
 #####################################################################
 
 >>> del v[2]
@@ -211,7 +211,7 @@ e
 [ a b d e ]
 
 #####################################################################
-# Show that the references are still valid 
+# Show that the references are still valid
 #####################################################################
 >>> z0 # proxy
 a
@@ -232,7 +232,7 @@ e
 [ ]
 
 #####################################################################
-# Show that the references are still valid 
+# Show that the references are still valid
 #####################################################################
 >>> z0 # proxy detached
 a
@@ -246,12 +246,12 @@ d
 e
 
 #####################################################################
-# Reset the container again 
+# Reset the container again
 #####################################################################
 >>> v[:] = ['a','b','c','d','e']
 
 #####################################################################
-# renew the references to the container elements 
+# renew the references to the container elements
 #####################################################################
 >>> z0 = v[0]
 >>> z1 = v[1]
@@ -271,14 +271,14 @@ d
 e
 
 #####################################################################
-# Set [2:4] to a list such that there will be more elements 
+# Set [2:4] to a list such that there will be more elements
 #####################################################################
 >>> v[2:4] = ['x','y','v']
 >>> print_xvec(v)
 [ a b x y v e ]
 
 #####################################################################
-# Show that the references are still valid 
+# Show that the references are still valid
 #####################################################################
 >>> z0 # proxy
 a
@@ -373,13 +373,13 @@ e
 a
 
 #####################################################################
-# END.... 
+# END....
 #####################################################################
 
-'''
+"""
 
 
-def run(args = None):
+def run(args=None):
     import sys
     import doctest
 
@@ -387,14 +387,12 @@ def run(args = None):
         sys.argv = args
     return doctest.testmod(sys.modules.get(__name__))
 
-if __name__ == '__main__':
-    print('running...')
+
+if __name__ == "__main__":
+    print("running...")
     import sys
+
     status = run()[0]
-    if (status == 0): print("Done.")
+    if status == 0:
+        print("Done.")
     sys.exit(status)
-
-
-
-
-
