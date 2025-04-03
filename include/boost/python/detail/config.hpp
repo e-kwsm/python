@@ -35,25 +35,26 @@
 
 #if defined(BOOST_MSVC)
 
-#  pragma warning (disable : 4786) // disable truncated debug symbols
-#  pragma warning (disable : 4251) // disable exported dll function
-#  pragma warning (disable : 4800) //'int' : forcing value to bool 'true' or 'false'
-#  pragma warning (disable : 4275) // non dll-interface class
+#pragma warning(disable : 4786) // disable truncated debug symbols
+#pragma warning(disable : 4251) // disable exported dll function
+#pragma warning(disable : 4800) // 'int' : forcing value to bool
+                                // 'true' or 'false'
+#pragma warning(disable : 4275) // non dll-interface class
 
-# elif defined(__ICL) && __ICL < 600 // Intel C++ 5
+#elif defined(__ICL) && __ICL < 600 // Intel C++ 5
 
-#  pragma warning(disable: 985) // identifier was truncated in debug information
+#pragma warning(disable : 985) // identifier was truncated in debug information
 
-# endif
+#endif
 
 // The STLport puts all of the standard 'C' library names in std (as far as the
 // user is concerned), but without it you need a fix if you're using MSVC or
 // Intel C++
-# if defined(BOOST_NO_STDC_NAMESPACE)
-#  define BOOST_CSTD_
-# else
-#  define BOOST_CSTD_ std
-# endif
+#if defined(BOOST_NO_STDC_NAMESPACE)
+#define BOOST_CSTD_
+#else
+#define BOOST_CSTD_ std
+#endif
 
 /*****************************************************************************
  *
