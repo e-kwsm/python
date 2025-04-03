@@ -114,30 +114,31 @@ template <unsigned> struct caller_arity;
 
 template <class F, class CallPolicies, class Sig> struct caller;
 
-#  define BOOST_PYTHON_NEXT(init,name,n)                                                        \
-    typedef BOOST_PP_IF(n,typename mpl::next< BOOST_PP_CAT(name,BOOST_PP_DEC(n)) >::type, init) name##n;
+#define BOOST_PYTHON_NEXT(init, name, n)                                       \
+  typedef BOOST_PP_IF(                                                         \
+      n, typename mpl::next<BOOST_PP_CAT(name, BOOST_PP_DEC(n))>::type, init)  \
+      name##n;
 
-#  define BOOST_PYTHON_ARG_CONVERTER(n)                                         \
-     BOOST_PYTHON_NEXT(typename mpl::next<first>::type, arg_iter,n)             \
-     typedef arg_from_python<BOOST_DEDUCED_TYPENAME arg_iter##n::type> c_t##n;  \
-     c_t##n c##n(get(mpl::int_<n>(), inner_args));                              \
-     if (!c##n.convertible())                                                   \
-          return 0;
+#define BOOST_PYTHON_ARG_CONVERTER(n)                                          \
+  BOOST_PYTHON_NEXT(typename mpl::next<first>::type, arg_iter, n)              \
+  typedef arg_from_python<BOOST_DEDUCED_TYPENAME arg_iter##n::type> c_t##n;    \
+  c_t##n c##n(get(mpl::int_<n>(), inner_args));                                \
+  if (!c##n.convertible())                                                     \
+    return 0;
 
-#  define BOOST_PP_ITERATION_PARAMS_1                                            \
-        (3, (0, BOOST_PYTHON_MAX_ARITY + 1, <boost/python/detail/caller.hpp>))
-#  include BOOST_PP_ITERATE()
+#define BOOST_PP_ITERATION_PARAMS_1                                            \
+  (3, (0, BOOST_PYTHON_MAX_ARITY + 1, <boost/python/detail/caller.hpp>))
+#include BOOST_PP_ITERATE()
 
-#  undef BOOST_PYTHON_ARG_CONVERTER
-#  undef BOOST_PYTHON_NEXT
+#undef BOOST_PYTHON_ARG_CONVERTER
+#undef BOOST_PYTHON_NEXT
 
 // A metafunction returning the base class used for caller<class F,
 // class ConverterGenerators, class CallPolicies, class Sig>.
-template <class F, class CallPolicies, class Sig>
-struct caller_base_select
-{
-    enum { arity = mpl::size<Sig>::value - 1 };
-    typedef typename caller_arity<arity>::template impl<F,CallPolicies,Sig> type;
+template <class F, class CallPolicies, class Sig> struct caller_base_select {
+  enum { arity = mpl::size<Sig>::value - 1 };
+  typedef typename caller_arity<arity>::template impl<F, CallPolicies, Sig>
+      type;
 };
 
 // A function object type which wraps C++ objects as Python callable
@@ -159,17 +160,12 @@ struct caller_base_select
 //      beginning with a result type and continuing with a list of
 //      argument types.
 template <class F, class CallPolicies, class Sig>
-struct caller
-    : caller_base_select<F,CallPolicies,Sig>::type
-{
-    typedef typename caller_base_select<
-        F,CallPolicies,Sig
-        >::type base;
+struct caller : caller_base_select<F, CallPolicies, Sig>::type {
+  typedef typename caller_base_select<F, CallPolicies, Sig>::type base;
 
-    typedef PyObject* result_type;
-    
-    caller(F f, CallPolicies p) : base(f,p) {}
+  typedef PyObject *result_type;
 
+  caller(F f, CallPolicies p) : base(f, p) {}
 };
 
 } // namespace detail
