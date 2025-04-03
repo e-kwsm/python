@@ -4,11 +4,12 @@
 // http://www.boost.org/LICENSE_1_0.txt)
 
 #ifndef BOOST_PYTHON_SSIZE_T_RWGK20060924_HPP
-# define BOOST_PYTHON_SSIZE_T_RWGK20060924_HPP
+#define BOOST_PYTHON_SSIZE_T_RWGK20060924_HPP
 
-# include <boost/python/detail/prefix.hpp>
+#include <boost/python/detail/prefix.hpp>
 
-namespace boost { namespace python {
+namespace boost {
+namespace python {
 
 #if PY_VERSION_HEX >= 0x02050000
 
@@ -24,6 +25,7 @@ ssize_t const ssize_t_min = INT_MIN;
 
 #endif
 
-}} // namespace boost::python
+} // namespace python
+} // namespace boost
 
 #endif // BOOST_PYTHON_SSIZE_T_RWGK20060924_HPP
