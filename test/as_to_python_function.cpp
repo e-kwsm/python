@@ -5,9 +5,9 @@
 
 #include <boost/python/converter/as_to_python_function.hpp>
 
-struct hopefully_illegal
-{
-    static PyObject* convert(int&);
+struct hopefully_illegal {
+  static PyObject *convert(int &);
 };
 
-PyObject* x = boost::python::converter::as_to_python_function<int, hopefully_illegal>::convert(0);
+PyObject *x = boost::python::converter::as_to_python_function<
+    int, hopefully_illegal>::convert(0);
