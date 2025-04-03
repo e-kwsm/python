@@ -62,76 +62,57 @@ typedef int void_result_to_python;
 // converting the result to python.
 template <class Policies, class Result>
 struct select_result_converter
-  : mpl::eval_if<
-        is_same<Result,void>
-      , mpl::identity<void_result_to_python>
-      , mpl::apply1<typename Policies::result_converter,Result>
-    >
-{
-};
+    : mpl::eval_if<is_same<Result, void>, mpl::identity<void_result_to_python>,
+                   mpl::apply1<typename Policies::result_converter, Result>> {};
 
 template <class ArgPackage, class ResultConverter>
-inline ResultConverter create_result_converter(
-    ArgPackage const& args_
-  , ResultConverter*
-  , converter::context_result_converter*
-)
-{
-    return ResultConverter(args_);
+inline ResultConverter
+create_result_converter(ArgPackage const &args_, ResultConverter *,
+                        converter::context_result_converter *) {
+  return ResultConverter(args_);
 }
-    
+
 template <class ArgPackage, class ResultConverter>
-inline ResultConverter create_result_converter(
-    ArgPackage const&
-  , ResultConverter*
-  , ...
-)
-{
-    return ResultConverter();
+inline ResultConverter create_result_converter(ArgPackage const &,
+                                               ResultConverter *, ...) {
+  return ResultConverter();
 }
 
 #ifndef BOOST_PYTHON_NO_PY_SIGNATURES
-template <class ResultConverter>
-struct converter_target_type 
-{
-    static PyTypeObject const *get_pytype()
-    {
-        return create_result_converter((PyObject*)0, (ResultConverter *)0, (ResultConverter *)0).get_pytype();
-    }
+template <class ResultConverter> struct converter_target_type {
+  static PyTypeObject const *get_pytype() {
+    return create_result_converter((PyObject *)0, (ResultConverter *)0,
+                                   (ResultConverter *)0)
+        .get_pytype();
+  }
 };
 
-template < >
-struct converter_target_type <void_result_to_python >
-{
-    static PyTypeObject const *get_pytype()
-    {
-        return 0;
-    }
+template <> struct converter_target_type<void_result_to_python> {
+  static PyTypeObject const *get_pytype() { return 0; }
 };
 
-// Generation of ret moved from caller_arity<N>::impl::signature to here due to "feature" in MSVC 15.7.2 with /O2
-// which left the ret uninitialized and caused segfaults in Python interpreter.
-template<class Policies, class Sig> const signature_element* get_ret()
-{
-    typedef BOOST_DEDUCED_TYPENAME Policies::template extract_return_type<Sig>::type rtype;
-    typedef typename select_result_converter<Policies, rtype>::type result_converter;
+// Generation of ret moved from caller_arity<N>::impl::signature to here due to
+// "feature" in MSVC 15.7.2 with /O2 which left the ret uninitialized and caused
+// segfaults in Python interpreter.
+template <class Policies, class Sig> const signature_element *get_ret() {
+  typedef BOOST_DEDUCED_TYPENAME
+      Policies::template extract_return_type<Sig>::type rtype;
+  typedef
+      typename select_result_converter<Policies, rtype>::type result_converter;
 
-    static const signature_element ret = {
-        (is_void<rtype>::value ? "void" : type_id<rtype>().name())
-        , &detail::converter_target_type<result_converter>::get_pytype
-        , boost::detail::indirect_traits::is_reference_to_non_const<rtype>::value 
-    };
+  static const signature_element ret = {
+      (is_void<rtype>::value ? "void" : type_id<rtype>().name()),
+      &detail::converter_target_type<result_converter>::get_pytype,
+      boost::detail::indirect_traits::is_reference_to_non_const<rtype>::value};
 
-    return &ret;
+  return &ret;
 }
 
 #endif
 
-    
 template <unsigned> struct caller_arity;
 
-template <class F, class CallPolicies, class Sig>
-struct caller;
+template <class F, class CallPolicies, class Sig> struct caller;
 
 #  define BOOST_PYTHON_NEXT(init,name,n)                                                        \
     typedef BOOST_PP_IF(n,typename mpl::next< BOOST_PP_CAT(name,BOOST_PP_DEC(n)) >::type, init) name##n;
