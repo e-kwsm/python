@@ -7,21 +7,14 @@
 //  producing this work.
 
 #ifndef NONE_DWA_052000_H_
-#define NONE_DWA_052000_H_
+# define NONE_DWA_052000_H_
 
-#include <boost/python/detail/prefix.hpp>
+# include <boost/python/detail/prefix.hpp>
 
-namespace boost {
-namespace python {
-namespace detail {
+namespace boost { namespace python { namespace detail {
 
-inline PyObject *none() {
-  Py_INCREF(Py_None);
-  return Py_None;
-}
-
-} // namespace detail
-} // namespace python
-} // namespace boost
+inline PyObject* none() { Py_INCREF(Py_None); return Py_None; }
+    
+}}} // namespace boost::python::detail
 
 #endif // NONE_DWA_052000_H_

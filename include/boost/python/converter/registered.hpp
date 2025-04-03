@@ -14,9 +14,9 @@
 #include <boost/detail/workaround.hpp>
 #include <boost/type.hpp>
 #include <memory>
-#if defined(BOOST_PYTHON_TRACE_REGISTRY) ||                                    \
-    defined(BOOST_PYTHON_CONVERTER_REGISTRY_APPLE_MACH_WORKAROUND)
-#include <iostream>
+#if defined(BOOST_PYTHON_TRACE_REGISTRY) \
+ || defined(BOOST_PYTHON_CONVERTER_REGISTRY_APPLE_MACH_WORKAROUND)
+# include <iostream>
 #endif
 
 namespace boost {
@@ -26,73 +26,99 @@ namespace boost {
 // implement special shared_ptr handling for rvalue conversions.
 template <class T> class shared_ptr;
 
-namespace python {
-namespace converter {
+namespace python { namespace converter { 
 
 struct registration;
 
-namespace detail {
-template <class T> struct registered_base {
-  static registration const &converters;
-};
-} // namespace detail
+namespace detail
+{
+  template <class T>
+  struct registered_base
+  {
+      static registration const& converters;
+  };
+}
 
 template <class T>
 struct registered
-    : detail::registered_base<
-          typename boost::python::detail::add_lvalue_reference<
-              typename boost::python::detail::add_cv<T>::type>::type> {};
+  : detail::registered_base<
+        typename boost::python::detail::add_lvalue_reference<
+            typename boost::python::detail::add_cv<T>::type
+        >::type
+    >
+{
+};
 
-#if !BOOST_WORKAROUND(BOOST_MSVC, BOOST_TESTED_AT(1310))
+# if !BOOST_WORKAROUND(BOOST_MSVC, BOOST_TESTED_AT(1310))
 // collapses a few more types to the same static instance.  MSVC7.1
 // fails to strip cv-qualification from array types in typeid.  For
 // some reason we can't use this collapse there or array converters
 // will not be found.
-template <class T> struct registered<T &> : registered<T> {};
-#endif
+template <class T>
+struct registered<T&>
+  : registered<T> {};
+# endif
 
 //
 // implementations
 //
-namespace detail {
-inline void register_shared_ptr0(...) {}
-
-template <class T> inline void register_shared_ptr0(shared_ptr<T> *) {
-  registry::lookup_shared_ptr(type_id<shared_ptr<T>>());
-}
+namespace detail
+{
+  inline void
+  register_shared_ptr0(...)
+  {
+  }
+  
+  template <class T>
+  inline void
+  register_shared_ptr0(shared_ptr<T>*)
+  {
+      registry::lookup_shared_ptr(type_id<shared_ptr<T> >());
+  }
 
 #if !defined(BOOST_NO_CXX11_SMART_PTR)
-template <class T> inline void register_shared_ptr0(std::shared_ptr<T> *) {
-  registry::lookup_shared_ptr(type_id<std::shared_ptr<T>>());
-}
+  template <class T>
+  inline void
+  register_shared_ptr0(std::shared_ptr<T>*)
+  {
+      registry::lookup_shared_ptr(type_id<std::shared_ptr<T> >());
+  }
 #endif
 
-template <class T> inline void register_shared_ptr1(T const volatile *) {
-  detail::register_shared_ptr0((T *)0);
+  template <class T>
+  inline void
+  register_shared_ptr1(T const volatile*)
+  {
+      detail::register_shared_ptr0((T*)0);
+  }
+  
+  template <class T>
+  inline registration const& 
+  registry_lookup2(T&(*)())
+  {
+      detail::register_shared_ptr1((T*)0);
+      return registry::lookup(type_id<T&>());
+  }
+
+  template <class T>
+  inline registration const& 
+  registry_lookup1(type<T>)
+  {
+      return registry_lookup2((T(*)())0);
+  }
+
+  inline registration const& 
+  registry_lookup1(type<const volatile void>)
+  {
+      detail::register_shared_ptr1((void*)0);
+      return registry::lookup(type_id<void>());
+  }
+
+  template <class T>
+  registration const& registered_base<T>::converters = detail::registry_lookup1(type<T>());
+
 }
 
-template <class T> inline registration const &registry_lookup2(T &(*)()) {
-  detail::register_shared_ptr1((T *)0);
-  return registry::lookup(type_id<T &>());
-}
-
-template <class T> inline registration const &registry_lookup1(type<T>) {
-  return registry_lookup2((T(*)())0);
-}
-
-inline registration const &registry_lookup1(type<const volatile void>) {
-  detail::register_shared_ptr1((void *)0);
-  return registry::lookup(type_id<void>());
-}
-
-template <class T>
-registration const &registered_base<T>::converters =
-    detail::registry_lookup1(type<T>());
-
-} // namespace detail
-
-} // namespace converter
-} // namespace python
-} // namespace boost
+}}} // namespace boost::python::converter
 
 #endif

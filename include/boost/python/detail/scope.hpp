@@ -3,19 +3,14 @@
 // accompanying file LICENSE_1_0.txt or copy at
 // http://www.boost.org/LICENSE_1_0.txt)
 #ifndef SCOPE_DWA2002927_HPP
-#define SCOPE_DWA2002927_HPP
+# define SCOPE_DWA2002927_HPP
 
-#include <boost/python/detail/config.hpp>
+# include <boost/python/detail/config.hpp>
 
-namespace boost {
-namespace python {
-namespace detail {
+namespace boost { namespace python { namespace detail {
 
-void BOOST_PYTHON_DECL scope_setattr_doc(char const *name, object const &obj,
-                                         char const *doc);
+void BOOST_PYTHON_DECL scope_setattr_doc(char const* name, object const& obj, char const* doc);
 
-}
-} // namespace python
-} // namespace boost
+}}} // namespace boost::python::detail
 
 #endif // SCOPE_DWA2002927_HPP
