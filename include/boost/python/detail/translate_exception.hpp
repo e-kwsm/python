@@ -3,16 +3,18 @@
 // accompanying file LICENSE_1_0.txt or copy at
 // http://www.boost.org/LICENSE_1_0.txt)
 #ifndef TRANSLATE_EXCEPTION_TDS20091020_HPP
-# define TRANSLATE_EXCEPTION_TDS20091020_HPP
+#define TRANSLATE_EXCEPTION_TDS20091020_HPP
 
-# include <boost/python/detail/exception_handler.hpp>
-# include <boost/python/detail/type_traits.hpp>
+#include <boost/python/detail/exception_handler.hpp>
+#include <boost/python/detail/type_traits.hpp>
 
-# include <boost/call_traits.hpp>
+#include <boost/call_traits.hpp>
 
-# include <boost/function/function0.hpp>
+#include <boost/function/function0.hpp>
 
-namespace boost { namespace python { namespace detail { 
+namespace boost {
+namespace python {
+namespace detail {
 
 // A ternary function object used to translate C++ exceptions of type
 // ExceptionType into Python exceptions by invoking an object of type
@@ -62,6 +64,8 @@ struct translate_exception
     }
 };
 
-}}} // namespace boost::python::detail
+} // namespace detail
+} // namespace python
+} // namespace boost
 
 #endif // TRANSLATE_EXCEPTION_DWA2002810_HPP
