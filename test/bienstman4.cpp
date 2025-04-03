@@ -11,29 +11,27 @@
 
 struct Type1 {};
 
-struct Term {Term(Type1 const&) {} };
+struct Term {
+  Term(Type1 const &) {}
+};
 
-struct Expression {void add(Term const&) {} };
+struct Expression {
+  void add(Term const &) {}
+};
 
-BOOST_PYTHON_MODULE(bienstman4_ext)
-{
+BOOST_PYTHON_MODULE(bienstman4_ext) {
   using namespace boost::python;
   using boost::mpl::list;
 
-  implicitly_convertible<Type1,Term>();
+  implicitly_convertible<Type1, Term>();
 
-  class_<Expression>("Expression")
-      .def("add", &Expression::add)
-      ;
-  
-  class_<Type1>("T1")
-      ;
-  
-  class_<Term>("Term", init<Type1&>())
-      ;
-  
+  class_<Expression>("Expression").def("add", &Expression::add);
+
+  class_<Type1>("T1");
+
+  class_<Term>("Term", init<Type1 &>());
+
   Type1 t1;
   Expression e;
   e.add(t1);
 }
-

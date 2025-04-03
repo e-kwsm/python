@@ -8,26 +8,21 @@
 
 using namespace boost::python;
 
-template <class T>
-void assert_borrowed_ptr(T const&)
-{
-    BOOST_STATIC_ASSERT(boost::python::detail::is_borrowed_ptr<T>::value);
+template <class T> void assert_borrowed_ptr(T const &) {
+  BOOST_STATIC_ASSERT(boost::python::detail::is_borrowed_ptr<T>::value);
 }
-    
-template <class T>
-void assert_not_borrowed_ptr(T const&)
-{
-    BOOST_STATIC_ASSERT(!boost::python::detail::is_borrowed_ptr<T>::value);
+
+template <class T> void assert_not_borrowed_ptr(T const &) {
+  BOOST_STATIC_ASSERT(!boost::python::detail::is_borrowed_ptr<T>::value);
 }
-    
-int main()
-{
-    assert_borrowed_ptr(borrowed((PyObject*)0));
-    assert_borrowed_ptr(borrowed((PyTypeObject*)0));
-    assert_borrowed_ptr((detail::borrowed<PyObject> const*)0);
-    assert_borrowed_ptr((detail::borrowed<PyObject> volatile*)0);
-    assert_borrowed_ptr((detail::borrowed<PyObject> const volatile*)0);
-    assert_not_borrowed_ptr((PyObject*)0);
-    assert_not_borrowed_ptr(0);
-    return 0;
+
+int main() {
+  assert_borrowed_ptr(borrowed((PyObject *)0));
+  assert_borrowed_ptr(borrowed((PyTypeObject *)0));
+  assert_borrowed_ptr((detail::borrowed<PyObject> const *)0);
+  assert_borrowed_ptr((detail::borrowed<PyObject> volatile *)0);
+  assert_borrowed_ptr((detail::borrowed<PyObject> const volatile *)0);
+  assert_not_borrowed_ptr((PyObject *)0);
+  assert_not_borrowed_ptr(0);
+  return 0;
 }

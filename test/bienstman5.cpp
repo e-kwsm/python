@@ -10,14 +10,12 @@
 
 #include <complex>
 
-struct M {M(const std::complex<double>&) {} };
+struct M {
+  M(const std::complex<double> &) {}
+};
 
-BOOST_PYTHON_MODULE(bienstman5_ext)
-{
+BOOST_PYTHON_MODULE(bienstman5_ext) {
   using namespace boost::python;
 
-  class_<M>("M", init<std::complex<double> const&>())
-      ;
+  class_<M>("M", init<std::complex<double> const &>());
 }
-
-
