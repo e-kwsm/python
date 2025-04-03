@@ -15,7 +15,9 @@
 #include <boost/python/numpy/invoke_matching.hpp>
 #include <boost/python/numpy/config.hpp>
 
-namespace boost { namespace python { namespace numpy {
+namespace boost {
+namespace python {
+namespace numpy {
 
 /**
  *  @brief Initialize the Numpy C-API
@@ -27,8 +29,10 @@ namespace boost { namespace python { namespace numpy {
  *            and "import_ufunc()", and then calls
  *            dtype::register_scalar_converters().
  */
-BOOST_NUMPY_DECL void initialize(bool register_scalar_converters=true);
+BOOST_NUMPY_DECL void initialize(bool register_scalar_converters = true);
 
-}}} // namespace boost::python::numpy
+} // namespace numpy
+} // namespace python
+} // namespace boost
 
 #endif
