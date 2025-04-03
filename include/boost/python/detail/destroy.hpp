@@ -3,11 +3,13 @@
 // accompanying file LICENSE_1_0.txt or copy at
 // http://www.boost.org/LICENSE_1_0.txt)
 #ifndef DESTROY_DWA2002221_HPP
-# define DESTROY_DWA2002221_HPP
+#define DESTROY_DWA2002221_HPP
 
-# include <boost/python/detail/type_traits.hpp>
-# include <boost/detail/workaround.hpp>
-namespace boost { namespace python { namespace detail { 
+#include <boost/python/detail/type_traits.hpp>
+#include <boost/detail/workaround.hpp>
+namespace boost {
+namespace python {
+namespace detail {
 
 template <bool array> struct value_destroyer;
     
@@ -58,6 +60,8 @@ inline void destroy_referent(void* p, T(*)() = 0)
     destroy_referent_impl(p, (T(*)())0);
 }
 
-}}} // namespace boost::python::detail
+} // namespace detail
+} // namespace python
+} // namespace boost
 
 #endif // DESTROY_DWA2002221_HPP

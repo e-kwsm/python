@@ -3,10 +3,12 @@
 // accompanying file LICENSE_1_0.txt or copy at
 // http://www.boost.org/LICENSE_1_0.txt)
 #ifndef IF_ELSE_DWA2002322_HPP
-# define IF_ELSE_DWA2002322_HPP
-# include <boost/config.hpp>
+#define IF_ELSE_DWA2002322_HPP
+#include <boost/config.hpp>
 
-namespace boost { namespace python { namespace detail { 
+namespace boost {
+namespace python {
+namespace detail {
 
 template <class T> struct elif_selected;
 
@@ -76,6 +78,8 @@ struct if_<false>
     };
 };
 
-}}} // namespace boost::python::detail
+} // namespace detail
+} // namespace python
+} // namespace boost
 
 #endif // IF_ELSE_DWA2002322_HPP
