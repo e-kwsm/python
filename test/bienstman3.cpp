@@ -5,22 +5,18 @@
 #include <boost/python/def.hpp>
 #include <boost/python/class.hpp>
 
-struct V 
-{
- virtual ~V() {}; // silence compiler warningsa
- virtual void f() = 0;
+struct V {
+  virtual ~V() {} // silence compiler warningsa
+  virtual void f() = 0;
 };
 
-struct B 
-{
-    B(const V&) {}    
+struct B {
+  B(const V &) {}
 };
 
-BOOST_PYTHON_MODULE(bienstman3_ext)
-{
+BOOST_PYTHON_MODULE(bienstman3_ext) {
   using namespace boost::python;
 
   class_<V, boost::noncopyable>("V", no_init);
-  class_<B>("B", init<const V&>());
-
+  class_<B>("B", init<const V &>());
 }

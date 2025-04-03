@@ -9,32 +9,28 @@
 
 struct A {};
 
-struct V 
-{
- virtual ~V() {}; // silence compiler warningsa
- virtual void f() = 0;
+struct V {
+  virtual ~V() {} // silence compiler warningsa
+  virtual void f() = 0;
 
- const A* inside() {return &a;}
+  const A *inside() { return &a; }
 
- A a;
+  A a;
 };
 
-const A* outside(const V& v) {return &v.a;}
+const A *outside(const V &v) { return &v.a; }
 
-BOOST_PYTHON_MODULE(bienstman1_ext)
-{
+BOOST_PYTHON_MODULE(bienstman1_ext) {
   using namespace boost::python;
   using boost::shared_ptr;
-  using boost::python::return_value_policy;
   using boost::python::reference_existing_object;
+  using boost::python::return_value_policy;
 
   class_<A>("A");
 
   class_<V, boost::noncopyable>("V", no_init)
-      .def("inside", &V::inside, 
+      .def("inside", &V::inside,
            return_value_policy<reference_existing_object>())
-      .def("outside", outside, 
-           return_value_policy<reference_existing_object>())
-      ;
+      .def("outside", outside,
+           return_value_policy<reference_existing_object>());
 }
-
