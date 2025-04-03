@@ -12,52 +12,32 @@ namespace python {
 namespace detail {
 
 template <bool array> struct value_destroyer;
-    
-template <>
-struct value_destroyer<false>
-{
-    template <class T>
-    static void execute(T const volatile* p)
-    {
-        p->~T();
-    }
+
+template <> struct value_destroyer<false> {
+  template <class T> static void execute(T const volatile *p) { p->~T(); }
 };
 
-template <>
-struct value_destroyer<true>
-{
-    template <class A, class T>
-    static void execute(A*, T const volatile* const first)
-    {
-        for (T const volatile* p = first; p != first + sizeof(A)/sizeof(T); ++p)
-        {
-            value_destroyer<
-                is_array<T>::value
-            >::execute(p);
-        }
+template <> struct value_destroyer<true> {
+  template <class A, class T>
+  static void execute(A *, T const volatile *const first) {
+    for (T const volatile *p = first; p != first + sizeof(A) / sizeof(T); ++p) {
+      value_destroyer<is_array<T>::value>::execute(p);
     }
-    
-    template <class T>
-    static void execute(T const volatile* p)
-    {
-        execute(p, *p);
-    }
+  }
+
+  template <class T> static void execute(T const volatile *p) {
+    execute(p, *p);
+  }
 };
 
-template <class T>
-inline void destroy_referent_impl(void* p, T& (*)())
-{
-    // note: cv-qualification needed for MSVC6
-    // must come *before* T for metrowerks
-    value_destroyer<
-         (is_array<T>::value)
-    >::execute((const volatile T*)p);
+template <class T> inline void destroy_referent_impl(void *p, T &(*)()) {
+  // note: cv-qualification needed for MSVC6
+  // must come *before* T for metrowerks
+  value_destroyer<(is_array<T>::value)>::execute((const volatile T *)p);
 }
 
-template <class T>
-inline void destroy_referent(void* p, T(*)() = 0)
-{
-    destroy_referent_impl(p, (T(*)())0);
+template <class T> inline void destroy_referent(void *p, T (*)() = 0) {
+  destroy_referent_impl(p, (T(*)())0);
 }
 
 } // namespace detail
