@@ -5,23 +5,25 @@
 // accompanying file LICENSE_1_0.txt or copy at
 // http://www.boost.org/LICENSE_1_0.txt)
 
-# ifndef RESULT_DWA2002521_HPP
-#  define RESULT_DWA2002521_HPP
+#ifndef RESULT_DWA2002521_HPP
+#define RESULT_DWA2002521_HPP
 
-#  include <boost/type.hpp>
+#include <boost/type.hpp>
 
-#  include <boost/python/detail/preprocessor.hpp>
-#  include <boost/python/detail/type_traits.hpp>
+#include <boost/python/detail/preprocessor.hpp>
+#include <boost/python/detail/type_traits.hpp>
 
-#  include <boost/mpl/if.hpp>
+#include <boost/mpl/if.hpp>
 
-#  include <boost/preprocessor/comma_if.hpp>
-#  include <boost/preprocessor/iterate.hpp>
-#  include <boost/preprocessor/debug/line.hpp>
-#  include <boost/preprocessor/enum_params.hpp>
-#  include <boost/preprocessor/repetition/enum_trailing_params.hpp>
+#include <boost/preprocessor/comma_if.hpp>
+#include <boost/preprocessor/iterate.hpp>
+#include <boost/preprocessor/debug/line.hpp>
+#include <boost/preprocessor/enum_params.hpp>
+#include <boost/preprocessor/repetition/enum_trailing_params.hpp>
 
-namespace boost { namespace python { namespace detail {
+namespace boost {
+namespace python {
+namespace detail {
 
 // Defines a family of overloaded function which, given x, a function
 // pointer, member [function] pointer, or an AdaptableFunction object,
@@ -32,56 +34,55 @@ namespace boost { namespace python { namespace detail {
 // an AdaptableFunction object, you must pass OL as a second argument
 // to get this to work portably.
 
-#  define BOOST_PP_ITERATION_PARAMS_1                                                                   \
-    (4, (0, BOOST_PYTHON_MAX_ARITY, <boost/python/detail/result.hpp>, BOOST_PYTHON_FUNCTION_POINTER))
-#  include BOOST_PP_ITERATE()
+#define BOOST_PP_ITERATION_PARAMS_1                                            \
+  (4, (0, BOOST_PYTHON_MAX_ARITY, <boost/python/detail/result.hpp>,            \
+       BOOST_PYTHON_FUNCTION_POINTER))
+#include BOOST_PP_ITERATE()
 
-#  define BOOST_PP_ITERATION_PARAMS_1                                                                     \
-    (4, (0, BOOST_PYTHON_CV_COUNT - 1, <boost/python/detail/result.hpp>, BOOST_PYTHON_POINTER_TO_MEMBER))
-#  include BOOST_PP_ITERATE()
+#define BOOST_PP_ITERATION_PARAMS_1                                            \
+  (4, (0, BOOST_PYTHON_CV_COUNT - 1, <boost/python/detail/result.hpp>,         \
+       BOOST_PYTHON_POINTER_TO_MEMBER))
+#include BOOST_PP_ITERATE()
 
-template <class R, class T>
-boost::type<R>* result(R (T::*), int = 0) { return 0; }
+template <class R, class T> boost::type<R> *result(R(T::*), int = 0) {
+  return 0;
+}
 
-#  if (defined(__MWERKS__) && __MWERKS__ < 0x3000)
-// This code actually works on all implementations, but why use it when we don't have to?
-template <class T>
-struct get_result_type
-{
-    typedef boost::type<typename T::result_type> type;
+#if (defined(__MWERKS__) && __MWERKS__ < 0x3000)
+// This code actually works on all implementations, but why use it when we don't
+// have to?
+template <class T> struct get_result_type {
+  typedef boost::type<typename T::result_type> type;
 };
 
-struct void_type
-{
-    typedef void type;
+struct void_type {
+  typedef void type;
 };
 
-template <class T>
-struct result_result
-{
-    typedef typename mpl::if_c<
-        is_class<T>::value
-        , get_result_type<T>
-        , void_type
-        >::type t1;
+template <class T> struct result_result {
+  typedef typename mpl::if_c<is_class<T>::value, get_result_type<T>,
+                             void_type>::type t1;
 
-    typedef typename t1::type* type;
+  typedef typename t1::type *type;
 };
 
+template <class X> typename result_result<X>::type result(X const &, short) {
+  return 0;
+}
+
+#else // Simpler code for more-capable compilers
 template <class X>
-typename result_result<X>::type
-result(X const&, short) { return 0; }
+boost::type<typename X::result_type> *result(X const &, short = 0) {
+  return 0;
+}
 
-#  else // Simpler code for more-capable compilers
-template <class X>
-boost::type<typename X::result_type>*
-result(X const&, short = 0) { return 0; }
+#endif
 
-#  endif
+} // namespace detail
+} // namespace python
+} // namespace boost
 
-}}} // namespace boost::python::detail
-
-# endif // RESULT_DWA2002521_HPP
+#endif // RESULT_DWA2002521_HPP
 
 /* --------------- function pointers --------------- */
 // For gcc 4.4 compatability, we must include the
