@@ -10,25 +10,30 @@
 //  04 Mar 01  Some fixes so it will compile with Intel C++ (Dave Abrahams)
 
 #ifndef CONFIG_DWA052200_H_
-# define CONFIG_DWA052200_H_
+#define CONFIG_DWA052200_H_
 
-# include <boost/config.hpp>
-# include <boost/detail/workaround.hpp>
+#include <boost/config.hpp>
+#include <boost/detail/workaround.hpp>
 
-# ifdef BOOST_NO_OPERATORS_IN_NAMESPACE
-   // A gcc bug forces some symbols into the global namespace
-#  define BOOST_PYTHON_BEGIN_CONVERSION_NAMESPACE
-#  define BOOST_PYTHON_END_CONVERSION_NAMESPACE
-#  define BOOST_PYTHON_CONVERSION
-#  define BOOST_PYTHON_IMPORT_CONVERSION(x) using ::x
-# else
-#  define BOOST_PYTHON_BEGIN_CONVERSION_NAMESPACE namespace boost { namespace python {
-#  define BOOST_PYTHON_END_CONVERSION_NAMESPACE }} // namespace boost::python
-#  define BOOST_PYTHON_CONVERSION boost::python
-#  define BOOST_PYTHON_IMPORT_CONVERSION(x) void never_defined() // so we can follow the macro with a ';'
-# endif
+#ifdef BOOST_NO_OPERATORS_IN_NAMESPACE
+// A gcc bug forces some symbols into the global namespace
+#define BOOST_PYTHON_BEGIN_CONVERSION_NAMESPACE
+#define BOOST_PYTHON_END_CONVERSION_NAMESPACE
+#define BOOST_PYTHON_CONVERSION
+#define BOOST_PYTHON_IMPORT_CONVERSION(x) using ::x
+#else
+#define BOOST_PYTHON_BEGIN_CONVERSION_NAMESPACE                                \
+  namespace boost {                                                            \
+  namespace python {
+#define BOOST_PYTHON_END_CONVERSION_NAMESPACE                                  \
+  }                                                                            \
+  } // namespace boost::python
+#define BOOST_PYTHON_CONVERSION boost::python
+#define BOOST_PYTHON_IMPORT_CONVERSION(x)                                      \
+  void never_defined() // so we can follow the macro with a ';'
+#endif
 
-# if defined(BOOST_MSVC)
+#if defined(BOOST_MSVC)
 
 #  pragma warning (disable : 4786) // disable truncated debug symbols
 #  pragma warning (disable : 4251) // disable exported dll function

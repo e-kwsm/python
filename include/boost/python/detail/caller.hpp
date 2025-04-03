@@ -5,52 +5,51 @@
 // accompanying file LICENSE_1_0.txt or copy at
 // http://www.boost.org/LICENSE_1_0.txt)
 
-# ifndef CALLER_DWA20021121_HPP
-#  define CALLER_DWA20021121_HPP
+#ifndef CALLER_DWA20021121_HPP
+#define CALLER_DWA20021121_HPP
 
-#  include <boost/python/type_id.hpp>
-#  include <boost/python/handle.hpp>
+#include <boost/python/type_id.hpp>
+#include <boost/python/handle.hpp>
 
-#  include <boost/detail/indirect_traits.hpp>
+#include <boost/detail/indirect_traits.hpp>
 
-#  include <boost/python/detail/invoke.hpp>
-#  include <boost/python/detail/signature.hpp>
-#  include <boost/python/detail/preprocessor.hpp>
-#  include <boost/python/detail/type_traits.hpp>
+#include <boost/python/detail/invoke.hpp>
+#include <boost/python/detail/signature.hpp>
+#include <boost/python/detail/preprocessor.hpp>
+#include <boost/python/detail/type_traits.hpp>
 
-#  include <boost/python/arg_from_python.hpp>
-#  include <boost/python/converter/context_result_converter.hpp>
-#  include <boost/python/converter/builtin_converters.hpp>
+#include <boost/python/arg_from_python.hpp>
+#include <boost/python/converter/context_result_converter.hpp>
+#include <boost/python/converter/builtin_converters.hpp>
 
-#  include <boost/preprocessor/iterate.hpp>
-#  include <boost/preprocessor/cat.hpp>
-#  include <boost/preprocessor/dec.hpp>
-#  include <boost/preprocessor/if.hpp>
-#  include <boost/preprocessor/iteration/local.hpp>
-#  include <boost/preprocessor/repetition/enum_trailing_params.hpp>
-#  include <boost/preprocessor/repetition/repeat.hpp>
+#include <boost/preprocessor/iterate.hpp>
+#include <boost/preprocessor/cat.hpp>
+#include <boost/preprocessor/dec.hpp>
+#include <boost/preprocessor/if.hpp>
+#include <boost/preprocessor/iteration/local.hpp>
+#include <boost/preprocessor/repetition/enum_trailing_params.hpp>
+#include <boost/preprocessor/repetition/repeat.hpp>
 
-#  include <boost/compressed_pair.hpp>
+#include <boost/compressed_pair.hpp>
 
-#  include <boost/mpl/apply.hpp>
-#  include <boost/mpl/eval_if.hpp>
-#  include <boost/mpl/identity.hpp>
-#  include <boost/mpl/size.hpp>
-#  include <boost/mpl/at.hpp>
-#  include <boost/mpl/int.hpp>
-#  include <boost/mpl/next.hpp>
+#include <boost/mpl/apply.hpp>
+#include <boost/mpl/eval_if.hpp>
+#include <boost/mpl/identity.hpp>
+#include <boost/mpl/size.hpp>
+#include <boost/mpl/at.hpp>
+#include <boost/mpl/int.hpp>
+#include <boost/mpl/next.hpp>
 
-namespace boost { namespace python { namespace detail { 
+namespace boost {
+namespace python {
+namespace detail {
 
-template <int N>
-inline PyObject* get(mpl::int_<N>, PyObject* const& args_)
-{
-    return PyTuple_GET_ITEM(args_,N);
+template <int N> inline PyObject *get(mpl::int_<N>, PyObject *const &args_) {
+  return PyTuple_GET_ITEM(args_, N);
 }
 
-inline Py_ssize_t arity(PyObject* const& args_)
-{
-    return PyTuple_GET_SIZE(args_);
+inline Py_ssize_t arity(PyObject *const &args_) {
+  return PyTuple_GET_SIZE(args_);
 }
 
 // This "result converter" is really just used as
@@ -192,13 +191,15 @@ struct caller
 
 };
 
-}}} // namespace boost::python::detail
+} // namespace detail
+} // namespace python
+} // namespace boost
 
-# endif // CALLER_DWA20021121_HPP
+#endif // CALLER_DWA20021121_HPP
 
 #else
 
-# define N BOOST_PP_ITERATION()
+#define N BOOST_PP_ITERATION()
 
 template <>
 struct caller_arity<N>
