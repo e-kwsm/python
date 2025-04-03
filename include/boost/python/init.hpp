@@ -9,7 +9,7 @@
 #ifndef INIT_JDG20020820_HPP
 #define INIT_JDG20020820_HPP
 
-# include <boost/python/detail/prefix.hpp>
+#include <boost/python/detail/prefix.hpp>
 
 #include <boost/python/detail/type_list.hpp>
 #include <boost/python/args_fwd.hpp>
@@ -389,11 +389,3 @@ namespace detail
 
 ///////////////////////////////////////////////////////////////////////////////
 #endif // INIT_JDG20020820_HPP
-
-
-
-
-
-
-
-
