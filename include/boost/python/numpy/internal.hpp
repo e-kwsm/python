@@ -11,7 +11,8 @@
  *  @file boost/python/numpy/internal.hpp
  *  @brief Internal header file to include the Numpy C-API headers.
  *
- *  This should only be included by source files in the boost.numpy library itself.
+ *  This should only be included by source files in the boost.numpy library
+ *  itself.
  */
 
 #include <boost/python.hpp>
@@ -30,7 +31,9 @@ ERROR_internal_hpp_is_for_internal_use_only
 #include <numpy/ufuncobject.h>
 #include <boost/python/numpy.hpp>
 
-#define NUMPY_OBJECT_MANAGER_TRAITS_IMPL(pytype,manager)                \
-    PyTypeObject const * object_manager_traits<manager>::get_pytype() { return &pytype; }
+#define NUMPY_OBJECT_MANAGER_TRAITS_IMPL(pytype, manager)                      \
+  PyTypeObject const *object_manager_traits<manager>::get_pytype() {           \
+    return &pytype;                                                            \
+  }
 
 #endif

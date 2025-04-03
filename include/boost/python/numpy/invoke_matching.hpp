@@ -15,75 +15,58 @@
 #include <boost/python/numpy/ndarray.hpp>
 #include <boost/mpl/integral_c.hpp>
 
-namespace boost { namespace python { namespace numpy {
-namespace detail 
-{
+namespace boost {
+namespace python {
+namespace numpy {
+namespace detail {
 
-struct BOOST_NUMPY_DECL add_pointer_meta
-{
-  template <typename T>
-  struct apply 
-  {
+struct BOOST_NUMPY_DECL add_pointer_meta {
+  template <typename T> struct apply {
     typedef typename boost::add_pointer<T>::type type;
   };
-
 };
 
-struct BOOST_NUMPY_DECL dtype_template_match_found {};
-struct BOOST_NUMPY_DECL nd_template_match_found {};
+struct BOOST_NUMPY_DECL dtype_template_match_found{};
+struct BOOST_NUMPY_DECL nd_template_match_found{};
 
-template <typename Function>
-struct dtype_template_invoker 
-{
-    
-  template <typename T>
-  void operator()(T *) const 
-  {
-    if (dtype::get_builtin<T>() == m_dtype) 
-    {
+template <typename Function> struct dtype_template_invoker {
+
+  template <typename T> void operator()(T *) const {
+    if (dtype::get_builtin<T>() == m_dtype) {
       m_func.Function::template apply<T>();
       throw dtype_template_match_found();
     }
   }
 
-  dtype_template_invoker(dtype const & dtype_, Function func) 
-    : m_dtype(dtype_), m_func(func) {}
+  dtype_template_invoker(dtype const &dtype_, Function func)
+      : m_dtype(dtype_), m_func(func) {}
 
 private:
-  dtype const & m_dtype;
+  dtype const &m_dtype;
   Function m_func;
 };
 
 template <typename Function>
-struct dtype_template_invoker< boost::reference_wrapper<Function> > 
-{
-    
-  template <typename T>
-  void operator()(T *) const 
-  {
-    if (dtype::get_builtin<T>() == m_dtype) 
-    {
+struct dtype_template_invoker<boost::reference_wrapper<Function>> {
+
+  template <typename T> void operator()(T *) const {
+    if (dtype::get_builtin<T>() == m_dtype) {
       m_func.Function::template apply<T>();
       throw dtype_template_match_found();
     }
   }
 
-  dtype_template_invoker(dtype const & dtype_, Function & func)
-    : m_dtype(dtype_), m_func(func) {}
+  dtype_template_invoker(dtype const &dtype_, Function &func)
+      : m_dtype(dtype_), m_func(func) {}
 
 private:
-  dtype const & m_dtype;
-  Function & m_func;
+  dtype const &m_dtype;
+  Function &m_func;
 };
 
-template <typename Function>
-struct nd_template_invoker 
-{    
-  template <int N>
-  void operator()(boost::mpl::integral_c<int,N> *) const 
-  {
-    if (m_nd == N) 
-    {
+template <typename Function> struct nd_template_invoker {
+  template <int N> void operator()(boost::mpl::integral_c<int, N> *) const {
+    if (m_nd == N) {
       m_func.Function::template apply<N>();
       throw nd_template_match_found();
     }

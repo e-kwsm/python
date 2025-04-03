@@ -19,7 +19,9 @@
 #include <boost/python/detail/type_traits.hpp>
 #include <boost/type_traits/is_unsigned.hpp>
 
-namespace boost { namespace python { namespace numpy {
+namespace boost {
+namespace python {
+namespace numpy {
 
 /**
  *  @brief A boost.python "object manager" (subclass of object) for numpy.dtype.
