@@ -8,21 +8,16 @@
 
 using namespace boost::python;
 
-struct X
-{
-    int x;
-    X(int n) : x(n) { }
+struct X {
+  int x;
+  X(int n) : x(n) {}
 };
 
-int x_function(X& x)
-{   return x.x;
-}
+int x_function(X &x) { return x.x; }
 
-
-BOOST_PYTHON_MODULE(class_ext)
-{
-    class_<X>("X", init<int>());
-    def("x_function", x_function);
+BOOST_PYTHON_MODULE(class_ext) {
+  class_<X>("X", init<int>());
+  def("x_function", x_function);
 }
 
 #include "module_tail.cpp"
