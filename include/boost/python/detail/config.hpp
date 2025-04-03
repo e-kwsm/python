@@ -64,73 +64,75 @@
 
 // backwards compatibility:
 #if defined(BOOST_PYTHON_STATIC_LINK) && !defined(BOOST_PYTHON_STATIC_LIB)
-#  define BOOST_PYTHON_STATIC_LIB
+#define BOOST_PYTHON_STATIC_LIB
 #endif
 
 #if defined(BOOST_PYTHON_DYNAMIC_LINK) && !defined(BOOST_PYTHON_DYNAMIC_LIB)
-#  define BOOST_PYTHON_DYNAMIC_LIB
+#define BOOST_PYTHON_DYNAMIC_LIB
 #endif
 
 #if !defined(BOOST_PYTHON_STATIC_LIB) && !defined(BOOST_PYTHON_DYNAMIC_LIB)
-#  define BOOST_PYTHON_DYNAMIC_LIB
+#define BOOST_PYTHON_DYNAMIC_LIB
 #endif
 
 #if defined(BOOST_PYTHON_DYNAMIC_LIB)
-#  if defined(BOOST_SYMBOL_EXPORT)
-#     if defined(BOOST_PYTHON_SOURCE)
-#        define BOOST_PYTHON_DECL           BOOST_SYMBOL_EXPORT
-#        define BOOST_PYTHON_DECL_FORWARD   BOOST_SYMBOL_FORWARD_EXPORT
-#        define BOOST_PYTHON_DECL_EXCEPTION BOOST_EXCEPTION_EXPORT
-#        define BOOST_PYTHON_BUILD_DLL
-#     else
-#        define BOOST_PYTHON_DECL           BOOST_SYMBOL_IMPORT
-#        define BOOST_PYTHON_DECL_FORWARD   BOOST_SYMBOL_FORWARD_IMPORT
-#        define BOOST_PYTHON_DECL_EXCEPTION BOOST_EXCEPTION_IMPORT
-#     endif
-#  endif
+#if defined(BOOST_SYMBOL_EXPORT)
+#if defined(BOOST_PYTHON_SOURCE)
+#define BOOST_PYTHON_DECL BOOST_SYMBOL_EXPORT
+#define BOOST_PYTHON_DECL_FORWARD BOOST_SYMBOL_FORWARD_EXPORT
+#define BOOST_PYTHON_DECL_EXCEPTION BOOST_EXCEPTION_EXPORT
+#define BOOST_PYTHON_BUILD_DLL
+#else
+#define BOOST_PYTHON_DECL BOOST_SYMBOL_IMPORT
+#define BOOST_PYTHON_DECL_FORWARD BOOST_SYMBOL_FORWARD_IMPORT
+#define BOOST_PYTHON_DECL_EXCEPTION BOOST_EXCEPTION_IMPORT
+#endif
+#endif
 #endif
 
 #ifndef BOOST_PYTHON_DECL
-#  define BOOST_PYTHON_DECL
+#define BOOST_PYTHON_DECL
 #endif
 
 #ifndef BOOST_PYTHON_DECL_FORWARD
-#  define BOOST_PYTHON_DECL_FORWARD
+#define BOOST_PYTHON_DECL_FORWARD
 #endif
 
 #ifndef BOOST_PYTHON_DECL_EXCEPTION
-#  define BOOST_PYTHON_DECL_EXCEPTION
+#define BOOST_PYTHON_DECL_EXCEPTION
 #endif
 
 #if BOOST_WORKAROUND(__DECCXX_VER, BOOST_TESTED_AT(60590042))
 // Replace broken Tru64/cxx offsetof macro
-# define BOOST_PYTHON_OFFSETOF(s_name, s_member) \
-        ((size_t)__INTADDR__(&(((s_name *)0)->s_member)))
+#define BOOST_PYTHON_OFFSETOF(s_name, s_member)                                \
+  ((size_t)__INTADDR__(&(((s_name *)0)->s_member)))
 #else
-# define BOOST_PYTHON_OFFSETOF offsetof
+#define BOOST_PYTHON_OFFSETOF offsetof
 #endif
 
-//  enable automatic library variant selection  ------------------------------// 
+//  enable automatic library variant selection  ------------------------------//
 
-#if !defined(BOOST_PYTHON_SOURCE) && !defined(BOOST_ALL_NO_LIB) && !defined(BOOST_PYTHON_NO_LIB)
+#if !defined(BOOST_PYTHON_SOURCE) && !defined(BOOST_ALL_NO_LIB) &&             \
+    !defined(BOOST_PYTHON_NO_LIB)
 //
 // Set the name of our library, this will get undef'ed by auto_link.hpp
 // once it's done with it:
 //
-#define _BOOST_PYTHON_CONCAT(N, M, m) N ## M ## m
+#define _BOOST_PYTHON_CONCAT(N, M, m) N##M##m
 #define BOOST_PYTHON_CONCAT(N, M, m) _BOOST_PYTHON_CONCAT(N, M, m)
-#define BOOST_LIB_NAME BOOST_PYTHON_CONCAT(boost_python, PY_MAJOR_VERSION, PY_MINOR_VERSION)
+#define BOOST_LIB_NAME                                                         \
+  BOOST_PYTHON_CONCAT(boost_python, PY_MAJOR_VERSION, PY_MINOR_VERSION)
 //
 // If we're importing code from a dll, then tell auto_link.hpp about it:
 //
 #ifdef BOOST_PYTHON_DYNAMIC_LIB
-#  define BOOST_DYN_LINK
+#define BOOST_DYN_LINK
 #endif
 //
 // And include the header that does the work:
 //
 #include <boost/config/auto_link.hpp>
-#endif  // auto-linking disabled
+#endif // auto-linking disabled
 
 #undef BOOST_PYTHON_CONCAT
 #undef _BOOST_PYTHON_CONCAT
@@ -140,7 +142,7 @@
 #endif
 
 #if !defined(BOOST_ATTRIBUTE_UNUSED) && defined(__GNUC__) && (__GNUC__ >= 4)
-#  define BOOST_ATTRIBUTE_UNUSED __attribute__((unused))
+#define BOOST_ATTRIBUTE_UNUSED __attribute__((unused))
 #endif
 
 #endif // CONFIG_DWA052200_H_
