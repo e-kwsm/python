@@ -25,13 +25,13 @@
 #include <boost/python/object/add_to_namespace.hpp>
 
 ///////////////////////////////////////////////////////////////////////////////
-namespace boost { namespace python {
+namespace boost {
+namespace python {
 
 struct module;
 
-namespace objects
-{
-  struct class_base;
+namespace objects {
+struct class_base;
 }
 
 namespace detail
@@ -258,7 +258,8 @@ namespace detail
 
 } // namespace detail
 
-}} // namespace boost::python
+} // namespace python
+} // namespace boost
 
 #endif // DEFAULTS_DEF_JDG20020811_HPP
 
