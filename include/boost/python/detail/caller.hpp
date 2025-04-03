@@ -178,71 +178,65 @@ struct caller : caller_base_select<F, CallPolicies, Sig>::type {
 
 #define N BOOST_PP_ITERATION()
 
-template <>
-struct caller_arity<N>
-{
-    template <class F, class Policies, class Sig>
-    struct impl
+template <> struct caller_arity<N> {
+  template <class F, class Policies, class Sig> struct impl {
+    impl(F f, Policies p) : m_data(f, p) {}
+
+    PyObject *operator()(PyObject *args_, PyObject *) // eliminate
+                                                      // this
+                                                      // trailing
+                                                      // keyword dict
     {
-        impl(F f, Policies p) : m_data(f,p) {}
+      typedef typename mpl::begin<Sig>::type first;
+      typedef typename first::type result_t;
+      typedef typename select_result_converter<Policies, result_t>::type
+          result_converter;
+      typedef typename Policies::argument_package argument_package;
 
-        PyObject* operator()(PyObject* args_, PyObject*) // eliminate
-                                                         // this
-                                                         // trailing
-                                                         // keyword dict
-        {
-            typedef typename mpl::begin<Sig>::type first;
-            typedef typename first::type result_t;
-            typedef typename select_result_converter<Policies, result_t>::type result_converter;
-            typedef typename Policies::argument_package argument_package;
-            
-            argument_package inner_args(args_);
+      argument_package inner_args(args_);
 
-# if N
-#  define BOOST_PP_LOCAL_MACRO(i) BOOST_PYTHON_ARG_CONVERTER(i)
-#  define BOOST_PP_LOCAL_LIMITS (0, N-1)
-#  include BOOST_PP_LOCAL_ITERATE()
-# endif 
-            // all converters have been checked. Now we can do the
-            // precall part of the policy
-            if (!m_data.second().precall(inner_args))
-                return 0;
+#if N
+#define BOOST_PP_LOCAL_MACRO(i) BOOST_PYTHON_ARG_CONVERTER(i)
+#define BOOST_PP_LOCAL_LIMITS (0, N - 1)
+#include BOOST_PP_LOCAL_ITERATE()
+#endif
+      // all converters have been checked. Now we can do the
+      // precall part of the policy
+      if (!m_data.second().precall(inner_args))
+        return 0;
 
-            PyObject* result = detail::invoke(
-                detail::invoke_tag<result_t,F>()
-              , create_result_converter(args_, (result_converter*)0, (result_converter*)0)
-              , m_data.first()
-                BOOST_PP_ENUM_TRAILING_PARAMS(N, c)
-            );
-            
-            return m_data.second().postcall(inner_args, result);
-        }
+      PyObject *result =
+          detail::invoke(detail::invoke_tag<result_t, F>(),
+                         create_result_converter(args_, (result_converter *)0,
+                                                 (result_converter *)0),
+                         m_data.first() BOOST_PP_ENUM_TRAILING_PARAMS(N, c));
 
-        static unsigned min_arity() { return N; }
-        
-        static py_func_sig_info  signature()
-        {
-            const signature_element * sig = detail::signature<Sig>::elements();
+      return m_data.second().postcall(inner_args, result);
+    }
+
+    static unsigned min_arity() { return N; }
+
+    static py_func_sig_info signature() {
+      const signature_element *sig = detail::signature<Sig>::elements();
 #ifndef BOOST_PYTHON_NO_PY_SIGNATURES
-            // MSVC 15.7.2, when compiling to /O2 left the static const signature_element ret, 
-            // originally defined here, uninitialized. This in turn led to SegFault in Python interpreter.
-            // Issue is resolved by moving the generation of ret to separate function in detail namespace (see above).
-            const signature_element * ret = detail::get_ret<Policies, Sig>();
+      // MSVC 15.7.2, when compiling to /O2 left the static const
+      // signature_element ret, originally defined here, uninitialized. This in
+      // turn led to SegFault in Python interpreter. Issue is resolved by moving
+      // the generation of ret to separate function in detail namespace (see
+      // above).
+      const signature_element *ret = detail::get_ret<Policies, Sig>();
 
-            py_func_sig_info res = {sig, ret };
+      py_func_sig_info res = {sig, ret};
 #else
-            py_func_sig_info res = {sig, sig };
+      py_func_sig_info res = {sig, sig};
 #endif
 
-            return  res;
-        }
-     private:
-        compressed_pair<F,Policies> m_data;
-    };
+      return res;
+    }
+
+  private:
+    compressed_pair<F, Policies> m_data;
+  };
 };
 
-
-
-#endif // BOOST_PP_IS_ITERATING 
-
-
+#endif // BOOST_PP_IS_ITERATING
