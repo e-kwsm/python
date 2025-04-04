@@ -29,8 +29,9 @@ void list_base::append(object_cref x)
 {
     if (PyList_CheckExact(this->ptr()))
     {
-        if (PyList_Append(this->ptr(), x.ptr()) == -1)
+        if (PyList_Append(this->ptr(), x.ptr()) == -1) {
             throw_error_already_set();
+        }
     }
     else
     {
@@ -53,8 +54,9 @@ long list_base::index(object_cref value) const
 #else
     long result = PyInt_AsLong(result_obj.ptr());
 #endif
-    if (result == -1)
+    if (result == -1) {
         throw_error_already_set();
+    }
     return result;
 }
 
@@ -62,8 +64,9 @@ void list_base::insert(ssize_t index, object_cref item)
 {
     if (PyList_CheckExact(this->ptr()))
     {
-        if (PyList_Insert(this->ptr(), index, item.ptr()) == -1)
+        if (PyList_Insert(this->ptr(), index, item.ptr()) == -1) {
             throw_error_already_set();
+        }
     }
     else
     {
@@ -78,8 +81,9 @@ void list_base::insert(object const& index, object_cref x)
 #else
     long index_ = PyInt_AsLong(index.ptr());
 #endif
-    if (index_ == -1 && PyErr_Occurred())
+    if (index_ == -1 && PyErr_Occurred()) {
         throw_error_already_set();
+    }
     this->insert(index_, x);
 }
 
@@ -107,8 +111,9 @@ void list_base::reverse()
 {
     if (PyList_CheckExact(this->ptr()))
     {
-        if (PyList_Reverse(this->ptr()) == -1)
+        if (PyList_Reverse(this->ptr()) == -1) {
             throw_error_already_set();
+        }
     }
     else
     {
@@ -120,8 +125,9 @@ void list_base::sort()
 {
     if (PyList_CheckExact(this->ptr()))
     {
-        if (PyList_Sort(this->ptr()) == -1)
+        if (PyList_Sort(this->ptr()) == -1) {
             throw_error_already_set();
+        }
     }
     else
     {
@@ -152,8 +158,9 @@ ssize_t list_base::count(object_cref value) const
 #else
     long result = PyInt_AsLong(result_obj.ptr());
 #endif
-    if (result == -1)
+    if (result == -1) {
         throw_error_already_set();
+    }
     return result;
 }
 

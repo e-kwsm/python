@@ -28,14 +28,16 @@ BOOST_PYTHON_DECL object getattr(object const& target, object const& key, object
         
 BOOST_PYTHON_DECL void setattr(object const& target, object const& key, object const& value)
 {
-    if (PyObject_SetAttr(target.ptr(), key.ptr(), value.ptr()) == -1)
+    if (PyObject_SetAttr(target.ptr(), key.ptr(), value.ptr()) == -1) {
         throw_error_already_set();
+    }
 }
 
 BOOST_PYTHON_DECL void delattr(object const& target, object const& key)
 {
-    if (PyObject_DelAttr(target.ptr(), key.ptr()) == -1)
+    if (PyObject_DelAttr(target.ptr(), key.ptr()) == -1) {
         throw_error_already_set();
+    }
 }
 
 BOOST_PYTHON_DECL object getattr(object const& target, char const* key)
@@ -85,14 +87,16 @@ BOOST_PYTHON_DECL object getitem(object const& target, object const& key)
     
 BOOST_PYTHON_DECL void setitem(object const& target, object const& key, object const& value)
 {
-    if (PyObject_SetItem(target.ptr(), key.ptr(), value.ptr()) == -1)
+    if (PyObject_SetItem(target.ptr(), key.ptr(), value.ptr()) == -1) {
         throw_error_already_set();
+    }
 }
     
 BOOST_PYTHON_DECL void delitem(object const& target, object const& key)
 {
-    if (PyObject_DelItem(target.ptr(), key.ptr()) == -1)
+    if (PyObject_DelItem(target.ptr(), key.ptr()) == -1) {
         throw_error_already_set();
+    }
 }
 
 namespace // slicing code copied directly out of the Python implementation
@@ -123,9 +127,9 @@ namespace // slicing code copied directly out of the Python implementation
               PyObject *res = PyObject_GetItem(u, slice);
               Py_DECREF(slice);
               return res;
-          }
-          else
+          } else {
               return NULL;
+          }
       }
   }
 
@@ -154,15 +158,16 @@ namespace // slicing code copied directly out of the Python implementation
           PyObject *slice = PySlice_New(v, w, NULL);
           if (slice != NULL) {
               int res;
-              if (x != NULL)
+              if (x != NULL) {
                   res = PyObject_SetItem(u, slice, x);
-              else
+              } else {
                   res = PyObject_DelItem(u, slice);
+              }
               Py_DECREF(slice);
               return res;
-          }
-          else
+          } else {
               return -1;
+          }
       }
   }
 }

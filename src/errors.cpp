@@ -38,7 +38,9 @@ BOOST_PYTHON_DECL bool handle_exception_impl(function0<void> f)
             handler_chain = detail::exception_handler::chain;
         }
         if (handler_chain)
+        {
             return handler_chain->handle(f);
+        }
         f();
         return false;
     }
@@ -98,10 +100,11 @@ exception_handler::exception_handler(handler_function const& impl)
     , m_next(0)
 {
     BOOST_PYTHON_LOCK_STATE();
-    if (chain != 0)
+    if (chain != 0) {
         tail->m_next = this;
-    else
+    } else {
         chain = this;
+    }
     tail = this;
 }
 

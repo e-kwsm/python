@@ -42,8 +42,9 @@ namespace detail
               }
               bool is_override = (class_f != PyMethod_GET_FUNCTION(m.get()));
               Py_XDECREF(class_f);
-              if (is_override)
+              if (is_override) {
                   return override(m);
+              }
           }
       }
       return override(handle<>(detail::none()));

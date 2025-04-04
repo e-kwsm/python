@@ -43,10 +43,11 @@ dict_base::dict_base(object_cref data)
     
 void dict_base::clear()
 {
-    if (check_exact(this))
+    if (check_exact(this)) {
         PyDict_Clear(this->ptr());
-    else
+    } else {
         this->attr("clear")();
+    }
 }
 
 dict dict_base::copy()
@@ -157,8 +158,9 @@ void dict_base::update(object_cref other)
 {
     if (check_exact(this))
     {
-        if (PyDict_Update(this->ptr(),other.ptr()) == -1)
+        if (PyDict_Update(this->ptr(),other.ptr()) == -1) {
             throw_error_already_set();
+        }
     }
     else
     {
