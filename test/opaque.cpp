@@ -17,8 +17,9 @@ opaque get() { return the_op; }
 
 void use(opaque op)
 {
-    if (op != the_op)
+    if (op != the_op) {
         throw std::runtime_error (std::string ("failed"));
+    }
 }
 
 int useany(opaque op)
@@ -33,22 +34,25 @@ opaque getnull()
 
 void failuse (opaque op)
 {
-    if (op == the_op)
+    if (op == the_op) {
         throw std::runtime_error (std::string ("success"));
+    }
 }
 
 opaque2 get2 () { return the_op2; }
 
 void use2 (opaque2 op)
 {
-    if (op != the_op2)
+    if (op != the_op2) {
         throw std::runtime_error (std::string ("failed"));
+    }
 }
 
 void failuse2 (opaque2 op)
 {
-    if (op == the_op2)
+    if (op == the_op2) {
         throw std::runtime_error (std::string ("success"));
+    }
 }
 
 BOOST_PYTHON_OPAQUE_SPECIALIZED_TYPE_ID(opaque_)
