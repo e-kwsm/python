@@ -206,7 +206,8 @@ namespace boost { namespace python { namespace objects {
                     param = str(" (%s)%s%d" % make_tuple(py_type_str(s[n], current_module_name),"arg", n) );
                 }
             }
-            else { //we are processing the return type
+            else //we are processing the return type
+            {
                 param = py_type_str(f.get_return_type(), current_module_name);
             }
         }
