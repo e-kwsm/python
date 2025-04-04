@@ -44,10 +44,11 @@ struct data_wrapper : data, bp::wrapper< data >
 
     virtual int id() const
     {
-        if( bp::override id = this->get_override( "id" ) )
+        if (bp::override id = this->get_override( "id" )) {
             return bp::call<int>(id.ptr()); // id();
-        else
+        } else {
             return data::id(  );
+        }
     }
     
     virtual int default_id(  ) const
