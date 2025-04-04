@@ -85,8 +85,9 @@ namespace boost_python_test {
 
         // restore the internal state of the C++ object
         long number = extract<long>(state[1]);
-        if (number != 42)
+        if (number != 42) {
             w.set_secret_number(number);
+        }
     }
 
     static bool getstate_manages_dict() { return true; }

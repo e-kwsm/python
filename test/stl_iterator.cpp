@@ -16,8 +16,9 @@ void assign(list_int& x, object const& y)
 {
     stl_input_iterator<int> begin(y), end;
     x.clear();
-    for( ; begin != end; ++begin)
+    for (; begin != end; ++begin) {
         x.push_back(*begin);
+    }
 }
 
 BOOST_PYTHON_MODULE(stl_iterator_ext)

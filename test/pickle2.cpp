@@ -77,8 +77,9 @@ namespace boost_python_test {
         }
 
         long number = extract<long>(state[0]);
-        if (number != 42)
+        if (number != 42) {
             w.set_secret_number(number);
+        }
     }
   };
 
