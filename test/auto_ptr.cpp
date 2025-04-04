@@ -36,8 +36,9 @@ int steal(std::auto_ptr<X> x)
 int maybe_steal(std::auto_ptr<X>& x, bool doit)
 {
     int n = x->value();
-    if (doit)
+    if (doit) {
         x.release();
+    }
     return n;
 }
 

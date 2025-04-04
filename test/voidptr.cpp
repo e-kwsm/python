@@ -22,8 +22,9 @@ void *getnull()
 
 void use(void *a)
 {
-    if(a!=test)
+    if (a != test) {
         throw std::runtime_error(std::string("failed"));
+    }
 }
 
 int useany(void *a)

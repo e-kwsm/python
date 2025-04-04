@@ -57,12 +57,13 @@ struct ACallback :  A, wrapper<A>
 {
     char const* f()
     {
-        if (override f = this->get_override("f"))
+        if (override f = this->get_override("f")) {
 #if BOOST_WORKAROUND(BOOST_MSVC, <= 1300)
             return call<char const*>(f.ptr());
 #else 
             return f();
 #endif 
+        }
 
         return A::f();
     }
@@ -90,12 +91,13 @@ struct DCallback :  D,  wrapper<D>
 {
     char const* f()
     {
-        if (override f = this->get_override("f"))
+        if (override f = this->get_override("f")) {
 #if BOOST_WORKAROUND(BOOST_MSVC, <= 1300)
             return call<char const*>(f.ptr());
 #else 
             return f();
 #endif 
+        }
         //else
             return D::f();
     }

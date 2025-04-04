@@ -50,7 +50,7 @@ struct BFromPython
   static void* convertible(PyObject* obj_ptr)
   {
       extract<const A&> ex(obj_ptr);
-      if (!ex.check()) return 0;
+      if (!ex.check()) { return 0; }
       return obj_ptr;
   }
 
