@@ -30,12 +30,14 @@ namespace boost { namespace python { namespace objects {
         py_function const & impl2  = f2->m_fn;
 
         //the number of parameters differs by 1
-        if (impl2.max_arity()-impl1.max_arity() != 1)
+        if (impl2.max_arity()-impl1.max_arity() != 1) {
             return false;
+        }
 
         // if check docs then f1 shold not have docstring or have the same docstring as f2
-        if (check_docs && f2->doc() != f1->doc() && f1->doc())
+        if (check_docs && f2->doc() != f1->doc() && f1->doc()) {
             return false;
+        }
 
         python::detail::signature_element const* s1 = impl1.signature();
         python::detail::signature_element const* s2 = impl2.signature();
@@ -45,11 +47,12 @@ namespace boost { namespace python { namespace objects {
         for (unsigned i = 0; i != size; ++i)
         {
             //check if the argument types are the same
-            if (s1[i].basename != s2[i].basename)
+            if (s1[i].basename != s2[i].basename) {
                 return false;
+            }
 
             //return type
-            if (!i) continue;
+            if (!i) { continue; }
 
             //check if the argument default values are the same
             bool f1_has_names = bool(f1->m_arg_names);
@@ -57,8 +60,9 @@ namespace boost { namespace python { namespace objects {
             if ( (f1_has_names && f2_has_names && f2->m_arg_names[i-1]!=f1->m_arg_names[i-1])
                  || (f1_has_names && !f2_has_names)
                  || (!f1_has_names && f2_has_names && f2->m_arg_names[i-1]!=python::object())
-                )
+                ) {
                 return false;
+            }
         }
         return true;
     }
@@ -72,8 +76,9 @@ namespace boost { namespace python { namespace objects {
         while (f) {
 
             //this if takes out the not_implemented_function
-            if (f->name() == name)
+            if (f->name() == name) {
                 res.push_back(f);
+            }
 
             f=f->m_overloads.get();
         }
@@ -93,14 +98,16 @@ namespace boost { namespace python { namespace objects {
         while (++fi != funcs.end()){
 
             //check if fi starts a new chain of overloads
-            if (!are_seq_overloads( last, *fi, split_on_doc_change ))
+            if (!are_seq_overloads( last, *fi, split_on_doc_change )) {
                 res.push_back(last);
+            }
 
             last = *fi;
         }
 
-        if (last)
+        if (last) {
             res.push_back(last);
+        }
 
         return res;
     }
@@ -117,8 +124,9 @@ namespace boost { namespace python { namespace objects {
     static str get_qualname(const PyTypeObject *py_type)
     {
 # if PY_VERSION_HEX >= 0x03030000
-        if ( py_type->tp_flags & Py_TPFLAGS_HEAPTYPE )
+        if (py_type->tp_flags & Py_TPFLAGS_HEAPTYPE) {
             return str(handle<>(borrowed(((PyHeapTypeObject*)(py_type))->ht_qualname)));
+        }
 # endif
         return str(py_type->tp_name);
     }
@@ -172,8 +180,9 @@ namespace boost { namespace python { namespace objects {
         python::detail::signature_element  const * s = f.signature();
         if (cpp_types)
         {
-            if(!n)
+            if (!n) {
                 s = &f.get_return_type();
+            }
             if (s[n].basename == 0)
             {
                 return str("...");
@@ -181,8 +190,9 @@ namespace boost { namespace python { namespace objects {
 
             param = str(s[n].basename);
 
-            if (s[n].lvalue)
+            if (s[n].lvalue) {
                  param += " {lvalue}";
+            }
 
         }
         else
@@ -190,13 +200,15 @@ namespace boost { namespace python { namespace objects {
             if (n) //we are processing an argument and trying to come up with a name for it
             {
                 object kv;
-                if ( arg_names && (kv = arg_names[n-1]) )
+                if ( arg_names && (kv = arg_names[n-1]) ) {
                     param = str( " (%s)%s" % make_tuple(py_type_str(s[n], current_module_name),kv[0]) );
-                else
+                } else {
                     param = str(" (%s)%s%d" % make_tuple(py_type_str(s[n], current_module_name),"arg", n) );
+                }
             }
-            else //we are processing the return type
+            else { //we are processing the return type
                 param = py_type_str(f.get_return_type(), current_module_name);
+            }
         }
 
         //an argument - check for default value and append it
@@ -245,20 +257,23 @@ namespace boost { namespace python { namespace objects {
                 if (kv && len(kv) == 2)
                 {
                     //default argument preceeding the arity-n_overloads
-                    if( n <= arity-n_overloads)
+                    if (n <= arity-n_overloads) {
                         ++n_extra_default_args;
+                    }
                 }
                 else
                     //argument without default, preceeding the arity-n_overloads
-                    if( n <= arity-n_overloads)
+                    if (n <= arity-n_overloads) {
                         n_extra_default_args = 0;
+                    }
             }
         }
 
         n_overloads+=n_extra_default_args;
 
-        if (!arity && cpp_types)
+        if (!arity && cpp_types) {
             formal_params.append("void");
+        }
 
         str ret_type (formal_params.pop(0));
         if (cpp_types )
@@ -345,21 +360,23 @@ namespace boost { namespace python { namespace objects {
                     { 
                         str sig = pretty_signature(*fi, n_overloads,false);
                         res+=sig;
-                        if(doc_len || show_cpp_signature )res+=" :";
+                        if (doc_len || show_cpp_signature) { res+=" :"; }
                         pad+= str("    ");
                     }
                     
                     if(doc_len)
                     {
-                        if(show_py_signature)
+                        if (show_py_signature) {
                             res+=pad;
+                        }
                          res+= pad.join(func_doc.split("\n"));
                     }
 
                     if( show_cpp_signature)
                     {
-                        if(len(res)>1)
+                        if (len(res) > 1) {
                             res+="\n"+pad;
+                        }
                         res+=detail::cpp_signature_tag+pad+"    "+pretty_signature(*fi, n_overloads,true);
                     }
                     
@@ -367,8 +384,9 @@ namespace boost { namespace python { namespace objects {
                 }
                 ++sfi;
                 n_overloads = 0;
-            }else
+            } else {
                 ++n_overloads ;
+            }
         }
 
         return signatures;

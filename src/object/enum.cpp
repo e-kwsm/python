@@ -60,8 +60,9 @@ extern "C"
         else
         {
             PyObject* name = self->name;
-            if (name == 0)
+            if (name == 0) {
                 return 0;
+            }
 
             return
 #if PY_VERSION_HEX >= 0x03030000
@@ -163,8 +164,9 @@ namespace
 #else
           enum_type_object.tp_base = &PyInt_Type;
 #endif
-          if (PyType_Ready(&enum_type_object))
+          if (PyType_Ready(&enum_type_object)) {
               throw_error_already_set();
+          }
       }
 
       type_handle metatype(borrowed(&PyType_Type));
@@ -178,15 +180,18 @@ namespace
       d["names"] = dict();
 
       object module_name = module_prefix();
-      if (module_name)
+      if (module_name) {
          d["__module__"] = module_name;
+      }
 #if PY_VERSION_HEX >= 0x03030000
       object q = qualname(name);
-      if (q)
+      if (q) {
          d["__qualname__"] = q;
+      }
 #endif
-      if (doc)
+      if (doc) {
          d["__doc__"] = doc;
+      }
 
       object result = (object(metatype))(name, make_tuple(base), d);
 
@@ -244,8 +249,9 @@ void enum_base::export_values()
     list items = d.items();
     scope current;
 
-    for (unsigned i = 0, max = len(items); i < max; ++i)
+    for (unsigned i = 0, max = len(items); i < max; ++i) {
         api::setattr(current, items[i][0], items[i][1]);
+    }
  }
 
 PyObject* enum_base::to_python(PyTypeObject* type_, long x)

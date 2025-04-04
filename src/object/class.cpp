@@ -81,15 +81,19 @@ extern "C"
       propertyobject *prop = (propertyobject *)self;
 
       if (!PyArg_ParseTupleAndKeywords(args, kwds, "|OOOO:property",
-                  const_cast<char **>(kwlist), &get, &set, &del, &doc))
+                  const_cast<char **>(kwlist), &get, &set, &del, &doc)) {
           return -1;
+      }
 
-      if (get == Py_None)
+      if (get == Py_None) {
           get = NULL;
-      if (set == Py_None)
+      }
+      if (set == Py_None) {
           set = NULL;
-      if (del == Py_None)
+      }
+      if (del == Py_None) {
           del = NULL;
+      }
 
       Py_XINCREF(get);
       Py_XINCREF(set);
@@ -120,10 +124,11 @@ extern "C"
       propertyobject *gs = (propertyobject *)self;
       PyObject *func, *res;
 
-      if (value == NULL)
+      if (value == NULL) {
           func = gs->prop_del;
-      else
+      } else {
           func = gs->prop_set;
+      }
       if (func == NULL) {
           PyErr_SetString(PyExc_AttributeError,
                           value == NULL ?
@@ -131,12 +136,14 @@ extern "C"
                           "can't set attribute");
           return -1;
       }
-      if (value == NULL)
+      if (value == NULL) {
           res = PyObject_CallFunction(func, const_cast<char*>("()"));
-      else
+      } else {
           res = PyObject_CallFunction(func, const_cast<char*>("(O)"), value);
-      if (res == NULL)
+      }
+      if (res == NULL) {
           return -1;
+      }
       Py_DECREF(res);
       return 0;
   }
@@ -211,8 +218,9 @@ namespace objects
       {
           Py_SET_TYPE(&static_data_object, &PyType_Type);
           static_data_object.tp_base = &PyProperty_Type;
-          if (PyType_Ready(&static_data_object))
+          if (PyType_Ready(&static_data_object)) {
               return 0;
+          }
       }
       return upcast<PyObject>(&static_data_object);
   }
@@ -241,10 +249,11 @@ extern "C"
         
         // If we found a static data descriptor, call it directly to
         // force it to set the static data member
-        if (a != 0 && PyObject_IsInstance(a, objects::static_data()))
+        if (a != 0 && PyObject_IsInstance(a, objects::static_data())) {
             return Py_TYPE(a)->tp_descr_set(a, obj, value);
-        else
+        } else {
             return PyType_Type.tp_setattro(obj, name, value);
+        }
     }
 }
 
@@ -319,8 +328,9 @@ namespace objects
       {
           Py_SET_TYPE(&class_metatype_object, &PyType_Type);
           class_metatype_object.tp_base = &PyType_Type;
-          if (PyType_Ready(&class_metatype_object))
+          if (PyType_Ready(&class_metatype_object)) {
               return type_handle();
+          }
       }
       return type_handle(borrowed(&class_metatype_object));
   }
@@ -342,8 +352,9 @@ namespace objects
           // tp_itemsize > 0, so we need to manage that
           // ourselves. Accordingly, we also have to clean up the
           // weakrefs ourselves.
-          if (kill_me->weakrefs != NULL)
+          if (kill_me->weakrefs != NULL) {
             PyObject_ClearWeakRefs(inst);
+          }
 
           Py_XDECREF(kill_me->dict);
           
@@ -364,8 +375,9 @@ namespace objects
               PyInt_AsLong(instance_size_obj) : 0;
 #endif
           
-          if (instance_size < 0)
+          if (instance_size < 0) {
               instance_size = 0;
+          }
           
           PyErr_Clear(); // Clear any errors that may have occurred.
 
@@ -384,8 +396,9 @@ namespace objects
       static PyObject* instance_get_dict(PyObject* op, void*)
       {
           instance<>* inst = downcast<instance<> >(op);
-          if (inst->dict == 0)
+          if (inst->dict == 0) {
               inst->dict = PyDict_New();
+          }
           return python::xincref(inst->dict);
       }
     
@@ -469,8 +482,9 @@ namespace objects
       {
           Py_SET_TYPE(&class_type_object, incref(class_metatype().get()));
           class_type_object.tp_base = &PyBaseObject_Type;
-          if (PyType_Ready(&class_type_object))
+          if (PyType_Ready(&class_type_object)) {
               return type_handle();
+          }
 //          class_type_object.tp_setattro = class_setattro;
       }
       return type_handle(borrowed(&class_type_object));
@@ -480,16 +494,18 @@ namespace objects
   find_instance_impl(PyObject* inst, type_info type, bool null_shared_ptr_only)
   {
       if (!Py_TYPE(Py_TYPE(inst)) ||
-              !PyType_IsSubtype(Py_TYPE(Py_TYPE(inst)), &class_metatype_object))
+              !PyType_IsSubtype(Py_TYPE(Py_TYPE(inst)), &class_metatype_object)) {
           return 0;
+      }
     
       instance<>* self = reinterpret_cast<instance<>*>(inst);
 
       for (instance_holder* match = self->objects; match != 0; match = match->next())
       {
           void* const found = match->holds(type, null_shared_ptr_only);
-          if (found)
+          if (found) {
               return found;
+          }
       }
       return 0;
   }
@@ -574,19 +590,21 @@ namespace objects
       dict d;
    
       object m = module_prefix();
-      if (m) d["__module__"] = m;
+      if (m) { d["__module__"] = m; }
 #if PY_VERSION_HEX >= 0x03030000
       d["__qualname__"] = qualname(name);
 #endif
 
-      if (doc != 0)
+      if (doc != 0) {
           d["__doc__"] = doc;
+      }
       
       object result = object(class_metatype())(name, bases, d);
       assert(PyType_IsSubtype(Py_TYPE(result.ptr()), &PyType_Type));
       
-      if (scope().ptr() != Py_None)
+      if (scope().ptr() != Py_None) {
           scope().attr(name) = result;
+      }
 
       // For pickle. Will lead to informative error messages if pickling
       // is not enabled.
@@ -664,8 +682,9 @@ namespace objects
 
   void class_base::setattr(char const* name, object const& x)
   {
-      if (PyObject_SetAttrString(this->ptr(), const_cast<char*>(name), x.ptr()) < 0)
+      if (PyObject_SetAttrString(this->ptr(), const_cast<char*>(name), x.ptr()) < 0) {
           throw_error_already_set();
+      }
   }
 
   namespace
@@ -702,8 +721,9 @@ namespace objects
   {
     PyObject* callable_check(PyObject* callable)
     {
-        if (PyCallable_Check(expect_non_null(callable)))
+        if (PyCallable_Check(expect_non_null(callable))) {
             return callable;
+        }
 
         ::PyErr_Format(
             PyExc_TypeError
@@ -763,8 +783,9 @@ void* instance_holder::allocate(PyObject* self_, std::size_t holder_offset, std:
     {
         const size_t base_allocation = sizeof(alignment_marker_t) + holder_size + alignment - 1;
         void* const base_storage = PyMem_Malloc(base_allocation);
-        if (base_storage == 0)
+        if (base_storage == 0) {
             throw std::bad_alloc();
+        }
 
         const uintptr_t x = reinterpret_cast<uintptr_t>(base_storage) + sizeof(alignment_marker_t);
         // Padding required to align the start of a data structure is: (alignment - (x % alignment)) % alignment

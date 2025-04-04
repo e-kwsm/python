@@ -77,8 +77,9 @@ function::function(
 
         if (num_keywords != 0)
         {
-            for (unsigned j = 0; j < keyword_offset; ++j)
+            for (unsigned j = 0; j < keyword_offset; ++j) {
                 PyTuple_SET_ITEM(m_arg_names.ptr(), j, incref(Py_None));
+            }
         }
         
         for (unsigned i = 0; i < num_keywords; ++i)
@@ -165,8 +166,9 @@ PyObject* function::call(PyObject* args, PyObject* keywords) const
                             PyTuple_New(static_cast<ssize_t>(max_arity)));
 
                         // Fill in the positional arguments
-                        for (std::size_t i = 0; i < n_unnamed_actual; ++i)
+                        for (std::size_t i = 0; i < n_unnamed_actual; ++i) {
                             PyTuple_SET_ITEM(inner_args.get(), i, incref(PyTuple_GET_ITEM(args, i)));
+                        }
 
                         // Grab remaining arguments by name from the keyword dictionary
                         std::size_t n_actual_processed = n_unnamed_actual;
@@ -186,8 +188,9 @@ PyObject* function::call(PyObject* args, PyObject* keywords) const
                             if (!value)
                             {
                                 // Not found; check if there's a default value
-                                if (PyTuple_GET_SIZE(kv) > 1)
+                                if (PyTuple_GET_SIZE(kv) > 1) {
                                     value = PyTuple_GET_ITEM(kv, 1);
+                                }
                         
                                 if (!value)
                                 {
@@ -208,8 +211,9 @@ PyObject* function::call(PyObject* args, PyObject* keywords) const
                         if (inner_args.get())
                         {
                             //check if we proccessed all the arguments
-                            if(n_actual_processed < n_actual)
+                            if (n_actual_processed < n_actual) {
                                 inner_args = handle<>();
+                            }
                         }
                     }
                 }
@@ -225,8 +229,9 @@ PyObject* function::call(PyObject* args, PyObject* keywords) const
             // This assumes that all other error-reporters are
             // well-behaved and never return NULL to python without
             // setting an error.
-            if (result != 0 || PyErr_Occurred())
+            if (result != 0 || PyErr_Occurred()) {
                 return result;
+            }
         }
         f = f->m_overloads.get();
     }
@@ -244,8 +249,9 @@ object function::signature(bool show_return_type) const
     python::detail::signature_element const* s = return_type + 1;
     
     list formal_params;
-    if (impl.max_arity() == 0)
+    if (impl.max_arity() == 0) {
         formal_params.append("void");
+    }
 
     for (unsigned n = 0; n < impl.max_arity(); ++n)
     {
@@ -256,8 +262,9 @@ object function::signature(bool show_return_type) const
         }
 
         str param(s[n].basename);
-        if (s[n].lvalue)
+        if (s[n].lvalue) {
             param += " {lvalue}";
+        }
         
         if (m_arg_names) // None or empty tuple will test false
         {
@@ -272,9 +279,10 @@ object function::signature(bool show_return_type) const
         formal_params.append(param);
     }
 
-    if (show_return_type)
+    if (show_return_type) {
         return "%s(%s) -> %s" % make_tuple(
             m_name, str(", ").join(formal_params), return_type->basename);
+    }
     return "%s(%s)" % make_tuple(
         m_name, str(", ").join(formal_params));
 }
@@ -317,14 +325,16 @@ void function::add_overload(handle<function> const& overload_)
 {
     function* parent = this;
     
-    while (parent->m_overloads)
+    while (parent->m_overloads) {
         parent = parent->m_overloads.get();
+    }
 
     parent->m_overloads = overload_;
 
     // If we have no documentation, get the docs from the overload
-    if (!m_doc)
+    if (!m_doc) {
         m_doc = overload_->m_doc;
+    }
 }
 
 namespace
@@ -426,8 +436,9 @@ object const& function::add_doc(object const& attribute, char const* doc)
     {
         _doc += str(const_cast<const char*>(detail::py_signature_tag));
     }
-    if (doc != 0 && docstring_options::show_user_defined_)
+    if (doc != 0 && docstring_options::show_user_defined_) {
         _doc += doc;
+    }
 
     if (docstring_options::show_cpp_signatures_)
     {
@@ -459,13 +470,15 @@ void function::add_to_namespace(
             dict = handle<>(borrowed(((PyClassObject*)ns)->cl_dict));
         else
 #endif        
-        if (PyType_Check(ns))
+        if (PyType_Check(ns)) {
             dict = handle<>(borrowed(((PyTypeObject*)ns)->tp_dict));
-        else    
+        } else {
             dict = handle<>(PyObject_GetAttrString(ns, const_cast<char*>("__dict__")));
+        }
 
-        if (dict == 0)
+        if (dict == 0) {
             throw_error_already_set();
+        }
 
         assert(!PyErr_Occurred());
         handle<> existing(allow_null(::PyObject_GetItem(dict.get(), name.ptr())));
@@ -507,8 +520,9 @@ void function::add_to_namespace(
         }
 
         // A function is named the first time it is added to a namespace.
-        if (new_func->name().is_none())
+        if (new_func->name().is_none()) {
             new_func->m_name = name;
+        }
 
         assert(!PyErr_Occurred());
         handle<> name_space_name(
@@ -521,8 +535,9 @@ void function::add_to_namespace(
             ))));
         PyErr_Clear();
         
-        if (name_space_name)
+        if (name_space_name) {
             new_func->m_namespace = object(name_space_name);
+        }
 
         object module_name(
           PyObject_IsInstance(name_space.ptr(), upcast<PyObject>(&PyModule_Type))
@@ -532,8 +547,9 @@ void function::add_to_namespace(
         new_func->m_module = module_name;
     }
 
-    if (PyObject_SetAttr(ns, name.ptr(), attribute.ptr()) < 0)
+    if (PyObject_SetAttr(ns, name.ptr(), attribute.ptr()) < 0) {
         throw_error_already_set();
+    }
 
     object mutable_attribute(attribute);
 /*
@@ -665,7 +681,7 @@ extern "C"
     {
         function* f = downcast<function>(op);
         list signatures = function_doc_signature_generator::function_doc_signatures(f);
-        if(!signatures) return python::detail::none();
+        if(!signatures) { return python::detail::none(); }
         signatures.reverse();
         return python::incref( str("\n").join(signatures).ptr());
     }
@@ -680,14 +696,15 @@ extern "C"
     static PyObject* function_get_name(PyObject* op, void*)
     {
         function* f = downcast<function>(op);
-        if (f->name().is_none())
+        if (f->name().is_none()) {
 #if PY_VERSION_HEX >= 0x03000000
             return PyUnicode_InternFromString("<unnamed Boost.Python function>");
 #else
             return PyString_InternFromString("<unnamed Boost.Python function>");
 #endif
-        else
+        } else {
             return python::incref(f->name().ptr());
+        }
     }
 
     // We add a dummy __class__ attribute in order to fool PyDoc into
