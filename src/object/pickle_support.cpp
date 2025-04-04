@@ -24,8 +24,9 @@ namespace {
       {
           str type_name(getattr(instance_class, "__name__"));
           str module_name(getattr(instance_class, "__module__", object("")));
-          if (module_name)
+          if (module_name) {
               module_name += ".";
+          }
 
           PyErr_SetObject(
                PyExc_RuntimeError,

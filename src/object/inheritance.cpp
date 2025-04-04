@@ -199,10 +199,11 @@ namespace
   inline index_entry* seek_type(class_id type)
   {
       type_index_t::iterator p = type_position(type);
-      if (p == type_index().end() || tuples::get<ksrc_static_t>(*p) != type)
+      if (p == type_index().end() || tuples::get<ksrc_static_t>(*p) != type) {
           return 0;
-      else
+      } else {
           return &*p;
+      }
   }
   
   // Get the entry for a type, inserting if necessary
@@ -210,8 +211,9 @@ namespace
   {
       type_index_t::iterator p = type_position(type);
 
-      if (p != type_index().end() && tuples::get<ksrc_static_t>(*p) == type)
+      if (p != type_index().end() && tuples::get<ksrc_static_t>(*p) == type) {
           return p;
+      }
 
       vertex_t v = add_vertex(full_graph().topology());
       vertex_t v2 = add_vertex(up_graph().topology());
@@ -231,8 +233,9 @@ namespace
       type_index().reserve(type_index().size() + 2);
       type_index_t::iterator first = demand_type(t1);
       type_index_t::iterator second = demand_type(t2);
-      if (first == second)
+      if (first == second) {
           ++first;
+      }
       return std::make_pair(first, second);
   }
 
@@ -294,8 +297,9 @@ namespace
       
       smart_graph::node_distance_map d(g.distances_to(dst));
 
-      if (d[src] == (std::numeric_limits<std::size_t>::max)())
+      if (d[src] == (std::numeric_limits<std::size_t>::max)()) {
           return 0;
+      }
 
       typedef property_map<cast_graph,edge_cast_t>::const_type cast_map;
       cast_map casts = get(edge_cast, g.topology());
@@ -313,11 +317,13 @@ namespace
           
           // Check to see if we have a real state
           void* dst_address = top.cast(top.src_address);
-          if (dst_address == 0)
+          if (dst_address == 0) {
               continue;
+          }
 
-          if (top.target == dst)
+          if (top.target == dst) {
               return dst_address;
+          }
           
           search_state s(top.target,dst_address);
 
@@ -325,8 +331,9 @@ namespace
               visited.begin(), visited.end(), s);
 
           // If already visited, continue
-          if (pos != visited.end() && *pos == s)
+          if (pos != visited.end() && *pos == s) {
               continue;
+          }
           
           visited.insert(pos, s); // mark it
 
@@ -395,12 +402,14 @@ namespace
 
       // Quickly rule out unregistered types
       index_entry* src_p = seek_type(src_t);
-      if (src_p == 0)
+      if (src_p == 0) {
           return 0;
+      }
 
       index_entry* dst_p = seek_type(dst_t);
-      if (dst_p == 0)
+      if (dst_p == 0) {
           return 0;
+      }
     
       // Look up the dynamic_id function and call it to get the dynamic
       // info

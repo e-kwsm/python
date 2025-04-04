@@ -88,8 +88,9 @@ PyTypeObject life_support_type = {
 
 PyObject* make_nurse_and_patient(PyObject* nurse, PyObject* patient)
 {
-    if (nurse == Py_None || nurse == patient)
+    if (nurse == Py_None || nurse == patient) {
         return nurse;
+    }
     
     if (Py_TYPE(&life_support_type) == 0)
     {
@@ -98,8 +99,9 @@ PyObject* make_nurse_and_patient(PyObject* nurse, PyObject* patient)
     }
     
     life_support* system = PyObject_New(life_support, &life_support_type);
-    if (!system)
+    if (!system) {
         return 0;
+    }
 
     system->patient = 0;
     
@@ -110,8 +112,9 @@ PyObject* make_nurse_and_patient(PyObject* nurse, PyObject* patient)
     // weakref has either taken ownership, or we have to release it
     // anyway
     Py_DECREF(system);
-    if (!weakref)
+    if (!weakref) {
         return 0;
+    }
     
     system->patient = patient;
     Py_XINCREF(patient); // hang on to the patient until death

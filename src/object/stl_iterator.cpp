@@ -31,8 +31,9 @@ void stl_input_iterator_impl::increment()
 {
     this->ob_ = boost::python::handle<>(
         boost::python::allow_null(PyIter_Next(this->it_.ptr())));
-    if (PyErr_Occurred())
+    if (PyErr_Occurred()) {
         throw boost::python::error_already_set();
+    }
 }
 
 bool stl_input_iterator_impl::equal(stl_input_iterator_impl const &that) const
