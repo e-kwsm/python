@@ -127,8 +127,9 @@ namespace
       static T extract(PyObject* intermediate)
       {
           long x = PyLong_AsLong(intermediate);
-          if (PyErr_Occurred())
+          if (PyErr_Occurred()) {
               throw_error_already_set();
+          }
           return numeric_cast<T>(x);
       }
   };
@@ -139,8 +140,9 @@ namespace
       static T extract(PyObject* intermediate)
       {
           unsigned long x = PyLong_AsUnsignedLong(intermediate);
-          if (PyErr_Occurred())
+          if (PyErr_Occurred()) {
               throw_error_already_set();
+          }
           return numeric_cast<T>(x);
       }
   };
@@ -271,8 +273,9 @@ namespace
           {
               BOOST_PYTHON_LONG_LONG result = PyLong_AsLongLong(intermediate);
               
-              if (PyErr_Occurred())
+              if (PyErr_Occurred()) {
                   throw_error_already_set();
+              }
 
               return result;
           }
@@ -293,8 +296,9 @@ namespace
           {
               unsigned BOOST_PYTHON_LONG_LONG result = PyLong_AsUnsignedLongLong(intermediate);
               
-              if (PyErr_Occurred())
+              if (PyErr_Occurred()) {
                   throw_error_already_set();
+              }
 
               return result;
           }
@@ -337,8 +341,9 @@ namespace
       static unaryfunc* get_slot(PyObject* obj)
       {
           PyNumberMethods* number_methods = obj->ob_type->tp_as_number;
-          if (number_methods == 0)
+          if (number_methods == 0) {
               return 0;
+          }
 
           // For integer types, return the tp_int conversion slot to avoid
           // creating a new object. We'll handle that below
@@ -458,8 +463,9 @@ namespace
                 , &result[0]
                 , result.size());
 
-              if (err == -1)
+              if (err == -1) {
                   throw_error_already_set();
+              }
           }
 #endif
           return result;
@@ -472,10 +478,11 @@ namespace
   {
       static unaryfunc* get_slot(PyObject* obj)
       {
-          if (PyComplex_Check(obj))
+          if (PyComplex_Check(obj)) {
               return &py_object_identity;
-          else
+          } else {
               return float_rvalue_from_python::get_slot(obj);
+          }
       }
       
       static std::complex<double> extract(PyObject* intermediate)
@@ -526,8 +533,9 @@ BOOST_PYTHON_DECL PyObject* do_return_to_python(PyObject* x)
   
 BOOST_PYTHON_DECL PyObject* do_arg_to_python(PyObject* x)
 {
-    if (x == 0)
+    if (x == 0) {
         return boost::python::detail::none();
+    }
       
     Py_INCREF(x);
     return x;
