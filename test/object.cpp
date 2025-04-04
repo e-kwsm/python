@@ -172,17 +172,21 @@ bool check_string_slice()
 {
     object s("hello, world");
 
-    if (s.slice(_,-3) != "hello, wo")
+    if (s.slice(_,-3) != "hello, wo") {
         return false;
+    }
     
-    if (s.slice(-3,_) != "rld")
+    if (s.slice(-3,_) != "rld") {
         return false;
+    }
     
-    if (s.slice(_,_) != s)
+    if (s.slice(_,_) != s) {
         return false;
+    }
     
-    if (", " != s.slice(5,7))
+    if (", " != s.slice(5,7)) {
         return false;
+    }
 
     return s.slice(2,-1).slice(1,-1)  == "lo, wor";
 }
@@ -267,8 +271,9 @@ bool check_inplace(object l, object o)
     l += l;
     for (y = 0; y < 6; ++y)
     {
-        if (l[y] != y % 3)
+        if (l[y] != y % 3) {
             return false;
+        }
     }
 
 #define TEST_ITEM_INPLACE(index, op, n, r1, r2)         \
@@ -319,24 +324,30 @@ bool check_inplace(object l, object o)
     TEST_ATTR_INPLACE(0,^,1,13,12)
     TEST_ATTR_INPLACE(0,|,1,13,13)
 
-    if (l[0] != o.attr("x0"))
+    if (l[0] != o.attr("x0")) {
         return false;
-    if (l[1] != o.attr("x1"))
+    }
+    if (l[1] != o.attr("x1")) {
         return false;
-    if (l[2] != o.attr("x2"))
+    }
+    if (l[2] != o.attr("x2")) {
         return false;
-    if (l[3] != o.attr("x3"))
+    }
+    if (l[3] != o.attr("x3")) {
         return false;
-    if (l[4] != o.attr("x4"))
+    }
+    if (l[4] != o.attr("x4")) {
         return false;
+    }
 
     // set item 5 to be a list, by calling l.__class__
     l[5] = l.attr("__class__")();
     // append an element
     l[5].attr("append")(2);
     // Check its value
-    if (l[5][0] != 2)
+    if (l[5][0] != 2) {
         return false;
+    }
     
     return true;
 }

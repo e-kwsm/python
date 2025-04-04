@@ -21,25 +21,31 @@ bool check_string_rich_slice()
     object s("hello, world");
 
     // default slice
-    if (s[slice()] != "hello, world")
+    if (s[slice()] != "hello, world") {
         return false;
+    }
 
     // simple reverse
-    if (s[slice(_,_,-1)] != "dlrow ,olleh")
+    if (s[slice(_,_,-1)] != "dlrow ,olleh") {
         return false;
+    }
 
     // reverse with mixed-sign offsets
-    if (s[slice(-6,1,-1)] != " ,oll")
+    if (s[slice(-6,1,-1)] != " ,oll") {
         return false;
+    }
 
     // all of the object.cpp check_string_slice() checks should work
     // with the form that omits the step argument.
-    if (s[slice(_,-3)] != "hello, wo")
+    if (s[slice(_,-3)] != "hello, wo") {
         return false;
-    if (s[slice(-3,_)] != "rld")
+    }
+    if (s[slice(-3,_)] != "rld") {
         return false;
-    if (", " != s[slice(5,7)])
+    }
+    if (", " != s[slice(5,7)]) {
         return false;
+    }
 
     return s[slice(2,-1)][slice(1,-1)]  == "lo, wor";
 }
