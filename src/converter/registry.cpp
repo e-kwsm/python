@@ -23,18 +23,22 @@
 namespace boost { namespace python { namespace converter { 
 BOOST_PYTHON_DECL PyTypeObject const* registration::expected_from_python_type() const
 {
-    if (this->m_class_object != 0)
+    if (this->m_class_object != 0) {
         return this->m_class_object;
+    }
 
     std::set<PyTypeObject const*> pool;
 
-    for(rvalue_from_python_chain* r = rvalue_chain; r ; r=r->next)
-        if(r->expected_pytype)
+    for (rvalue_from_python_chain* r = rvalue_chain; r; r = r->next) {
+        if (r->expected_pytype) {
             pool.insert(r->expected_pytype());
+        }
+    }
 
     //for now I skip the search for common base
-    if (pool.size()==1)
+    if (pool.size() == 1) {
         return *pool.begin();
+    }
 
     return 0;
 
@@ -42,11 +46,13 @@ BOOST_PYTHON_DECL PyTypeObject const* registration::expected_from_python_type() 
 
 BOOST_PYTHON_DECL PyTypeObject const* registration::to_python_target_type() const
 {
-    if (this->m_class_object != 0)
+    if (this->m_class_object != 0) {
         return this->m_class_object;
+    }
 
-    if (this->m_to_python_target_type != 0)
+    if (this->m_to_python_target_type != 0) {
         return this->m_to_python_target_type();
+    }
 
     return 0;
 }
@@ -97,8 +103,9 @@ namespace
   template< typename T >
   void delete_node( T* node )
   {
-      if( !!node && !!node->next )
+      if (!!node && !!node->next) {
           delete_node( node->next );
+      }
       delete node;
   }
 }
@@ -273,8 +280,9 @@ namespace registry
       std::cout << "push_back rvalue from_python " << key << "\n";
 #  endif 
       rvalue_from_python_chain** found = &get(key)->rvalue_chain;
-      while (*found != 0)
+      while (*found != 0) {
           found = &(*found)->next;
+      }
       
       rvalue_from_python_chain *registration = new rvalue_from_python_chain;
       registration->convertible = convertible;

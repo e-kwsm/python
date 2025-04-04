@@ -111,8 +111,9 @@ BOOST_PYTHON_DECL void* rvalue_from_python_stage2(
 
     // If a construct function was registered (i.e. we found an
     // rvalue conversion), call it now.
-    if (data.construct != 0)
+    if (data.construct != 0) {
         data.construct(source, &data);
+    }
 
     // Return the address of the resulting C++ object
     return data.convertible;
@@ -124,15 +125,17 @@ BOOST_PYTHON_DECL void* get_lvalue_from_python(
 {
     // Check to see if it's embedded in a class instance
     void* x = objects::find_instance_impl(source, converters.target_type);
-    if (x)
+    if (x) {
         return x;
+    }
 
     lvalue_from_python_chain const* chain = converters.lvalue_chain;
     for (;chain != 0; chain = chain->next)
     {
         void* r = chain->convert(source);
-        if (r != 0)
+        if (r != 0) {
             return r;
+        }
     }
     return 0;
 }
@@ -149,8 +152,9 @@ namespace
       BOOST_PYTHON_LOCK_STATE();
 
       visited_t::iterator const p = std::lower_bound(visited.begin(), visited.end(), chain);
-      if (p != visited.end() && *p == chain)
+      if (p != visited.end() && *p == chain) {
           return false;
+      }
       visited.insert(p, chain);
       return true;
   }
@@ -179,20 +183,23 @@ BOOST_PYTHON_DECL bool implicit_rvalue_convertible_from_python(
     PyObject* source
     , registration const& converters)
 {    
-    if (objects::find_instance_impl(source, converters.target_type))
+    if (objects::find_instance_impl(source, converters.target_type)) {
         return true;
+    }
     
     rvalue_from_python_chain const* chain = converters.rvalue_chain;
     
-    if (!visit(chain))
+    if (!visit(chain)) {
         return false;
+    }
 
     unvisit protect(chain);
     
     for (;chain != 0; chain = chain->next)
     {
-        if (chain->convertible(source))
+        if (chain->convertible(source)) {
             return true;
+        }
     }
 
     return false;
@@ -252,8 +259,9 @@ namespace
       }
       
       void* result = get_lvalue_from_python(source, converters);
-      if (!result)
+      if (!result) {
           (throw_no_lvalue_from_python)(source, converters, ref_type);
+      }
       return result;
   }
   
