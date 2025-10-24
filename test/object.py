@@ -28,32 +28,43 @@
         Attributes
 
 >>> class X: pass
-...
 >>> x = X()
 
->>> try: obj_getattr(x, 'foo')
-... except AttributeError: pass
-... else: print('expected an exception')
->>> try: obj_objgetattr(x, 'objfoo')
-... except AttributeError: pass
-... else: print('expected an exception')
+>>> try:
+...     obj_getattr(x, 'foo')
+... except AttributeError:
+...     pass
+... else:
+...     print('expected an exception')
+>>> try:
+...     obj_objgetattr(x, 'objfoo')
+... except AttributeError:
+...     pass
+... else:
+...     print('expected an exception')
 
 >>> obj_setattr(x, 'foo', 1)
 >>> x.foo
 1
 >>> obj_objsetattr(x, 'objfoo', 1)
->>> try:obj_objsetattr(x, 1)
-... except TypeError: pass
-... else: print('expected an exception')
+>>> try:
+...     obj_objsetattr(x, 1)
+... except TypeError:
+...     pass
+... else:
+...     print('expected an exception')
 >>> x.objfoo
 1
 >>> obj_getattr(x, 'foo')
 1
 >>> obj_objgetattr(x, 'objfoo')
 1
->>> try:obj_objgetattr(x, 1)
-... except TypeError: pass
-... else: print('expected an exception')
+>>> try:
+...     obj_objgetattr(x, 1)
+... except TypeError:
+...     pass
+... else:
+...     print('expected an exception')
 >>> obj_const_getattr(x, 'foo')
 1
 >>> obj_const_objgetattr(x, 'objfoo')
@@ -90,12 +101,18 @@
 1
 >>> obj_delattr(x, 'foo')
 >>> obj_objdelattr(x, 'objfoo')
->>> try:obj_delattr(x, 'foo')
-... except AttributeError: pass
-... else: print('expected an exception')
->>> try:obj_objdelattr(x, 'objfoo')
-... except AttributeError: pass
-... else: print('expected an exception')
+>>> try:
+...     obj_delattr(x, 'foo')
+... except AttributeError:
+...     pass
+... else:
+...     print('expected an exception')
+>>> try:
+...     obj_objdelattr(x, 'objfoo')
+... except AttributeError:
+...     pass
+... else:
+...     print('expected an exception')
 
         Items
 
@@ -143,7 +160,6 @@
 >>> assert check_binary_operators()
 
 >>> class X: pass
-...
 >>> assert check_inplace(list(range(3)), X())
 
 
@@ -151,10 +167,8 @@
 
 >>> import weakref
 >>> class Z: pass
-...
 >>> z = Z()
 >>> def death(r): print('death')
-...
 >>> r = weakref.ref(z, death)
 >>> z.foo = 1
 >>> obj_getattr(z, 'foo')
@@ -177,5 +191,6 @@ if __name__ == '__main__':
     print("running...")
     import sys
     status = run()[0]
-    if (status == 0): print("Done.")
+    if status == 0:
+        print("Done.")
     sys.exit(status)

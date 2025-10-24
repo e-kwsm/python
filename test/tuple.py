@@ -4,9 +4,9 @@
 """
 >>> from tuple_ext import *
 >>> def printer(*args):
-...     for x in args: print(x,)
+...     for x in args:
+...         print(x,)
 ...     print('')
-...
 >>> print(convert_to_tuple("this is a test string"))
 ('t', 'h', 'i', 's', ' ', 'i', 's', ' ', 'a', ' ', 't', 'e', 's', 't', ' ', 's', 't', 'r', 'i', 'n', 'g')
 >>> t1 = convert_to_tuple("this is")
@@ -35,5 +35,6 @@ if __name__ == '__main__':
     print("running...")
     import sys
     status = run()[0]
-    if (status == 0): print("Done.")
+    if status == 0:
+        print("Done.")
     sys.exit(status)

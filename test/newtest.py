@@ -41,8 +41,10 @@
 Can't get a non-const reference to a built-in integer object
 >>> try:
 ...     unwrap_int_ref(7)
-... except: pass
-... else: print('no exception')
+... except:
+...     pass
+... else:
+...     print('no exception')
 
 >>> unwrap_int_const_ref(9)
 9
@@ -103,9 +105,12 @@ are a complicated constructor and member function, respectively.
      by the Method property which wraps the method when accessed as an
      attribute. 
 
->>> try: A.__dict__['name'](None)
-... except TypeError: pass
-... else: print('expected an exception!')
+>>> try:
+...     A.__dict__['name'](None)
+... except TypeError:
+...     pass
+... else:
+...     print('expected an exception!')
 
 
 >>> a = A()
@@ -119,18 +124,24 @@ are a complicated constructor and member function, respectively.
 
 >>> try:
 ...     take_b(a)
-... except: pass
-... else: print('no exception')
+... except:
+...     pass
+... else:
+...     print('no exception')
 
 >>> try:
 ...     take_c(a)
-... except: pass
-... else: print('no exception')
+... except:
+...     pass
+... else:
+...     print('no exception')
 
 >>> try:
 ...     take_d(a)
-... except: pass
-... else: print('no exception')
+... except:
+...     pass
+... else:
+...     print('no exception')
 
 ------
 >>> take_a(b).name()
@@ -141,13 +152,17 @@ are a complicated constructor and member function, respectively.
 
 >>> try:
 ...     take_c(b)
-... except: pass
-... else: print('no exception')
+... except:
+...     pass
+... else:
+...     print('no exception')
 
 >>> try:
 ...     take_d(b)
-... except: pass
-... else: print('no exception')
+... except:
+...     pass
+... else:
+...     print('no exception')
 
 -------
 >>> take_a(c).name()
@@ -155,16 +170,20 @@ are a complicated constructor and member function, respectively.
 
 >>> try:
 ...     take_b(c)
-... except: pass
-... else: print('no exception')
+... except:
+...     pass
+... else:
+...     print('no exception')
 
 >>> take_c(c).name()
 'C'
 
 >>> try:
 ...     take_d(c)
-... except: pass
-... else: print('no exception')
+... except:
+...     pass
+... else:
+...     print('no exception')
 
 -------
 >>> take_a(d).name()
@@ -202,5 +221,6 @@ if __name__ == '__main__':
     print("running...")
     import sys
     status = run()[0]
-    if (status == 0): print("Done.")
+    if status == 0:
+        print("Done.")
     sys.exit(status)

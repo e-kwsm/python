@@ -28,9 +28,10 @@ r'''>>> import pickle2_ext
     >>> wd.x = 1
     >>> wd.__dict__
     {'x': 1}
-    >>> try: pstr = pickle.dumps(wd)
-    ... except RuntimeError as err: print(err)
-    ...
+    >>> try:
+    ...     pstr = pickle.dumps(wd)
+    ... except RuntimeError as err:
+    ...     print(err)
     Incomplete pickle support (__getstate_manages_dict__ not set)
 '''
 
@@ -48,5 +49,6 @@ if __name__ == '__main__':
     print("running...")
     import sys
     status = run()[0]
-    if (status == 0): print("Done.")
+    if status == 0:
+        print("Done.")
     sys.exit(status)

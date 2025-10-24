@@ -33,15 +33,21 @@ RuntimeError: success
 
    Check that there is no conversion from integers ...
    
->>> try: use(0)
-... except TypeError: pass
-... else: print('expected a TypeError')
+>>> try:
+...     use(0)
+... except TypeError:
+...     pass
+... else:
+...     print('expected a TypeError')
 
    ... and from strings to opaque objects
    
->>> try: use("")
-... except TypeError: pass
-... else: print('expected a TypeError')
+>>> try:
+...     use("")
+... except TypeError:
+...     pass
+... else:
+...     print('expected a TypeError')
 
    Now check the same for another opaque pointer type
    
@@ -50,21 +56,33 @@ RuntimeError: success
 Traceback (most recent call last):
         ...
 RuntimeError: success
->>> try: use2(0)
-... except TypeError: pass
-... else: print('expected a TypeError')
->>> try: use2("")
-... except TypeError: pass
-... else: print('expected a TypeError')
+>>> try:
+...     use2(0)
+... except TypeError:
+...     pass
+... else:
+...     print('expected a TypeError')
+>>> try:
+...     use2("")
+... except TypeError:
+...     pass
+... else:
+...     print('expected a TypeError')
 
    Check that opaque types are distinct
 
->>> try: use(get2())
-... except TypeError: pass
-... else: print('expected a TypeError')
->>> try: use2(get())
-... except TypeError: pass
-... else: print('expected a TypeError')
+>>> try:
+...     use(get2())
+... except TypeError:
+...     pass
+... else:
+...     print('expected a TypeError')
+>>> try:
+...     use2(get())
+... except TypeError:
+...     pass
+... else:
+...     print('expected a TypeError')
 
    This used to result in a segmentation violation
 
@@ -83,5 +101,6 @@ if __name__ == '__main__':
     print("running...")
     import sys
     status = run()[0]
-    if (status == 0): print("Done.")
+    if status == 0:
+        print("Done.")
     sys.exit(status)

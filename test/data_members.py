@@ -161,9 +161,12 @@ False
 >>> x = X(42)
 >>> x.x
 42
->>> try: x.x = 77
-... except AttributeError: pass
-... else: print('no error')
+>>> try:
+...     x.x = 77
+... except AttributeError:
+...     pass
+... else:
+...     print('no error')
 
 >>> x.fair_value
 42.0
@@ -211,5 +214,6 @@ if __name__ == '__main__':
     print("running...")
     import sys
     status = run()[0]
-    if (status == 0): print("Done.")
+    if status == 0:
+        print("Done.")
     sys.exit(status)

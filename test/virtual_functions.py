@@ -50,14 +50,20 @@
 42
 
 # Call f indirectly from C++
->>> try: a2.call_f(y1)
-... except AttributeError: pass
-... else: print('no exception')
+>>> try:
+...     a2.call_f(y1)
+... except AttributeError:
+...     pass
+... else:
+...     print('no exception')
 
 # Call f directly from Python
->>> try: a2.call_f(y2)
-... except AttributeError: pass
-... else: print('no exception')
+>>> try:
+...     a2.call_f(y2)
+... except AttributeError:
+...     pass
+... else:
+...     print('no exception')
 
 ############# Concrete Tests ############
 
@@ -106,5 +112,6 @@ if __name__ == '__main__':
     print("running...")
     import sys
     status = run()[0]
-    if (status == 0): print("Done.")
+    if status == 0:
+        print("Done.")
     sys.exit(status)

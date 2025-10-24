@@ -4,7 +4,8 @@
 """
 >>> from str_ext import *
 >>> def printer(*args):
-...     for x in args: print(x, end=' ')
+...     for x in args:
+...         print(x, end=' ')
 ...     print('')
 ...
 >>> work_with_string(printer) #doctest: +NORMALIZE_WHITESPACE
@@ -51,5 +52,6 @@ if __name__ == '__main__':
     print("running...")
     import sys
     status = run()[0]
-    if (status == 0): print("Done.")
+    if status == 0:
+        print("Done.")
     sys.exit(status)

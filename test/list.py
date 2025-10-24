@@ -23,17 +23,23 @@ X(22)
 
   5 is not convertible to a list
 
->>> try: result = apply_object_list(identity, 5)
-... except TypeError: pass
-... else: print('expected an exception, got', result, 'instead')
+>>> try:
+...     result = apply_object_list(identity, 5)
+... except TypeError:
+...     pass
+... else:
+...     print('expected an exception, got', result, 'instead')
 
 >>> assert apply_list_list(identity, letters) is letters
 
   5 is not convertible to a list as a return value
 
->>> try: result = apply_list_list(len, letters)
-... except TypeError: pass
-... else: print('expected an exception, got', result, 'instead')
+>>> try:
+...     result = apply_list_list(len, letters)
+... except TypeError:
+...     pass
+... else:
+...     print('expected an exception, got', result, 'instead')
 
 >>> append_object(letters, '.')
 >>> letters
@@ -41,9 +47,12 @@ X(22)
 
   tuples do not automatically convert to lists when passed as arguments
 
->>> try: append_list(letters, (1,2))
-... except TypeError: pass
-... else: print('expected an exception')
+>>> try:
+...     append_list(letters, (1,2))
+... except TypeError:
+...     pass
+... else:
+...     print('expected an exception')
 
 >>> append_list(letters, [1,2])
 >>> letters
@@ -68,9 +77,9 @@ X(22)
 2
 
 >>> def printer(*args):
-...     for x in args: print( x,)
+...     for x in args:
+...         print(x,)
 ...     print('')
-...
 
 >>> y = X(42)
 >>> exercise(letters, y, printer) #doctest: +NORMALIZE_WHITESPACE
@@ -116,5 +125,6 @@ if __name__ == '__main__':
     print("running...")
     import sys
     status = run()[0]
-    if (status == 0): print("Done.")
+    if status == 0:
+        print("Done.")
     sys.exit(status)

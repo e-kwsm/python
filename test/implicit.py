@@ -10,9 +10,12 @@
 >>> x = make_x(X(42))
 >>> x.value()
 42
->>> try: make_x('fool')
-... except TypeError: pass
-... else: print('no error')
+>>> try:
+...     make_x('fool')
+... except TypeError:
+...     pass
+... else:
+...     print('no error')
 
 >>> print(x_value.__doc__.splitlines()[1])
 x_value( (X)arg1) -> int :
@@ -40,5 +43,6 @@ if __name__ == '__main__':
     print("running...")
     import sys
     status = run()[0]
-    if (status == 0): print("Done.")
+    if status == 0:
+        print("Done.")
     sys.exit(status)

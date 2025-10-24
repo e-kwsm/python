@@ -36,9 +36,12 @@
 -12
 >>> look(p)
 12
->>> try: modify(p)
-... except TypeError: pass
-... else: print('expected a TypeError')
+>>> try:
+...     modify(p)
+... except TypeError:
+...     pass
+... else:
+...     print('expected a TypeError')
 >>> look(None)
 -1
 >>> store(p)
@@ -59,9 +62,12 @@ bye
 13
 >>> z.v()
 13
->>> try: modify(z)
-... except TypeError: pass
-... else: print('expected a TypeError')
+>>> try:
+...     modify(z)
+... except TypeError:
+...     pass
+... else:
+...     print('expected a TypeError')
 
 >>> Z.get() # should be None
 >>> store(z)
@@ -82,9 +88,12 @@ bye
 17
 >>> look(x)
 17
->>> try: modify(x)
-... except TypeError: pass
-... else: print('expected a TypeError')
+>>> try:
+...     modify(x)
+... except TypeError:
+...     pass
+... else:
+...     print('expected a TypeError')
 >>> look(None)
 -1
 >>> store(x)
@@ -126,5 +135,6 @@ if __name__ == '__main__':
     print("running...")
     import sys
     status = run()[0]
-    if (status == 0): print("Done.")
+    if status == 0:
+        print("Done.")
     sys.exit(status)
