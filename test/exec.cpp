@@ -145,11 +145,7 @@ int main(int argc, char **argv)
 
   // Register the module with the interpreter
   if (PyImport_AppendInittab(const_cast<char*>("embedded_hello"),
-#if PY_VERSION_HEX >= 0x03000000 
                              PyInit_embedded_hello 
-#else 
-                             initembedded_hello 
-#endif 
                              ) == -1)
   {
     BOOST_ERROR("Failed to add embedded_hello to the interpreter's "
