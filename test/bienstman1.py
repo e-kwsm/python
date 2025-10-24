@@ -4,8 +4,10 @@
 '''
 # Try to reproduce a Numeric interaction bug if Numeric is installed.
 >>> from bienstman1_ext import *
->>> try: from Numeric import *
-... except: pass
+>>> try:
+...     from Numeric import *
+... except:
+...     pass
 '''
 def run(args = None):
     import sys
@@ -19,5 +21,6 @@ if __name__ == '__main__':
     print("running...")
     import sys
     status = run()[0]
-    if (status == 0): print("Done.")
+    if status == 0:
+        print("Done.")
     sys.exit(status)

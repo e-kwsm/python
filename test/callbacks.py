@@ -17,17 +17,23 @@
 Once we have array conversion support, this test will fail. Er,
 succeed<wink>:
 
->>> try: apply_to_string_literal(identity)
-... except ReferenceError: pass # expected
-... else: print('expected an exception!')
+>>> try:
+...     apply_to_string_literal(identity)
+... except ReferenceError:
+...     pass # expected
+... else:
+...     print('expected an exception!')
 
->>> try: apply_X_ref_handle(lambda ignored:X(42), None)
-... except ReferenceError: pass # expected
-... else: print('expected an exception!')
+>>> try:
+...     apply_X_ref_handle(lambda ignored:X(42), None)
+... except ReferenceError:
+...     pass # expected
+... else:
+...     print('expected an exception!')
 
 >>> x = X(42)
 >>> x.y = X(7)
->>> apply_X_ref_handle(lambda z:z.y, x).value()
+>>> apply_X_ref_handle(lambda z: z.y, x).value()
 7
 
 >>> x = apply_X_X(identity, X(42))
@@ -102,17 +108,26 @@ succeed<wink>:
 >>> def new_x(ignored):
 ...     return X(666)
 ...
->>> try: apply_X_ref_handle(new_x, 1)
-... except ReferenceError: pass
-... else: print('no error')
+>>> try:
+...     apply_X_ref_handle(new_x, 1)
+... except ReferenceError:
+...     pass
+... else:
+...     print('no error')
 
->>> try: apply_X_ptr_handle_cref(new_x, 1)
-... except ReferenceError: pass
-... else: print('no error')
+>>> try:
+...     apply_X_ptr_handle_cref(new_x, 1)
+... except ReferenceError:
+...     pass
+... else:
+...     print('no error')
 
->>> try: apply_cstring_cstring(identity, 'hello')
-... except ReferenceError: pass
-... else: print('no error')
+>>> try:
+...     apply_cstring_cstring(identity, 'hello')
+... except ReferenceError:
+...     pass
+... else:
+...     print('no error')
 
 >>> apply_char_char(identity, 'x')
 'x'
@@ -143,5 +158,6 @@ if __name__ == '__main__':
     print("running...")
     import sys
     status = run()[0]
-    if (status == 0): print("Done.")
+    if status == 0:
+        print("Done.")
     sys.exit(status)

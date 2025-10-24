@@ -29,9 +29,12 @@
 >>> f(1, z = 'hi', y = 3)
 (1, 3.0, 'hi')
 
->>> try: f(1, 2, 'hello', bar = 'baz')
-... except TypeError: pass
-... else: print('expected an exception: unknown keyword')
+>>> try:
+...     f(1, 2, 'hello', bar = 'baz')
+... except TypeError:
+...     pass
+... else:
+...     print('expected an exception: unknown keyword')
 
 
    Exercise the functions using default stubs
@@ -75,9 +78,12 @@
 >>> q.f(1, z = 'hi', y = 3)
 (1, 3.0, 'hi')
 
->>> try: q.f(1, 2, 'hello', bar = 'baz')
-... except TypeError: pass
-... else: print('expected an exception: unknown keyword')
+>>> try:
+...     q.f(1, 2, 'hello', bar = 'baz')
+... except TypeError:
+...     pass
+... else:
+...     print('expected an exception: unknown keyword')
 
    Exercise member functions using default stubs
 
@@ -149,7 +155,8 @@ if __name__ == '__main__':
     print("running...")
     import sys
     status = run()[0]
-    if (status == 0): print("Done.")
+    if status == 0:
+        print("Done.")
     import args_ext
     help(args_ext)
     sys.exit(status)

@@ -22,8 +22,10 @@ r'''>>> import pickle1_ext
     Hello from California!
 
     >>> noop = pickle1_ext.noop()
-    >>> try: pickle.dumps(noop)
-    ... except RuntimeError as e: print(str(e)[:55])
+    >>> try:
+    ...     pickle.dumps(noop)
+    ... except RuntimeError as e:
+    ...     print(str(e)[:55])
     Pickling of "pickle1_ext.noop" instances is not enabled
 '''
 

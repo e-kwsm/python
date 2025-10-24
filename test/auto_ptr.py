@@ -26,9 +26,12 @@
 -1
 
 >>> if not broken_auto_ptr:
-...     try: x.value()
-...     except TypeError: pass
-...     else: print('expected a TypeError exception')
+...     try:
+...         x.value()
+...     except TypeError:
+...         pass
+...     else:
+...         print('expected a TypeError exception')
 
 >>> x = make()
 >>> look(x)
@@ -49,9 +52,12 @@
 >>> y.value()
 42
 
->>> try: maybe_steal(y, 0)
-... except TypeError: pass
-... else: print('expected a TypeError exception')
+>>> try:
+...     maybe_steal(y, 0)
+... except TypeError:
+...     pass
+... else:
+...     print('expected a TypeError exception')
 
 >>> y.value()
 42
@@ -60,9 +66,12 @@
 42
 
 >>> if not broken_auto_ptr:
-...     try: y.value()
-...     except TypeError: pass
-...     else: print('expected a TypeError exception')
+...     try:
+...         y.value()
+...     except TypeError:
+...         pass
+...     else:
+...         print('expected a TypeError exception')
 
 >>> print(look.__doc__.splitlines()[1])
 look( (X)arg1) -> int :
@@ -96,5 +105,6 @@ if __name__ == '__main__':
     print("running...")
     import sys
     status = run()[0]
-    if (status == 0): print("Done.")
+    if status == 0:
+        print("Done.")
     sys.exit(status)

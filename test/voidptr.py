@@ -28,15 +28,21 @@
 
    Check that there is no conversion from integers ...
    
->>> try: use(0)
-... except TypeError: pass
-... else: print('expected a TypeError')
+>>> try:
+...     use(0)
+... except TypeError:
+...     pass
+... else:
+...     print('expected a TypeError')
 
    ... and from strings to opaque objects
    
->>> try: use("")
-... except TypeError: pass
-... else: print('expected a TypeError')
+>>> try:
+...     use("")
+... except TypeError:
+...     pass
+... else:
+...     print('expected a TypeError')
 """
 def run(args = None):
     import sys
