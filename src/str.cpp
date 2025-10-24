@@ -10,32 +10,20 @@ namespace boost { namespace python { namespace detail {
 detail::new_reference str_base::call(object const& arg_)
 {
     return (detail::new_reference)PyObject_CallFunction(
-#if PY_VERSION_HEX >= 0x03000000
         (PyObject*)&PyUnicode_Type,
-#else
-        (PyObject*)&PyString_Type, 
-#endif
         const_cast<char*>("(O)"), 
         arg_.ptr());
 } 
 
 str_base::str_base()
   : object(detail::new_reference(
-#if PY_VERSION_HEX >= 0x03000000
               ::PyUnicode_FromString("")
-#else
-              ::PyString_FromString("")
-#endif
             ))
 {}
 
 str_base::str_base(const char* s)
   : object(detail::new_reference(
-#if PY_VERSION_HEX >= 0x03000000
               ::PyUnicode_FromString(s)
-#else
-              ::PyString_FromString(s)
-#endif
             ))
 {}
 
@@ -55,11 +43,7 @@ namespace {
 str_base::str_base(char const* start, char const* finish)
     : object(
         detail::new_reference(
-#if PY_VERSION_HEX >= 0x03000000
             ::PyUnicode_FromStringAndSize
-#else
-            ::PyString_FromStringAndSize
-#endif
                 (start, str_size_as_py_ssize_t(finish - start))
         )
     )
@@ -68,11 +52,7 @@ str_base::str_base(char const* start, char const* finish)
 str_base::str_base(char const* start, std::size_t length) // new str
     : object(
         detail::new_reference(
-#if PY_VERSION_HEX >= 0x03000000
             ::PyUnicode_FromStringAndSize
-#else
-            ::PyString_FromStringAndSize
-#endif
             ( start, str_size_as_py_ssize_t(length) )
         )
     )
@@ -115,23 +95,6 @@ long str_base::count(object_cref sub, object_cref start, object_cref end) const
     return extract<long>(this->attr("count")(sub,start,end));
 }
 
-#if PY_VERSION_HEX < 0x03000000
-object str_base::decode() const
-{
-    return this->attr("decode")();
-}
-
-object str_base::decode(object_cref encoding) const
-{
-    return this->attr("decode")(encoding);
-}
-
-object str_base::decode(object_cref encoding, object_cref errors) const
-{
-    return this->attr("decode")(encoding,errors);
-}
-#endif
-
 object str_base::encode() const
 {
     return this->attr("encode")();
@@ -148,11 +111,7 @@ object str_base::encode(object_cref encoding, object_cref errors) const
 }
 
 
-#if PY_VERSION_HEX >= 0x03000000
-    #define _BOOST_PYTHON_ASLONG PyLong_AsLong
-#else
-    #define _BOOST_PYTHON_ASLONG PyInt_AsLong
-#endif
+#define _BOOST_PYTHON_ASLONG PyLong_AsLong
 
 bool str_base::endswith(object_cref suffix) const
 {
@@ -408,11 +367,7 @@ static struct register_str_pytype_ptr
         const_cast<converter::registration &>(
             converter::registry::lookup(boost::python::type_id<boost::python::str>())
             )
-#if PY_VERSION_HEX >= 0x03000000
             .m_class_object = &PyUnicode_Type;
-#else
-            .m_class_object = &PyString_Type;
-#endif
     }
 }register_str_pytype_ptr_;
     
