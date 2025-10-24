@@ -196,15 +196,6 @@ static PyTypeObject static_data_object = {
 
 namespace objects
 {
-#if PY_VERSION_HEX < 0x03000000
-  // XXX Not sure why this run into compiling error in Python 3
-  extern "C"
-  {
-      // This declaration needed due to broken Python 2.2 headers
-      extern DL_IMPORT(PyTypeObject) PyProperty_Type;
-  }
-#endif
-
   BOOST_PYTHON_DECL PyObject* static_data()
   {
       if (static_data_object.tp_dict == 0)
@@ -358,11 +349,7 @@ namespace objects
           PyObject* instance_size_obj = PyObject_GetAttrString(d, const_cast<char*>("__instance_size__"));
 
           ssize_t instance_size = instance_size_obj ? 
-#if PY_VERSION_HEX >= 0x03000000
               PyLong_AsSsize_t(instance_size_obj) : 0;
-#else
-              PyInt_AsLong(instance_size_obj) : 0;
-#endif
           
           if (instance_size < 0)
               instance_size = 0;

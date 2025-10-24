@@ -113,17 +113,11 @@ object BOOST_PYTHON_DECL exec_file(char const *filename, object global, object l
   FILE *fs = fopen(f_as_uft, "r");
   Py_DECREF(fo);
   Py_DECREF(fb);
-#elif PY_VERSION_HEX >= 0x03000000
+#else
   // Let python open the file to avoid potential binary incompatibilities.
   PyObject *fo = Py_BuildValue("s", f);
   FILE *fs = fopen(fo, "r");
   Py_DECREF(fo);
-#else
-  // Let python open the file to avoid potential binary incompatibilities.
-  PyObject *pyfile = PyFile_FromString(f, const_cast<char*>("r"));
-  if (!pyfile) throw std::invalid_argument(std::string(f) + " : no such file");
-  python::handle<> file(pyfile);
-  FILE *fs = PyFile_AsFile(file.get());
 #endif
   PyObject* result = PyRun_File(fs,
                 f,

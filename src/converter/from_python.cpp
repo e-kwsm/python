@@ -94,11 +94,7 @@ BOOST_PYTHON_DECL void* rvalue_from_python_stage2(
     if (!data.convertible)
     {
         handle<> msg(
-#if PY_VERSION_HEX >= 0x03000000
             ::PyUnicode_FromFormat
-#else
-            ::PyString_FromFormat
-#endif
                 (
                 "No registered converter was able to produce a C++ rvalue of type %s from this Python object of type %s"
                 , converters.target_type.name()
@@ -203,11 +199,7 @@ namespace
   void throw_no_lvalue_from_python(PyObject* source, registration const& converters, char const* ref_type)
   {
       handle<> msg(
-#if PY_VERSION_HEX >= 0x03000000
           ::PyUnicode_FromFormat
-#else
-          ::PyString_FromFormat
-#endif
               (
               "No registered converter was able to extract a C++ %s to type %s"
               " from this Python object of type %s"
@@ -236,11 +228,7 @@ namespace
                 <= 1)
       {
           handle<> msg(
-#if PY_VERSION_HEX >= 0x3000000
               ::PyUnicode_FromFormat
-#else
-              ::PyString_FromFormat
-#endif
                   (
                   "Attempt to return dangling %s to object of type: %s"
                   , ref_type
