@@ -18,11 +18,7 @@ namespace boost { namespace python { namespace objects {
 
 struct enum_object
 {
-#if PY_VERSION_HEX >= 0x03000000
     PyLongObject base_object;
-#else
-    PyIntObject base_object;
-#endif
     PyObject* name;
 };
 
@@ -51,10 +47,8 @@ extern "C"
             return
 #if PY_VERSION_HEX >= 0x03030000
                 PyUnicode_FromFormat("%S.%S(%ld)", mod, ((PyHeapTypeObject*)(self_->ob_type))->ht_qualname, PyLong_AsLong(self_));
-#elif PY_VERSION_HEX >= 0x03000000
-                PyUnicode_FromFormat("%S.%s(%ld)", mod, self_->ob_type->tp_name, PyLong_AsLong(self_));
 #else
-                PyString_FromFormat("%s.%s(%ld)", PyString_AsString(mod), self_->ob_type->tp_name, PyInt_AS_LONG(self_));
+                PyUnicode_FromFormat("%S.%s(%ld)", mod, self_->ob_type->tp_name, PyLong_AsLong(self_));
 #endif
         }
         else
@@ -66,11 +60,8 @@ extern "C"
             return
 #if PY_VERSION_HEX >= 0x03030000
                 PyUnicode_FromFormat("%S.%S.%S", mod, ((PyHeapTypeObject*)(self_->ob_type))->ht_qualname, name);
-#elif PY_VERSION_HEX >= 0x03000000
-                PyUnicode_FromFormat("%S.%s.%S", mod, self_->ob_type->tp_name, name);
 #else
-                PyString_FromFormat("%s.%s.%s", 
-                        PyString_AsString(mod), self_->ob_type->tp_name, PyString_AsString(name));
+                PyUnicode_FromFormat("%S.%s.%S", mod, self_->ob_type->tp_name, name);
 #endif
         }
     }
@@ -80,11 +71,7 @@ extern "C"
         enum_object* self = downcast<enum_object>(self_);
         if (!self->name)
         {
-#if PY_VERSION_HEX >= 0x03000000
             return PyLong_Type.tp_str(self_);
-#else
-            return PyInt_Type.tp_str(self_);
-#endif
         }
         else
         {
@@ -114,9 +101,6 @@ static PyTypeObject enum_type_object = {
     0,                                      /* tp_setattro */
     0,                                      /* tp_as_buffer */
     Py_TPFLAGS_DEFAULT
-#if PY_VERSION_HEX < 0x03000000
-    | Py_TPFLAGS_CHECKTYPES
-#endif
     | Py_TPFLAGS_BASETYPE,                  /* tp_flags */
     0,                                      /* tp_doc */
     0,                                      /* tp_traverse */
@@ -158,11 +142,7 @@ namespace
       if (enum_type_object.tp_dict == 0)
       {
           Py_SET_TYPE(&enum_type_object, incref(&PyType_Type));
-#if PY_VERSION_HEX >= 0x03000000
           enum_type_object.tp_base = &PyLong_Type;
-#else
-          enum_type_object.tp_base = &PyInt_Type;
-#endif
           if (PyType_Ready(&enum_type_object))
               throw_error_already_set();
       }
