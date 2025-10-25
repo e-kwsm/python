@@ -111,11 +111,7 @@ BOOST_PYTHON_MODULE(example) {
 int main(int argc, char **argv)
 {
     // This line makes our module available to the embedded Python intepreter.
-# if PY_VERSION_HEX >= 0x03000000
     PyImport_AppendInittab("example", &PyInit_example);
-# else
-    PyImport_AppendInittab("example", &initexample);
-# endif
     // Initialize the Python runtime.
     Py_Initialize();
 
