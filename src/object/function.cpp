@@ -453,12 +453,6 @@ void function::add_to_namespace(
         function* new_func = downcast<function>(attribute.ptr());
         handle<> dict;
         
-#if PY_VERSION_HEX < 0x03000000
-        // Old-style class gone in Python 3
-        if (PyClass_Check(ns))
-            dict = handle<>(borrowed(((PyClassObject*)ns)->cl_dict));
-        else
-#endif        
         if (PyType_Check(ns))
             dict = handle<>(borrowed(((PyTypeObject*)ns)->tp_dict));
         else    
@@ -585,11 +579,7 @@ BOOST_PYTHON_DECL void add_to_namespace(
 
 BOOST_PYTHON_DECL object const& add_doc(object const& attribute, char const* doc)
 {
-#if PY_VERSION_HEX >= 0x03000000
     if (PyInstanceMethod_Check(attribute.ptr())) {
-#else
-    if (PyMethod_Check(attribute.ptr())) {
-#endif
         return attribute;
     }
     return function::add_doc(attribute, doc);
@@ -626,18 +616,12 @@ extern "C"
     static PyObject *
     function_descr_get(PyObject *func, PyObject *obj, PyObject *type_)
     {
-#if PY_VERSION_HEX >= 0x03000000
         // The implement is different in Python 3 because of the removal of unbound method
         if (obj == Py_None || obj == NULL) {
             Py_INCREF(func);
             return func;
         }
         return PyMethod_New(func, obj);
-#else
-        if (obj == Py_None)
-            obj = NULL;
-        return PyMethod_New(func, obj, type_);
-#endif
     }
 
     static void
@@ -681,11 +665,7 @@ extern "C"
     {
         function* f = downcast<function>(op);
         if (f->name().is_none())
-#if PY_VERSION_HEX >= 0x03000000
             return PyUnicode_InternFromString("<unnamed Boost.Python function>");
-#else
-            return PyString_InternFromString("<unnamed Boost.Python function>");
-#endif
         else
             return python::incref(f->name().ptr());
     }
