@@ -12,14 +12,7 @@
 ...     print("test passed")
 ...
 test passed
->>> import sys
->>> if sys.version_info[0] == 2 and sys.version_info[1] >= 3:
-...     check_string_rich_slice()
-... elif sys.version_info[0] > 2:
-...     check_string_rich_slice()
-... else:
-...     print(1)
-...
+>>> check_string_rich_slice()
 1
 >>> check_slice_get_indices( slice(None))
 0
