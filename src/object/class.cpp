@@ -28,6 +28,9 @@
 #include <new>
 #include <structmember.h>
 
+#pragma clang diagnostic push
+#pragma clang diagnostic ignored "-Wzero-as-null-pointer-constant"
+
 namespace boost { namespace python {
 
 # ifdef BOOST_PYTHON_SELF_IS_CLASS
@@ -792,3 +795,4 @@ void instance_holder::deallocate(PyObject* self_, void* storage) throw()
 }
 
 }} // namespace boost::python
+#pragma clang diagnostic pop
