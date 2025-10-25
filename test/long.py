@@ -9,17 +9,14 @@
 42
 >>> print(longify_string('300'))
 300
->>> is_long(long(20))
+>>> is_long(20)
 'yes'
 >>> is_long('20')
 0
 
->>> x = Y(long(4294967295))
+>>> x = Y(4294967295)
 '''
 
-import sys
-if (sys.version_info.major >= 3):
-    long = int
 
 def run(args = None):
     import sys
