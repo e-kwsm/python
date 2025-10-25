@@ -34,11 +34,7 @@ class has_numpy(try_run):
 #define NPY_NO_DEPRECATED_API NPY_1_7_API_VERSION
 #include "numpy/arrayobject.h"
 
-#if PY_VERSION_HEX >= 0x03000000
 void *initialize() { import_array();}
-#else
-void initialize() { import_array();}
-#endif
 
 int main()
 {
