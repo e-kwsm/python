@@ -8,9 +8,6 @@
 import dtype_ext
 import unittest
 import numpy
-import sys
-if (sys.version_info.major >= 3):
-    long = int
 
 class DtypeTestCase(unittest.TestCase):
     
@@ -30,8 +27,6 @@ class DtypeTestCase(unittest.TestCase):
             self.assertEquivalent(fu(True), numpy.dtype(u))
             self.assertEquivalent(fs(int(1)), numpy.dtype(s))
             self.assertEquivalent(fu(int(1)), numpy.dtype(u))
-            self.assertEquivalent(fs(long(1)), numpy.dtype(s))
-            self.assertEquivalent(fu(long(1)), numpy.dtype(u))
         for name in ("bool_", "byte", "ubyte", "short", "ushort", "intc", "uintc"):
             t = getattr(numpy, name)
             ft = getattr(dtype_ext, "accept_%s" % name)
@@ -40,7 +35,6 @@ class DtypeTestCase(unittest.TestCase):
             self.assertEquivalent(ft(True), numpy.dtype(t))
             if name != "bool_":
                 self.assertEquivalent(ft(int(1)), numpy.dtype(t))
-                self.assertEquivalent(ft(long(1)), numpy.dtype(t))
 
 
     def testFloats(self):
