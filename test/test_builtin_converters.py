@@ -11,7 +11,7 @@ r"""
 ...     return [[-base, -1, 1, base - 1], [-base - 1, base]]
 >>> def _unsigned_values(s):
 ...     base = 2 ** (8 * s)
-...     return [[1, base - 1], [long(-1), -1, base]]
+...     return [[1, base - 1], [-1, -1, base]]
 
 # Wrappers to simplify tests
 >>> def should_pass(method, values):
@@ -26,10 +26,10 @@ r"""
 
 # Synthesize idendity functions in case long long not supported
 >>> if not 'rewrap_value_long_long' in dir():
-...     def rewrap_value_long_long(x): return long(x)
-...     def rewrap_value_unsigned_long_long(x): return long(x)
-...     def rewrap_const_reference_long_long(x): return long(x)
-...     def rewrap_const_reference_unsigned_long_long(x): return long(x)
+...     def rewrap_value_long_long(x): return x
+...     def rewrap_value_unsigned_long_long(x): return x
+...     def rewrap_const_reference_long_long(x): return x
+...     def rewrap_const_reference_unsigned_long_long(x): return x
 >>> if not 'long_long_size' in dir():
 ...     def long_long_size(): return long_size()
 
@@ -75,7 +75,7 @@ False
     test unsigned long values which don't fit in a signed long.
     strip any 'L' characters in case the platform has > 32 bit longs
 
->>> hex(rewrap_value_unsigned_long(long(0x80000001))).replace('L','')
+>>> hex(rewrap_value_unsigned_long(0x80000001)).replace('L','')
 '0x80000001'
 
 >>> rewrap_value_long_long(42) == 42
@@ -233,9 +233,6 @@ Now check implicit conversions between floating/integer types
 >>> rewrap_const_reference_float(42)
 42.0
 
->>> rewrap_const_reference_float(long(42))
-42.0
-
 >>> try: rewrap_const_reference_int(42.0)
 ... except TypeError: pass
 ... else: print('expected a TypeError exception')
@@ -281,9 +278,6 @@ Check that classic classes also work
 >>> assert return_null_handle() is None
 """
 
-import sys
-if (sys.version_info.major >= 3):
-    long = int
 
 def run(args = None):
     import sys
