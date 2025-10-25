@@ -5,23 +5,14 @@ Python 2.5 introduces a new `Py_ssize_t` typedef and two related macros ([@http:
 [section Typedefs]
 Imports `Py_ssize_t` into the `boost::python` namespace if available, or provides an appropriate typedef for backward compatibility:
 ``
-#if PY_VERSION_HEX >= 0x02050000
 typedef Py_ssize_t ssize_t;
-#else
-typedef int ssize_t;
-#endif
 ``
 [endsect]
 [section Constants]
 Imports `PY_SSIZE_T_MAX` and `PY_SSIZE_T_MIN` as constants into the `boost::python` namespace if available, or provides appropriate constants for backward compatibility:
 ``
-#if PY_VERSION_HEX >= 0x02050000
 ssize_t const ssize_t_max = PY_SSIZE_T_MAX;
 ssize_t const ssize_t_min = PY_SSIZE_T_MIN;
-#else
-ssize_t const ssize_t_max = INT_MAX;
-ssize_t const ssize_t_min = INT_MIN;
-#endif
 ``
 [endsect]
 [endsect]
