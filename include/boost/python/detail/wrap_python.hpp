@@ -218,6 +218,17 @@ typedef int pid_t;
         ( (op)->ob_type = (typeobj), _Py_NewReference((PyObject *)(op)), (op) )
 #endif
 
+// Define Python 3 macros for Python 2.x
+#if PY_VERSION_HEX < 0x02060000
+
+# define Py_TYPE(o)    (((PyObject*)(o))->ob_type)
+# define Py_REFCNT(o)  (((PyObject*)(o))->ob_refcnt)
+# define Py_SIZE(o)    (((PyVarObject*)(o))->ob_size)
+
+# define PyVarObject_HEAD_INIT(type, size) \
+        PyObject_HEAD_INIT(type) size,
+#endif
+
 #if PY_VERSION_HEX < 0x030900A4
 #  define Py_SET_TYPE(obj, type) ((Py_TYPE(obj) = (type)), (void)0)
 #  define Py_SET_SIZE(obj, size) ((Py_SIZE(obj) = (size)), (void)0)
