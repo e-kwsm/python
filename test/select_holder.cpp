@@ -7,7 +7,6 @@
 #include <boost/python/detail/not_specified.hpp>
 #include <boost/static_assert.hpp>
 #include <boost/python/detail/type_traits.hpp>
-#include <boost/function/function0.hpp>
 #include <boost/mpl/bool.hpp>
 #include <memory>
 

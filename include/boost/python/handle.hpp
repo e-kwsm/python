@@ -15,6 +15,8 @@
 # include <boost/python/tag.hpp>
 # include <boost/python/detail/raw_pyobject.hpp>
 
+# include <boost/get_pointer.hpp>
+
 namespace boost { namespace python { 
 
 template <class T> struct null_ok;

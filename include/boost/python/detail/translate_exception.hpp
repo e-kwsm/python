@@ -10,7 +10,7 @@
 
 # include <boost/call_traits.hpp>
 
-# include <boost/function/function0.hpp>
+# include <functional>
 
 namespace boost { namespace python { namespace detail { 
 
@@ -38,7 +38,7 @@ struct translate_exception
     
     inline bool operator()(
         exception_handler const& handler
-      , function0<void> const& f
+      , std::function<void(void)> const& f
       , typename call_traits<Translate>::param_type translate) const
     {
         try

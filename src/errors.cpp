@@ -12,6 +12,8 @@
 #include <boost/python/detail/exception_handler.hpp>
 #include <boost/python/detail/pymutex.hpp>
 
+#include <stdexcept>
+
 namespace boost { namespace python {
 
 #ifdef Py_GIL_DISABLED
@@ -28,7 +30,7 @@ namespace detail {
 error_already_set::~error_already_set() {}
 
 // IMPORTANT: this function may only be called from within a catch block!
-BOOST_PYTHON_DECL bool handle_exception_impl(function0<void> f)
+BOOST_PYTHON_DECL bool handle_exception_impl(std::function<void(void)> f)
 {
     try
     {
@@ -80,7 +82,7 @@ void BOOST_PYTHON_DECL throw_error_already_set()
 
 namespace detail {
 
-bool exception_handler::operator()(function0<void> const& f) const
+bool exception_handler::operator()(std::function<void(void)> const& f) const
 {
     if (m_next)
     {
