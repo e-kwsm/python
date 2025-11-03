@@ -27,8 +27,9 @@ void initialize(bool register_scalar_converters)
 {
   wrap_import_array();
   import_ufunc();
-  if (register_scalar_converters)
+  if (register_scalar_converters) {
 	dtype::register_scalar_converters();
+  }
 }
 
 }}} // namespace boost::python::numpy

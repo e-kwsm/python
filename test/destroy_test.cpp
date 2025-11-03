@@ -30,8 +30,9 @@ struct foo
 
 void assert_destructions(int n)
 {
-    for (int i = 0; i < n; ++i)
+    for (int i = 0; i < n; ++i) {
         BOOST_TEST(marks[i] == i);
+    }
     BOOST_TEST(marks[n] == -1);
 }
 

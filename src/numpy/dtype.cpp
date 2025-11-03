@@ -87,13 +87,15 @@ python::detail::new_reference dtype::convert(object const & arg, bool align)
   PyArray_Descr* obj=NULL;
   if (align)
   {
-    if (PyArray_DescrAlignConverter(arg.ptr(), &obj) < 0)
+    if (PyArray_DescrAlignConverter(arg.ptr(), &obj) < 0) {
       throw_error_already_set();
+    }
   }
   else
   {
-    if (PyArray_DescrConverter(arg.ptr(), &obj) < 0)
+    if (PyArray_DescrConverter(arg.ptr(), &obj) < 0) {
       throw_error_already_set();
+    }
   }
   return python::detail::new_reference(reinterpret_cast<PyObject*>(obj));
 }
