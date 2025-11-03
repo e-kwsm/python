@@ -10,15 +10,14 @@ namespace boost { namespace python { namespace detail {
 
 detail::new_non_null_reference list_base::call(object const& arg_)
 {
-    return (detail::new_non_null_reference)
-        (expect_non_null)(
+    return reinterpret_cast<detail::new_non_null_reference>((expect_non_null)(
             PyObject_CallFunction(
-                (PyObject*)&PyList_Type, const_cast<char*>("(O)"), 
-                arg_.ptr()));
+                reinterpret_cast<PyObject*>(&PyList_Type), const_cast<char*>("(O)"),
+                arg_.ptr())));
 }
 
 list_base::list_base()
-    : object(detail::new_reference(PyList_New(0)))
+    : object(reinterpret_cast<detail::new_reference>(PyList_New(0)))
 {}
 
 list_base::list_base(object_cref sequence)

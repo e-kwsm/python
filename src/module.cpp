@@ -18,7 +18,7 @@ namespace
         if (m != 0)
         {
             // Create the current module scope
-            object m_obj(((borrowed_reference_t*)m));
+            object m_obj((reinterpret_cast<borrowed_reference_t*>(m)));
             scope current_module(m_obj);
 
             if (handle_exception(init_function)) return NULL;

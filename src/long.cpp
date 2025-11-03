@@ -8,22 +8,22 @@ namespace boost { namespace python { namespace detail {
 
 new_reference long_base::call(object const& arg_)
 {
-    return (detail::new_reference)PyObject_CallFunction(
-        (PyObject*)&PyLong_Type, const_cast<char*>("(O)"), 
-        arg_.ptr());
+    return reinterpret_cast<detail::new_reference>(PyObject_CallFunction(
+        reinterpret_cast<PyObject*>(&PyLong_Type), const_cast<char*>("(O)"),
+        arg_.ptr()));
 }
 
 new_reference long_base::call(object const& arg_, object const& base)
 {
-    return (detail::new_reference)PyObject_CallFunction(
-        (PyObject*)&PyLong_Type, const_cast<char*>("(OO)"), 
-        arg_.ptr(), base.ptr());
+    return reinterpret_cast<detail::new_reference>(PyObject_CallFunction(
+        reinterpret_cast<PyObject*>(&PyLong_Type), const_cast<char*>("(OO)"),
+        arg_.ptr(), base.ptr()));
 }
 
 long_base::long_base()
     : object(
-        detail::new_reference(
-            PyObject_CallFunction((PyObject*)&PyLong_Type, const_cast<char*>("()")))
+        reinterpret_cast<detail::new_reference>(
+            PyObject_CallFunction(reinterpret_cast<PyObject*>(&PyLong_Type), const_cast<char*>("()")))
         )
 {}
 
