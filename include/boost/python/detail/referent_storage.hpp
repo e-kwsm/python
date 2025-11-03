@@ -10,7 +10,7 @@
 
 namespace boost { namespace python { namespace detail {
 
-template <std::size_t size, std::size_t alignment = std::size_t(-1)>
+template <std::size_t size, std::size_t alignment = static_cast<std::size_t>(-1)>
 struct aligned_storage
 {
   union type

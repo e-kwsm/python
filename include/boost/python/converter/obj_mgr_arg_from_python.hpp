@@ -83,7 +83,7 @@ inline object_manager_ref_arg_from_python<Ref>::object_manager_ref_arg_from_pyth
     python::detail::borrowed_reference x_ = python::detail::borrowed_reference(x);
     python::detail::construct_referent<Ref>(m_result.bytes, x_);
 # else 
-    python::detail::construct_referent<Ref>(m_result.bytes, (python::detail::borrowed_reference)x);
+    python::detail::construct_referent<Ref>(m_result.bytes, reinterpret_cast<python::detail::borrowed_reference>(x));
 # endif 
 }
 

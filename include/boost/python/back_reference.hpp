@@ -49,7 +49,7 @@ class is_back_reference<back_reference<T> >
 //
 template <class T>
 back_reference<T>::back_reference(PyObject* p, T x)
-    : m_source(detail::borrowed_reference(p))
+    : m_source(reinterpret_cast<detail::borrowed_reference>(p))
       , m_value(x)
 {
 }

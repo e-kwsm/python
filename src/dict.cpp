@@ -16,7 +16,7 @@ namespace
   // we have a Python list object and stuff it into the list result.
   list assume_list(object const& o)
   {
-      return list(detail::borrowed_reference(o.ptr()));
+      return list(reinterpret_cast<detail::borrowed_reference>(o.ptr()));
   }
 
   // No PyDict_CheckExact; roll our own.
@@ -28,13 +28,13 @@ namespace
 
 detail::new_reference dict_base::call(object const& arg_)
 {
-    return (detail::new_reference)PyObject_CallFunction(
-        (PyObject*)&PyDict_Type, const_cast<char*>("(O)"), 
-        arg_.ptr());
+    return reinterpret_cast<detail::new_reference>(PyObject_CallFunction(
+        reinterpret_cast<PyObject*>(&PyDict_Type), const_cast<char*>("(O)"),
+        arg_.ptr()));
 }
 
 dict_base::dict_base()
-    : object(detail::new_reference(PyDict_New()))
+    : object(reinterpret_cast<detail::new_reference>(PyDict_New()))
 {}
     
 dict_base::dict_base(object_cref data)
@@ -53,12 +53,12 @@ dict dict_base::copy()
 {
     if (check_exact(this))
     {
-        return dict(detail::new_reference(
+        return dict(reinterpret_cast<detail::new_reference>(
                         PyDict_Copy(this->ptr())));
     }
     else
     {
-        return dict(detail::borrowed_reference(
+        return dict(reinterpret_cast<detail::borrowed_reference>(
                         this->attr("copy")().ptr()
                         ));
     }
@@ -99,7 +99,7 @@ list dict_base::items() const
 {
     if (check_exact(this))
     {
-        return list(detail::new_reference(
+        return list(reinterpret_cast<detail::new_reference>(
                         PyDict_Items(this->ptr())));
     }
     else
@@ -127,7 +127,7 @@ list dict_base::keys() const
 {
     if (check_exact(this))
     {
-        return list(detail::new_reference(
+        return list(reinterpret_cast<detail::new_reference>(
                         PyDict_Keys(this->ptr())));
     }
     else
@@ -138,7 +138,7 @@ list dict_base::keys() const
 
 tuple dict_base::popitem()
 {
-    return tuple(detail::borrowed_reference(
+    return tuple(reinterpret_cast<detail::borrowed_reference>(
                      this->attr("popitem")().ptr()
                      ));
 }
@@ -170,7 +170,7 @@ list dict_base::values() const
 {
     if (check_exact(this))
     {
-        return list(detail::new_reference(
+        return list(reinterpret_cast<detail::new_reference>(
                         PyDict_Values(this->ptr())));
     }
     else
