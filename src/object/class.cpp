@@ -289,7 +289,7 @@ static PyTypeObject class_metatype_object = {
     0,                                      /* tp_alloc */
     0, // filled in with type_new           /* tp_new */
     0, // filled in with __PyObject_GC_Del  /* tp_free */
-    (inquiry)type_is_gc,                    /* tp_is_gc */
+    reinterpret_cast<inquiry>(type_is_gc),  /* tp_is_gc */
     0,                                      /* tp_bases */
     0,                                      /* tp_mro */
     0,                                      /* tp_cache */
@@ -305,8 +305,8 @@ static PyTypeObject class_metatype_object = {
 void instance_holder::install(PyObject* self) throw()
 {
     assert(PyType_IsSubtype(Py_TYPE(Py_TYPE(self)), &class_metatype_object));
-    m_next = ((objects::instance<>*)self)->objects;
-    ((objects::instance<>*)self)->objects = this;
+    m_next = (reinterpret_cast<objects::instance<>*>(self))->objects;
+    (reinterpret_cast<objects::instance<>*>(self))->objects = this;
 }
 
 
@@ -605,7 +605,7 @@ namespace objects
           converter::registry::lookup(types[0]));
 
       // Class object is leaked, for now
-      converters.m_class_object = (PyTypeObject*)incref(this->ptr());
+      converters.m_class_object = reinterpret_cast<PyTypeObject*>(incref(this->ptr()));
   }
 
   BOOST_PYTHON_DECL void copy_class_object(type_info const& src, type_info const& dst)
@@ -627,8 +627,8 @@ namespace objects
     char const* name, object const& fget, char const* docstr)
   {
       object property(
-          (python::detail::new_reference)
-          PyObject_CallFunction((PyObject*)&PyProperty_Type, const_cast<char*>("Osss"), fget.ptr(), (char*)NULL, (char*)NULL, docstr));
+          reinterpret_cast<python::detail::new_reference>
+          (PyObject_CallFunction(reinterpret_cast<PyObject*>(&PyProperty_Type), const_cast<char*>("Osss"), fget.ptr(), (char*)NULL, (char*)NULL, docstr)));
       
       this->setattr(name, property);
   }
@@ -637,8 +637,8 @@ namespace objects
     char const* name, object const& fget, object const& fset, char const* docstr)
   {
       object property(
-          (python::detail::new_reference)
-          PyObject_CallFunction((PyObject*)&PyProperty_Type, const_cast<char*>("OOss"), fget.ptr(), fset.ptr(), (char*)NULL, docstr));
+          reinterpret_cast<python::detail::new_reference>
+          (PyObject_CallFunction(reinterpret_cast<PyObject*>(&PyProperty_Type), const_cast<char*>("OOss"), fget.ptr(), fset.ptr(), (char*)NULL, docstr)));
       
       this->setattr(name, property);
   }
@@ -646,8 +646,8 @@ namespace objects
   void class_base::add_static_property(char const* name, object const& fget)
   {
       object property(
-          (python::detail::new_reference) 
-          PyObject_CallFunction(static_data(), const_cast<char*>("O"), fget.ptr())
+          reinterpret_cast<python::detail::new_reference>
+          (PyObject_CallFunction(static_data(), const_cast<char*>("O"), fget.ptr()))
           );
       
       this->setattr(name, property);
@@ -656,8 +656,8 @@ namespace objects
   void class_base::add_static_property(char const* name, object const& fget, object const& fset)
   {
       object property(
-          (python::detail::new_reference)
-          PyObject_CallFunction(static_data(), const_cast<char*>("OO"), fget.ptr(), fset.ptr()));
+          reinterpret_cast<python::detail::new_reference>
+          (PyObject_CallFunction(static_data(), const_cast<char*>("OO"), fget.ptr(), fset.ptr())));
       
       this->setattr(name, property);
   }
@@ -741,7 +741,7 @@ typedef unsigned int alignment_marker_t;
 void* instance_holder::allocate(PyObject* self_, std::size_t holder_offset, std::size_t holder_size, std::size_t alignment)
 {
     assert(PyType_IsSubtype(Py_TYPE(Py_TYPE(self_)), &class_metatype_object));
-    objects::instance<>* self = (objects::instance<>*)self_;
+    objects::instance<>* self = reinterpret_cast<objects::instance<>*>(self_);
     
     int total_size_needed = holder_offset + holder_size + alignment - 1;
     
@@ -751,13 +751,13 @@ void* instance_holder::allocate(PyObject* self_, std::size_t holder_offset, std:
         assert(holder_offset >= offsetof(objects::instance<>,storage));
 
         size_t allocated = holder_size + alignment;
-        void* storage = (char*)self + holder_offset;
+        void* storage = reinterpret_cast<char*>(self) + holder_offset;
         void* aligned_storage = ::boost::alignment::align(alignment, holder_size, storage, allocated);
 
         // Record the fact that the storage is occupied, noting where it starts
         const size_t offset = reinterpret_cast<uintptr_t>(aligned_storage) - reinterpret_cast<uintptr_t>(storage) + holder_offset;
         Py_SET_SIZE(self, offset);
-        return (char*)self + offset;
+        return reinterpret_cast<char*>(self) + offset;
     }
     else
     {
@@ -771,9 +771,9 @@ void* instance_holder::allocate(PyObject* self_, std::size_t holder_offset, std:
         // Since the alignment is a power of two, the formula can be simplified with bitwise AND operator as follow:
         const uintptr_t padding = (alignment - (x & (alignment - 1))) & (alignment - 1);
         const size_t aligned_offset = sizeof(alignment_marker_t) + padding;
-        void* const aligned_storage = (char *)base_storage + aligned_offset;
+        void* const aligned_storage = static_cast<char *>(base_storage) + aligned_offset;
         BOOST_ASSERT((char *) aligned_storage + holder_size <= (char *)base_storage + base_allocation);
-        alignment_marker_t* const marker_storage = reinterpret_cast<alignment_marker_t *>((char *)aligned_storage - sizeof(alignment_marker_t));
+        alignment_marker_t* const marker_storage = reinterpret_cast<alignment_marker_t *>(static_cast<char *>(aligned_storage) - sizeof(alignment_marker_t));
         *marker_storage = static_cast<alignment_marker_t>(padding);
         return aligned_storage;
     }
@@ -782,11 +782,11 @@ void* instance_holder::allocate(PyObject* self_, std::size_t holder_offset, std:
 void instance_holder::deallocate(PyObject* self_, void* storage) throw()
 {
     assert(PyType_IsSubtype(Py_TYPE(Py_TYPE(self_)), &class_metatype_object));
-    objects::instance<>* self = (objects::instance<>*)self_;
-    if (storage != (char*)self + Py_SIZE(self))
+    objects::instance<>* self = reinterpret_cast<objects::instance<>*>(self_);
+    if (storage != reinterpret_cast<char*>(self) + Py_SIZE(self))
     {
-        alignment_marker_t* marker_storage = reinterpret_cast<alignment_marker_t *>((char *)storage - sizeof(alignment_marker_t));
-        void *malloced_storage = (char *) storage - sizeof(alignment_marker_t) - (*marker_storage);
+        alignment_marker_t* marker_storage = reinterpret_cast<alignment_marker_t *>(static_cast<char *>(storage) - sizeof(alignment_marker_t));
+        void *malloced_storage = static_cast<char *>(storage) - sizeof(alignment_marker_t) - (*marker_storage);
         PyMem_Free(malloced_storage);
     }
 }
