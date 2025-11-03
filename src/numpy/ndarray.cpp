@@ -22,20 +22,20 @@ namespace detail
 ndarray::bitflag numpy_to_bitflag(int const f)
 {
   ndarray::bitflag r = ndarray::NONE;
-  if (f & NPY_ARRAY_C_CONTIGUOUS) r = (r | ndarray::C_CONTIGUOUS);
-  if (f & NPY_ARRAY_F_CONTIGUOUS) r = (r | ndarray::F_CONTIGUOUS);
-  if (f & NPY_ARRAY_ALIGNED) r = (r | ndarray::ALIGNED);
-  if (f & NPY_ARRAY_WRITEABLE) r = (r | ndarray::WRITEABLE);
+  if (f & NPY_ARRAY_C_CONTIGUOUS) { r = (r | ndarray::C_CONTIGUOUS); }
+  if (f & NPY_ARRAY_F_CONTIGUOUS) { r = (r | ndarray::F_CONTIGUOUS); }
+  if (f & NPY_ARRAY_ALIGNED) { r = (r | ndarray::ALIGNED); }
+  if (f & NPY_ARRAY_WRITEABLE) { r = (r | ndarray::WRITEABLE); }
   return r;
 }
 
 int bitflag_to_numpy(ndarray::bitflag f)
 {
   int r = 0;
-  if (f & ndarray::C_CONTIGUOUS) r |= NPY_ARRAY_C_CONTIGUOUS;
-  if (f & ndarray::F_CONTIGUOUS) r |= NPY_ARRAY_F_CONTIGUOUS;
-  if (f & ndarray::ALIGNED) r |= NPY_ARRAY_ALIGNED;
-  if (f & ndarray::WRITEABLE) r |= NPY_ARRAY_WRITEABLE;
+  if (f & ndarray::C_CONTIGUOUS) { r |= NPY_ARRAY_C_CONTIGUOUS; }
+  if (f & ndarray::F_CONTIGUOUS) { r |= NPY_ARRAY_F_CONTIGUOUS; }
+  if (f & ndarray::ALIGNED) { r |= NPY_ARRAY_ALIGNED; }
+  if (f & ndarray::WRITEABLE) { r |= NPY_ARRAY_WRITEABLE; }
   return r;
 }
 
@@ -47,7 +47,7 @@ bool is_c_contiguous(std::vector<Py_intptr_t> const & shape,
   int total = itemsize;
   for (std::vector<Py_intptr_t>::const_reverse_iterator i = shape.rbegin(); i != shape.rend(); ++i, ++j) 
   {
-    if (total != *j) return false;
+    if (total != *j) { return false; }
     total *= (*i);
   }
   return true;
@@ -61,7 +61,7 @@ bool is_f_contiguous(std::vector<Py_intptr_t> const & shape,
   int total = itemsize;
   for (std::vector<Py_intptr_t>::const_iterator i = shape.begin(); i != shape.end(); ++i, ++j)
   {
-    if (total != *j) return false;
+    if (total != *j) { return false; }
     total *= (*i);
   }
   return true;
@@ -72,7 +72,7 @@ bool is_aligned(std::vector<Py_intptr_t> const & strides,
 {
   for (std::vector<Py_intptr_t>::const_iterator i = strides.begin(); i != strides.end(); ++i) 
   {
-    if (*i % itemsize) return false;
+    if (*i % itemsize) { return false; }
   }
   return true;
 }
@@ -119,10 +119,10 @@ ndarray from_data_impl(void * data,
   }
   int itemsize = dt.get_itemsize();
   int flags = 0;
-  if (writeable) flags |= NPY_ARRAY_WRITEABLE;
-  if (is_c_contiguous(shape, strides, itemsize)) flags |= NPY_ARRAY_C_CONTIGUOUS;
-  if (is_f_contiguous(shape, strides, itemsize)) flags |= NPY_ARRAY_F_CONTIGUOUS;
-  if (is_aligned(strides, itemsize)) flags |= NPY_ARRAY_ALIGNED;
+  if (writeable) { flags |= NPY_ARRAY_WRITEABLE; }
+  if (is_c_contiguous(shape, strides, itemsize)) { flags |= NPY_ARRAY_C_CONTIGUOUS; }
+  if (is_f_contiguous(shape, strides, itemsize)) { flags |= NPY_ARRAY_F_CONTIGUOUS; }
+  if (is_aligned(strides, itemsize)) { flags |= NPY_ARRAY_ALIGNED; }
   ndarray r(python::detail::new_reference
     (PyArray_NewFromDescr(&PyArray_Type,
 			  incref_dtype(dt),
@@ -142,7 +142,9 @@ namespace {
     int normalize_index(int n,int nlim) // wraps [-nlim:nlim) into [0:nlim), throw IndexError otherwise
     {
         if (n<0)
+        {
             n += nlim; // negative indices work backwards from end
+        }
         if (n < 0 || n >= nlim)
         {
             PyErr_SetObject(PyExc_IndexError, Py_None);
@@ -187,7 +189,7 @@ dtype ndarray::get_dtype() const
 
 python::object ndarray::get_base() const 
 {
-  if (get_struct()->base == NULL) return object();
+  if (get_struct()->base == NULL) { return object(); }
   return python::object(python::detail::borrowed_reference(get_struct()->base));
 }
 
@@ -238,7 +240,7 @@ ndarray zeros(python::tuple const & shape, dtype const & dt)
 {
   int nd = len(shape);
   boost::scoped_array<Py_intptr_t> dims(new Py_intptr_t[nd]);
-  for (int n=0; n<nd; ++n) dims[n] = python::extract<Py_intptr_t>(shape[n]);
+  for (int n=0; n<nd; ++n) { dims[n] = python::extract<Py_intptr_t>(shape[n]); }
   return ndarray(python::detail::new_reference
                  (PyArray_Zeros(nd, dims.get(), detail::incref_dtype(dt), 0)));
 }
@@ -253,7 +255,7 @@ ndarray empty(python::tuple const & shape, dtype const & dt)
 {
   int nd = len(shape);
   boost::scoped_array<Py_intptr_t> dims(new Py_intptr_t[nd]);
-  for (int n=0; n<nd; ++n) dims[n] = python::extract<Py_intptr_t>(shape[n]);
+  for (int n=0; n<nd; ++n) { dims[n] = python::extract<Py_intptr_t>(shape[n]); }
   return ndarray(python::detail::new_reference
                  (PyArray_Empty(nd, dims.get(), detail::incref_dtype(dt), 0)));    
 }
