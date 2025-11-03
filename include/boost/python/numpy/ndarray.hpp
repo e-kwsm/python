@@ -292,13 +292,13 @@ BOOST_NUMPY_DECL inline ndarray from_object(object const & obj,
 BOOST_NUMPY_DECL inline ndarray::bitflag operator|(ndarray::bitflag a,
 						   ndarray::bitflag b)
 {
-  return ndarray::bitflag(int(a) | int(b));
+  return ndarray::bitflag(static_cast<int>(a) | static_cast<int>(b));
 }
 
 BOOST_NUMPY_DECL inline ndarray::bitflag operator&(ndarray::bitflag a,
 						   ndarray::bitflag b)
 {
-  return ndarray::bitflag(int(a) & int(b));
+  return ndarray::bitflag(static_cast<int>(a) & static_cast<int>(b));
 }
 
 } // namespace boost::python::numpy

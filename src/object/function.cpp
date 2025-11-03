@@ -460,7 +460,7 @@ void function::add_to_namespace(
         else
 #endif        
         if (PyType_Check(ns))
-            dict = handle<>(borrowed(((PyTypeObject*)ns)->tp_dict));
+            dict = handle<>(borrowed((reinterpret_cast<PyTypeObject*>(ns))->tp_dict));
         else    
             dict = handle<>(PyObject_GetAttrString(ns, const_cast<char*>("__dict__")));
 
@@ -713,13 +713,13 @@ extern "C"
 }
 
 static PyGetSetDef function_getsetlist[] = {
-    {const_cast<char*>("__name__"), (getter)function_get_name, 0, 0, 0 },
-    {const_cast<char*>("func_name"), (getter)function_get_name, 0, 0, 0 },
-    {const_cast<char*>("__module__"), (getter)function_get_module, 0, 0, 0 },
-    {const_cast<char*>("func_module"), (getter)function_get_module, 0, 0, 0 },
-    {const_cast<char*>("__class__"), (getter)function_get_class, 0, 0, 0 },    // see note above
-    {const_cast<char*>("__doc__"), (getter)function_get_doc, (setter)function_set_doc, 0, 0},
-    {const_cast<char*>("func_doc"), (getter)function_get_doc, (setter)function_set_doc, 0, 0},
+    {const_cast<char*>("__name__"), static_cast<getter>(function_get_name), 0, 0, 0 },
+    {const_cast<char*>("func_name"), static_cast<getter>(function_get_name), 0, 0, 0 },
+    {const_cast<char*>("__module__"), static_cast<getter>(function_get_module), 0, 0, 0 },
+    {const_cast<char*>("func_module"), static_cast<getter>(function_get_module), 0, 0, 0 },
+    {const_cast<char*>("__class__"), static_cast<getter>(function_get_class), 0, 0, 0 },    // see note above
+    {const_cast<char*>("__doc__"), static_cast<getter>(function_get_doc), static_cast<setter>(function_set_doc), 0, 0},
+    {const_cast<char*>("func_doc"), static_cast<getter>(function_get_doc), static_cast<setter>(function_set_doc), 0, 0},
     {NULL, 0, 0, 0, 0} /* Sentinel */
 };
 
@@ -728,7 +728,7 @@ PyTypeObject function_type = {
     const_cast<char*>("Boost.Python.function"),
     sizeof(function),
     0,
-    (destructor)function_dealloc,               /* tp_dealloc */
+    static_cast<destructor>(function_dealloc),  /* tp_dealloc */
     0,                                  /* tp_print */
     0,                                  /* tp_getattr */
     0,                                  /* tp_setattr */
@@ -779,7 +779,7 @@ object function_object(
     , python::detail::keyword_range const& keywords)
 {
     return python::object(
-        python::detail::new_non_null_reference(
+        reinterpret_cast<python::detail::new_non_null_reference>(
             new function(
                 f, keywords.first, keywords.second - keywords.first)));
 }

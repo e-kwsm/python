@@ -95,7 +95,7 @@ python::detail::new_reference dtype::convert(object const & arg, bool align)
     if (PyArray_DescrConverter(arg.ptr(), &obj) < 0)
       throw_error_already_set();
   }
-  return python::detail::new_reference(reinterpret_cast<PyObject*>(obj));
+  return reinterpret_cast<python::detail::new_reference>(reinterpret_cast<PyObject*>(obj));
 }
 
 int dtype::get_itemsize() const {
@@ -139,7 +139,7 @@ public:
     }
     else
     {
-      dtype dt(python::detail::borrowed_reference(obj->ob_type));
+      dtype dt(reinterpret_cast<python::detail::borrowed_reference>(obj->ob_type));
       if (equivalent(dt, dtype::get_builtin<T>()))
       {
 	return obj;
