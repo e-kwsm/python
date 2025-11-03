@@ -29,7 +29,7 @@ boost::python::list extract_list(object x)
 
     // Make sure we always have the right idea about whether it's a list
     bool is_list_1 = get_list.check();
-    bool is_list_2 = PyObject_IsInstance(x.ptr(), (PyObject*)&PyList_Type);
+    bool is_list_2 = PyObject_IsInstance(x.ptr(), reinterpret_cast<PyObject*>(&PyList_Type));
     if (is_list_1 != is_list_2) {
         throw std::runtime_error("is_list_1 == is_list_2 failure.");
     }
