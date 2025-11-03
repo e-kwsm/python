@@ -98,7 +98,7 @@ static PyTypeObject enum_type_object = {
     const_cast<char*>("Boost.Python.enum"),
     sizeof(enum_object),                    /* tp_basicsize */
     0,                                      /* tp_itemsize */
-    (destructor) enum_dealloc,              /* tp_dealloc */
+    reinterpret_cast<destructor>(enum_dealloc), /* tp_dealloc */
     0,                                      /* tp_print */
     0,                                      /* tp_getattr */
     0,                                      /* tp_setattr */

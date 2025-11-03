@@ -20,7 +20,7 @@ detail::new_reference str_base::call(object const& arg_)
 } 
 
 str_base::str_base()
-  : object(detail::new_reference(
+  : object(reinterpret_cast<detail::new_reference>(
 #if PY_VERSION_HEX >= 0x03000000
               ::PyUnicode_FromString("")
 #else
@@ -30,7 +30,7 @@ str_base::str_base()
 {}
 
 str_base::str_base(const char* s)
-  : object(detail::new_reference(
+  : object(reinterpret_cast<detail::new_reference>(
 #if PY_VERSION_HEX >= 0x03000000
               ::PyUnicode_FromString(s)
 #else
@@ -54,7 +54,7 @@ namespace {
 
 str_base::str_base(char const* start, char const* finish)
     : object(
-        detail::new_reference(
+        reinterpret_cast<detail::new_reference>(
 #if PY_VERSION_HEX >= 0x03000000
             ::PyUnicode_FromStringAndSize
 #else
@@ -67,7 +67,7 @@ str_base::str_base(char const* start, char const* finish)
 
 str_base::str_base(char const* start, std::size_t length) // new str
     : object(
-        detail::new_reference(
+        reinterpret_cast<detail::new_reference>(
 #if PY_VERSION_HEX >= 0x03000000
             ::PyUnicode_FromStringAndSize
 #else
