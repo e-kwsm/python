@@ -118,53 +118,53 @@ opaque<Pointee> opaque<Pointee>::instance;
 template <class Pointee>
 PyTypeObject opaque<Pointee>::type_object =
 {
-    PyVarObject_HEAD_INIT(NULL, 0)
+    PyVarObject_HEAD_INIT(BOOST_NULLPTR, 0)
     BOOST_NULLPTR,
     sizeof( BOOST_DEDUCED_TYPENAME opaque<Pointee>::python_instance ),
     0,
     ::boost::python::detail::dealloc,
     0,          /* tp_print */
-    BOOST_NULLPTR, /* tp_getattr */
-    BOOST_NULLPTR, /* tp_setattr */
-    BOOST_NULLPTR, /* tp_compare */
-    BOOST_NULLPTR, /* tp_repr */
-    BOOST_NULLPTR, /* tp_as_number */
-    BOOST_NULLPTR, /* tp_as_sequence */
-    BOOST_NULLPTR, /* tp_as_mapping */
-    BOOST_NULLPTR, /* tp_hash */
-    BOOST_NULLPTR, /* tp_call */
-    BOOST_NULLPTR, /* tp_str */
-    BOOST_NULLPTR, /* tp_getattro */
-    BOOST_NULLPTR, /* tp_setattro */
-    BOOST_NULLPTR, /* tp_as_buffer */
+    BOOST_NULLPTR,          /* tp_getattr */
+    BOOST_NULLPTR,          /* tp_setattr */
+    BOOST_NULLPTR,          /* tp_compare */
+    BOOST_NULLPTR,          /* tp_repr */
+    BOOST_NULLPTR,          /* tp_as_number */
+    BOOST_NULLPTR,          /* tp_as_sequence */
+    BOOST_NULLPTR,          /* tp_as_mapping */
+    BOOST_NULLPTR,          /* tp_hash */
+    BOOST_NULLPTR,          /* tp_call */
+    BOOST_NULLPTR,          /* tp_str */
+    BOOST_NULLPTR,          /* tp_getattro */
+    BOOST_NULLPTR,          /* tp_setattro */
+    BOOST_NULLPTR,          /* tp_as_buffer */
     0,          /* tp_flags */
-    BOOST_NULLPTR, /* tp_doc */
-    BOOST_NULLPTR, /* tp_traverse */
-    BOOST_NULLPTR, /* tp_clear */
-    BOOST_NULLPTR, /* tp_richcompare */
+    BOOST_NULLPTR,          /* tp_doc */
+    BOOST_NULLPTR,          /* tp_traverse */
+    BOOST_NULLPTR,          /* tp_clear */
+    BOOST_NULLPTR,          /* tp_richcompare */
     0,          /* tp_weaklistoffset */
-    BOOST_NULLPTR, /* tp_iter */
-    BOOST_NULLPTR, /* tp_iternext */
-    BOOST_NULLPTR, /* tp_methods */
-    BOOST_NULLPTR, /* tp_members */
-    BOOST_NULLPTR, /* tp_getset */
-    BOOST_NULLPTR, /* tp_base */
-    BOOST_NULLPTR, /* tp_dict */
-    BOOST_NULLPTR, /* tp_descr_get */
-    BOOST_NULLPTR, /* tp_descr_set */
+    BOOST_NULLPTR,          /* tp_iter */
+    BOOST_NULLPTR,          /* tp_iternext */
+    BOOST_NULLPTR,          /* tp_methods */
+    BOOST_NULLPTR,          /* tp_members */
+    BOOST_NULLPTR,          /* tp_getset */
+    BOOST_NULLPTR,          /* tp_base */
+    BOOST_NULLPTR,          /* tp_dict */
+    BOOST_NULLPTR,          /* tp_descr_get */
+    BOOST_NULLPTR,          /* tp_descr_set */
     0,          /* tp_dictoffset */
-    BOOST_NULLPTR, /* tp_init */
-    BOOST_NULLPTR, /* tp_alloc */
-    BOOST_NULLPTR, /* tp_new */
-    BOOST_NULLPTR, /* tp_free */
-    BOOST_NULLPTR, /* tp_is_gc */
-    BOOST_NULLPTR, /* tp_bases */
-    BOOST_NULLPTR, /* tp_mro */
-    BOOST_NULLPTR, /* tp_cache */
-    BOOST_NULLPTR, /* tp_subclasses */
-    BOOST_NULLPTR, /* tp_weaklist */
+    BOOST_NULLPTR,          /* tp_init */
+    BOOST_NULLPTR,          /* tp_alloc */
+    BOOST_NULLPTR,          /* tp_new */
+    BOOST_NULLPTR,          /* tp_free */
+    BOOST_NULLPTR,          /* tp_is_gc */
+    BOOST_NULLPTR,          /* tp_bases */
+    BOOST_NULLPTR,          /* tp_mro */
+    BOOST_NULLPTR,          /* tp_cache */
+    BOOST_NULLPTR,          /* tp_subclasses */
+    BOOST_NULLPTR,          /* tp_weaklist */
 #if PYTHON_API_VERSION >= 1012
-    BOOST_NULLPTR  /* tp_del */
+    BOOST_NULLPTR           /* tp_del */
 #endif
 };
 }} // namespace boost::python

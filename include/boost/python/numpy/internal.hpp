@@ -26,12 +26,9 @@ ERROR_internal_hpp_is_for_internal_use_only
 #endif
 #define PY_ARRAY_UNIQUE_SYMBOL BOOST_NUMPY_ARRAY_API
 #define PY_UFUNC_UNIQUE_SYMBOL BOOST_UFUNC_ARRAY_API
-#pragma GCC diagnostic push
-#pragma GCC diagnostic ignored "-Wzero-as-null-pointer-constant"
 #include <numpy/arrayobject.h>
 #include <numpy/ufuncobject.h>
 #include <boost/python/numpy.hpp>
-#pragma GCC diagnostic pop
 
 #define NUMPY_OBJECT_MANAGER_TRAITS_IMPL(pytype,manager)                \
     PyTypeObject const * object_manager_traits<manager>::get_pytype() { return &pytype; }

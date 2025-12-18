@@ -724,53 +724,53 @@ static PyGetSetDef function_getsetlist[] = {
 };
 
 PyTypeObject function_type = {
-    PyVarObject_HEAD_INIT(NULL, 0)
+    PyVarObject_HEAD_INIT(BOOST_NULLPTR, 0)
     const_cast<char*>("Boost.Python.function"),
     sizeof(function),
     0,
     (destructor)function_dealloc,               /* tp_dealloc */
     0,                                  /* tp_print */
-    BOOST_NULLPTR,                            /* tp_getattr */
-    BOOST_NULLPTR,                            /* tp_setattr */
-    BOOST_NULLPTR,                            /* tp_compare */
-    BOOST_NULLPTR, //(reprfunc)func_repr,     /* tp_repr */
-    BOOST_NULLPTR,                            /* tp_as_number */
-    BOOST_NULLPTR,                            /* tp_as_sequence */
-    BOOST_NULLPTR,                            /* tp_as_mapping */
-    BOOST_NULLPTR,                            /* tp_hash */
+    BOOST_NULLPTR,                      /* tp_getattr */
+    BOOST_NULLPTR,                      /* tp_setattr */
+    BOOST_NULLPTR,                      /* tp_compare */
+    BOOST_NULLPTR, //(reprfunc)func_repr,                   /* tp_repr */
+    BOOST_NULLPTR,                      /* tp_as_number */
+    BOOST_NULLPTR,                      /* tp_as_sequence */
+    BOOST_NULLPTR,                      /* tp_as_mapping */
+    BOOST_NULLPTR,                      /* tp_hash */
     function_call,                              /* tp_call */
-    BOOST_NULLPTR,                                  /* tp_str */
-    BOOST_NULLPTR, // PyObject_GenericGetAttr,      /* tp_getattro */
-    BOOST_NULLPTR, // PyObject_GenericSetAttr,      /* tp_setattro */
-    BOOST_NULLPTR,                                  /* tp_as_buffer */
+    BOOST_NULLPTR,                      /* tp_str */
+    BOOST_NULLPTR, // PyObject_GenericGetAttr,            /* tp_getattro */
+    BOOST_NULLPTR, // PyObject_GenericSetAttr,            /* tp_setattro */
+    BOOST_NULLPTR,                      /* tp_as_buffer */
     Py_TPFLAGS_DEFAULT /* | Py_TPFLAGS_HAVE_GC */,/* tp_flags */
-    BOOST_NULLPTR,                                  /* tp_doc */
-    BOOST_NULLPTR, // (traverseproc)func_traverse,  /* tp_traverse */
-    BOOST_NULLPTR,                                  /* tp_clear */
-    BOOST_NULLPTR,                                  /* tp_richcompare */
+    BOOST_NULLPTR,                      /* tp_doc */
+    BOOST_NULLPTR, // (traverseproc)func_traverse,          /* tp_traverse */
+    BOOST_NULLPTR,                      /* tp_clear */
+    BOOST_NULLPTR,                      /* tp_richcompare */
     0, //offsetof(PyFunctionObject, func_weakreflist), /* tp_weaklistoffset */
-    BOOST_NULLPTR,                            /* tp_iter */
-    BOOST_NULLPTR,                            /* tp_iternext */
-    BOOST_NULLPTR,                            /* tp_methods */
-    BOOST_NULLPTR, // func_memberlist,        /* tp_members */
+    BOOST_NULLPTR,                      /* tp_iter */
+    BOOST_NULLPTR,                      /* tp_iternext */
+    BOOST_NULLPTR,                      /* tp_methods */
+    BOOST_NULLPTR, // func_memberlist,  /* tp_members */
     function_getsetlist,                /* tp_getset */
-    BOOST_NULLPTR,                            /* tp_base */
-    BOOST_NULLPTR,                            /* tp_dict */
+    BOOST_NULLPTR,                      /* tp_base */
+    BOOST_NULLPTR,                      /* tp_dict */
     function_descr_get,                 /* tp_descr_get */
-    BOOST_NULLPTR,                            /* tp_descr_set */
+    BOOST_NULLPTR,                      /* tp_descr_set */
     0, //offsetof(PyFunctionObject, func_dict),      /* tp_dictoffset */
-    BOOST_NULLPTR,                            /* tp_init */
-    BOOST_NULLPTR,                            /* tp_alloc */
-    BOOST_NULLPTR,                            /* tp_new */
-    BOOST_NULLPTR,                            /* tp_free */
-    BOOST_NULLPTR,                            /* tp_is_gc */
-    BOOST_NULLPTR,                            /* tp_bases */
-    BOOST_NULLPTR,                            /* tp_mro */
-    BOOST_NULLPTR,                            /* tp_cache */
-    BOOST_NULLPTR,                            /* tp_subclasses */
-    BOOST_NULLPTR,                            /* tp_weaklist */
+    BOOST_NULLPTR,                          /* tp_init */
+    BOOST_NULLPTR,                          /* tp_alloc */
+    BOOST_NULLPTR,                          /* tp_new */
+    BOOST_NULLPTR,                          /* tp_free */
+    BOOST_NULLPTR,                          /* tp_is_gc */
+    BOOST_NULLPTR,                          /* tp_bases */
+    BOOST_NULLPTR,                          /* tp_mro */
+    BOOST_NULLPTR,                          /* tp_cache */
+    BOOST_NULLPTR,                          /* tp_subclasses */
+    BOOST_NULLPTR,                          /* tp_weaklist */
 #if PYTHON_API_VERSION >= 1012
-    BOOST_NULLPTR                             /* tp_del */
+    BOOST_NULLPTR                           /* tp_del */
 #endif
 };
 

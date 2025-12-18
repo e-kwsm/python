@@ -28,9 +28,6 @@
 #include <new>
 #include <structmember.h>
 
-#pragma clang diagnostic push
-#pragma clang diagnostic ignored "-Wzero-as-null-pointer-constant"
-
 namespace boost { namespace python {
 
 # ifdef BOOST_PYTHON_SELF_IS_CLASS
@@ -146,7 +143,7 @@ extern "C"
 }
 
 static PyTypeObject static_data_object = {
-    PyVarObject_HEAD_INIT(NULL, 0)
+    PyVarObject_HEAD_INIT(BOOST_NULLPTR, 0)
     const_cast<char*>("Boost.Python.StaticProperty"),
     sizeof(propertyobject),
     0,
@@ -252,7 +249,7 @@ extern "C"
 }
 
 static PyTypeObject class_metatype_object = {
-    PyVarObject_HEAD_INIT(NULL, 0)
+    PyVarObject_HEAD_INIT(BOOST_NULLPTR, 0)
     const_cast<char*>("Boost.Python.class"),
     PyType_Type.tp_basicsize,
     0,
@@ -415,7 +412,7 @@ namespace objects
   };
 
   static PyTypeObject class_type_object = {
-      PyVarObject_HEAD_INIT(NULL, 0)
+      PyVarObject_HEAD_INIT(BOOST_NULLPTR, 0)
       const_cast<char*>("Boost.Python.instance"),
       offsetof(instance<>,storage),           /* tp_basicsize */
       1,                                      /* tp_itemsize */
@@ -687,7 +684,7 @@ namespace objects
   
   void class_base::def_no_init()
   {
-      handle<> f(::PyCFunction_New(&no_init_def, BOOST_NULLPTR));
+      handle<> f(::PyCFunction_New(&no_init_def, 0));
       this->setattr("__init__", object(f));
   }
 
@@ -795,4 +792,3 @@ void instance_holder::deallocate(PyObject* self_, void* storage) throw()
 }
 
 }} // namespace boost::python
-#pragma clang diagnostic pop

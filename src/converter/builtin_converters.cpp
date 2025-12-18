@@ -152,7 +152,7 @@ namespace
       {
           PyNumberMethods* number_methods = obj->ob_type->tp_as_number;
           if (number_methods == 0)
-              return BOOST_NULLPTR;
+              return 0;
 
           return (
 #if PY_VERSION_HEX >= 0x02040000 && defined(BOOST_PYTHON_BOOL_INT_STRICT)
@@ -160,7 +160,7 @@ namespace
 #endif
           (PyInt_Check(obj) || PyLong_Check(obj)))
 
-        ? &number_methods->nb_int : BOOST_NULLPTR;
+        ? &number_methods->nb_int : 0;
       }
       static PyTypeObject const* get_pytype() { return &PyInt_Type;}
   };
@@ -184,7 +184,7 @@ namespace
       {
           PyNumberMethods* number_methods = obj->ob_type->tp_as_number;
           if (number_methods == 0)
-              return BOOST_NULLPTR;
+              return 0;
 
           return (
 #if PY_VERSION_HEX >= 0x02040000 && defined(BOOST_PYTHON_BOOL_INT_STRICT)
@@ -312,7 +312,7 @@ namespace
 #elif PY_VERSION_HEX >= 0x02040000 && defined(BOOST_PYTHON_BOOL_INT_STRICT)
           return obj == Py_None || PyBool_Check(obj) ? &py_object_identity : BOOST_NULLPTR;
 #else
-          return obj == Py_None || PyInt_Check(obj) ? &py_object_identity : 0;
+          return obj == Py_None || PyInt_Check(obj) ? &py_object_identity : BOOST_NULLPTR;
 #endif
       }
       
@@ -381,7 +381,7 @@ namespace
           return (PyUnicode_Check(obj)) ? &py_unicode_as_string_unaryfunc : 
                   PyBytes_Check(obj) ? &py_object_identity : BOOST_NULLPTR;
 #else
-          return (PyString_Check(obj)) ? &obj->ob_type->tp_str : 0;
+          return (PyString_Check(obj)) ? &obj->ob_type->tp_str : BOOST_NULLPTR;
 
 #endif
       };
@@ -441,7 +441,7 @@ namespace
 
           Py_ssize_t size = 0;
           wchar_t *buf = PyUnicode_AsWideCharString(intermediate, &size);
-          if (buf == BOOST_NULLPTR) {
+          if (buf == NULL) {
               boost::python::throw_error_already_set();
           }
           std::wstring result(buf, size);

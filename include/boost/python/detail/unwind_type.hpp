@@ -17,7 +17,7 @@ namespace boost { namespace python { namespace detail {
 // forward declaration, required (at least) by Tru64 cxx V6.5-042 and msvc14.15
 template <class Generator, class U>
 inline typename Generator::result_type
-unwind_type(U const& p, Generator* = BOOST_NULLPTR);
+unwind_type(U const& p, Generator* = 0);
 
 // forward declaration, required (at least) by Tru64 cxx V6.5-042 and msvc14.15
 template <class Generator, class U>
@@ -41,21 +41,21 @@ unwind_type_cv(U const* p, const_, Generator* = BOOST_NULLPTR)
 
 template <class Generator, class U>
 inline typename Generator::result_type
-unwind_type_cv(U volatile* p, volatile_, Generator* = BOOST_NULLPTR)
+unwind_type_cv(U volatile* p, volatile_, Generator* = 0)
 {
-    return unwind_type(const_cast<U*>(p), (Generator*)BOOST_NULLPTR);
+    return unwind_type(const_cast<U*>(p), (Generator*)0);
 }
 
 template <class Generator, class U>
 inline typename Generator::result_type
-unwind_type_cv(U const volatile* p, const_volatile_, Generator* = BOOST_NULLPTR)
+unwind_type_cv(U const volatile* p, const_volatile_, Generator* = 0)
 {
-    return unwind_type(const_cast<U*>(p), (Generator*)BOOST_NULLPTR);
+    return unwind_type(const_cast<U*>(p), (Generator*)0);
 }
 
 template <class Generator, class U>
 inline typename Generator::result_type
-unwind_ptr_type(U* p, Generator* = BOOST_NULLPTR)
+unwind_ptr_type(U* p, Generator* = 0)
 {
     typedef typename cv_category<U>::type tag;
     return unwind_type_cv<Generator>(p, tag());
@@ -66,7 +66,7 @@ struct unwind_helper
 {
     template <class Generator, class U>
     static typename Generator::result_type
-    execute(U p, Generator* = BOOST_NULLPTR)
+    execute(U p, Generator* = 0)
     {
         return unwind_ptr_type(p, (Generator*)BOOST_NULLPTR);
     }
@@ -77,9 +77,9 @@ struct unwind_helper<false>
 {
     template <class Generator, class U>
     static typename Generator::result_type
-    execute(U& p, Generator* = BOOST_NULLPTR)
+    execute(U& p, Generator* = 0)
     {
-        return unwind_ptr_type(&p, (Generator*)BOOST_NULLPTR);
+        return unwind_ptr_type(&p, (Generator*)0);
     }
 };
 
@@ -88,7 +88,7 @@ inline typename Generator::result_type
 #if (!defined(_MSC_VER) || _MSC_VER >= 1915)
 unwind_type(U const& p, Generator*)
 #else
-unwind_type(U const& p, Generator* = BOOST_NULLPTR)
+unwind_type(U const& p, Generator* = 0)
 #endif
 {
     return unwind_helper<is_pointer<U>::value>::execute(p, (Generator*)BOOST_NULLPTR);
@@ -102,7 +102,7 @@ struct unwind_helper2<direct_>
 {
     template <class Generator, class U>
     static typename Generator::result_type
-    execute(U(*)(), Generator* = BOOST_NULLPTR)
+    execute(U(*)(), Generator* = 0)
     {
         return unwind_ptr_type((U*)BOOST_NULLPTR, (Generator*)BOOST_NULLPTR);
     }
@@ -113,7 +113,7 @@ struct unwind_helper2<pointer_>
 {
     template <class Generator, class U>
     static typename Generator::result_type
-    execute(U*(*)(), Generator* = BOOST_NULLPTR)
+    execute(U*(*)(), Generator* = 0)
     {
         return unwind_ptr_type((U*)BOOST_NULLPTR, (Generator*)BOOST_NULLPTR);
     }
@@ -124,7 +124,7 @@ struct unwind_helper2<reference_>
 {
     template <class Generator, class U>
     static typename Generator::result_type
-    execute(U&(*)(), Generator* = BOOST_NULLPTR)
+    execute(U&(*)(), Generator* = 0)
     {
         return unwind_ptr_type((U*)BOOST_NULLPTR, (Generator*)BOOST_NULLPTR);
     }
@@ -135,7 +135,7 @@ struct unwind_helper2<reference_to_pointer_>
 {
     template <class Generator, class U>
     static typename Generator::result_type
-    execute(U&(*)(), Generator* = BOOST_NULLPTR)
+    execute(U&(*)(), Generator* = 0)
     {
         return unwind_ptr_type(U(BOOST_NULLPTR), (Generator*)BOOST_NULLPTR);
     }
@@ -153,7 +153,7 @@ inline typename Generator::result_type
 #if (!defined(_MSC_VER) || _MSC_VER >= 1915)
 unwind_type(boost::type<U>*, Generator*)
 #else
-unwind_type(boost::type<U>*p = BOOST_NULLPTR, Generator* = BOOST_NULLPTR)
+unwind_type(boost::type<U>*p =0, Generator* =0)
 #endif
 {
     BOOST_STATIC_CONSTANT(int, indirection

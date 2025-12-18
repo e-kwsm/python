@@ -10,6 +10,7 @@
 
 #  include <boost/python/detail/preprocessor.hpp>
 
+#  include <boost/config.hpp>
 #  include <boost/type.hpp>
 
 #  include <boost/preprocessor/comma_if.hpp>

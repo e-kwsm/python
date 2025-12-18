@@ -67,7 +67,7 @@ struct pointer_holder : instance_holder
     template <class T>
     inline void* holds_wrapped(type_info dst_t, wrapper<T>*,T* p)
     {
-        return python::type_id<T>() == dst_t ? p : BOOST_NULLPTR;
+        return python::type_id<T>() == dst_t ? p : 0;
     }
     
     inline void* holds_wrapped(type_info, ...)

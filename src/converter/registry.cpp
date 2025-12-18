@@ -221,7 +221,7 @@ namespace registry
               + " already registered; second conversion method ignored."
           );
           
-          if ( ::PyErr_Warn( NULL, const_cast<char*>(msg.c_str()) ) )
+          if ( ::PyErr_Warn( BOOST_NULLPTR, const_cast<char*>(msg.c_str()) ) )
           {
               throw_error_already_set();
           }

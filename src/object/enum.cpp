@@ -94,7 +94,7 @@ extern "C"
 }
 
 static PyTypeObject enum_type_object = {
-    PyVarObject_HEAD_INIT(NULL, 0) // &PyType_Type
+    PyVarObject_HEAD_INIT(BOOST_NULLPTR, 0) // &PyType_Type
     const_cast<char*>("Boost.Python.enum"),
     sizeof(enum_object),                    /* tp_basicsize */
     0,                                      /* tp_itemsize */

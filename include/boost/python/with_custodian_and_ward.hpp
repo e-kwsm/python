@@ -100,8 +100,7 @@ struct with_custodian_and_ward_postcall : BasePolicy_
         PyObject* patient = detail::get_prev<ward>::execute(args_, result);
         PyObject* nurse = detail::get_prev<custodian>::execute(args_, result);
 
-        if (nurse == BOOST_NULLPTR)
-            return BOOST_NULLPTR;
+        if (nurse == BOOST_NULLPTR) return BOOST_NULLPTR;
     
         result = BasePolicy_::postcall(args_, result);
         if (result == BOOST_NULLPTR)

@@ -5,6 +5,8 @@
 #ifndef CONSTRUCT_REFERENCE_DWA2002716_HPP
 # define CONSTRUCT_REFERENCE_DWA2002716_HPP
 
+# include <boost/config.hpp>
+
 namespace boost { namespace python { namespace detail { 
 
 template <class T, class Arg>
@@ -26,7 +28,7 @@ void construct_referent(void* storage, Arg const& x, T(*tag)() = BOOST_NULLPTR)
 }
 
 template <class T, class Arg>
-void construct_referent(void* storage, Arg& x, T(*tag)() = BOOST_NULLPTR)
+void construct_referent(void* storage, Arg& x, T(*tag)() = 0)
 {
     construct_referent_impl(storage, x, tag);
 }

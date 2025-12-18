@@ -39,7 +39,7 @@ namespace detail
           typedef typename add_lvalue_reference<U>::type param;
           return &Extractor::execute(
               boost::python::detail::void_ptr_to_reference(
-                  op, (param(*)())BOOST_NULLPTR)
+                  op, (param(*)())BOOST_NULLPTR )
               );
       }
   };

@@ -5,8 +5,7 @@
 #ifndef CONVERTIBLE_DWA2002614_HPP
 # define CONVERTIBLE_DWA2002614_HPP
 
-#include <boost/config.hpp>
-
+# include <boost/config.hpp>
 # if defined(__EDG_VERSION__) && __EDG_VERSION__ <= 241
 #  include <boost/mpl/if.hpp>
 #  include <boost/python/detail/type_traits.hpp>
@@ -31,7 +30,7 @@ struct convertible
         is_convertible<X,Target>::value
         , yes_convertible
         , no_convertible
-        >::type check(X const&) { return BOOST_NULLPTR; }
+        >::type check(X const&) { return 0; }
 # endif 
 };
 

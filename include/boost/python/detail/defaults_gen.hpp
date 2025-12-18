@@ -216,7 +216,7 @@ namespace detail
                 N,n_args>::too_many_keywords assertion BOOST_ATTRIBUTE_UNUSED;              \
     }                                                                                       \
     template <std::size_t N>                                                                \
-    fstubs_name(::boost::python::detail::keywords<N> const& keywords, char const* doc = BOOST_NULLPTR)  \
+    fstubs_name(::boost::python::detail::keywords<N> const& keywords, char const* doc = BOOST_NULLPTR) \
         : ::boost::python::detail::overloads_common<fstubs_name>(                           \
             doc, keywords.range())                                                          \
     {                                                                                       \

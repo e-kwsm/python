@@ -228,7 +228,7 @@ struct caller_arity<N>
             // all converters have been checked. Now we can do the
             // precall part of the policy
             if (!m_data.second().precall(inner_args))
-                return BOOST_NULLPTR;
+                return 0;
 
             PyObject* result = detail::invoke(
                 detail::invoke_tag<result_t,F>()
