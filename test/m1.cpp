@@ -38,47 +38,47 @@ PyTypeObject NoddyType = {
     0,
     dealloc,    /* tp_dealloc */
     0,          /* tp_print */
-    BOOST_NULLPTR,    /* tp_getattr */
-    BOOST_NULLPTR,    /* tp_setattr */
-    BOOST_NULLPTR,    /* tp_compare */
-    BOOST_NULLPTR,    /* tp_repr */
-    BOOST_NULLPTR,    /* tp_as_number */
-    BOOST_NULLPTR,    /* tp_as_sequence */
-    BOOST_NULLPTR,    /* tp_as_mapping */
-    BOOST_NULLPTR,    /* tp_hash */
-    BOOST_NULLPTR,    /* tp_call */
-    BOOST_NULLPTR,    /* tp_str */
-    BOOST_NULLPTR,    /* tp_getattro */
-    BOOST_NULLPTR,    /* tp_setattro */
-    BOOST_NULLPTR,    /* tp_as_buffer */
+    0,          /* tp_getattr */
+    0,          /* tp_setattr */
+    0,          /* tp_compare */
+    0,          /* tp_repr */
+    0,          /* tp_as_number */
+    0,          /* tp_as_sequence */
+    0,          /* tp_as_mapping */
+    0,          /* tp_hash */
+    0,          /* tp_call */
+    0,          /* tp_str */
+    0,          /* tp_getattro */
+    0,          /* tp_setattro */
+    0,          /* tp_as_buffer */
     0,          /* tp_flags */
-    BOOST_NULLPTR,    /* tp_doc */
-    BOOST_NULLPTR,    /* tp_traverse */
-    BOOST_NULLPTR,    /* tp_clear */
-    BOOST_NULLPTR,    /* tp_richcompare */
+    0,          /* tp_doc */
+    0,          /* tp_traverse */
+    0,          /* tp_clear */
+    0,          /* tp_richcompare */
     0,          /* tp_weaklistoffset */
-    BOOST_NULLPTR,    /* tp_iter */
-    BOOST_NULLPTR,    /* tp_iternext */
-    BOOST_NULLPTR,    /* tp_methods */
-    BOOST_NULLPTR,    /* tp_members */
-    BOOST_NULLPTR,    /* tp_getset */
-    BOOST_NULLPTR,    /* tp_base */
-    BOOST_NULLPTR,    /* tp_dict */
-    BOOST_NULLPTR,    /* tp_descr_get */
-    BOOST_NULLPTR,    /* tp_descr_set */
+    0,          /* tp_iter */
+    0,          /* tp_iternext */
+    0,          /* tp_methods */
+    0,          /* tp_members */
+    0,          /* tp_getset */
+    0,          /* tp_base */
+    0,          /* tp_dict */
+    0,          /* tp_descr_get */
+    0,          /* tp_descr_set */
     0,          /* tp_dictoffset */
-    BOOST_NULLPTR,    /* tp_init */
-    BOOST_NULLPTR,    /* tp_alloc */
-    BOOST_NULLPTR,    /* tp_new */
-    BOOST_NULLPTR,    /* tp_free */
-    BOOST_NULLPTR,    /* tp_is_gc */
-    BOOST_NULLPTR,    /* tp_bases */
-    BOOST_NULLPTR,    /* tp_mro */
-    BOOST_NULLPTR,    /* tp_cache */
-    BOOST_NULLPTR,    /* tp_subclasses */
-    BOOST_NULLPTR,    /* tp_weaklist */
+    0,          /* tp_init */
+    0,          /* tp_alloc */
+    0,          /* tp_new */
+    0,          /* tp_free */
+    0,          /* tp_is_gc */
+    0,          /* tp_bases */
+    0,          /* tp_mro */
+    0,          /* tp_cache */
+    0,          /* tp_subclasses */
+    0,          /* tp_weaklist */
 #if PYTHON_API_VERSION >= 1012
-    BOOST_NULLPTR     /* tp_del */
+    0           /* tp_del */
 #endif
 };
 
@@ -109,47 +109,47 @@ PyTypeObject SimpleType = {
     0,
     dealloc,    /* tp_dealloc */
     0,          /* tp_print */
-    BOOST_NULLPTR,    /* tp_getattr */
-    BOOST_NULLPTR,    /* tp_setattr */
-    BOOST_NULLPTR,    /* tp_compare */
-    BOOST_NULLPTR,    /* tp_repr */
-    BOOST_NULLPTR,    /* tp_as_number */
-    BOOST_NULLPTR,    /* tp_as_sequence */
-    BOOST_NULLPTR,    /* tp_as_mapping */
-    BOOST_NULLPTR,    /* tp_hash */
-    BOOST_NULLPTR,    /* tp_call */
-    BOOST_NULLPTR,    /* tp_str */
-    BOOST_NULLPTR,    /* tp_getattro */
-    BOOST_NULLPTR,    /* tp_setattro */
-    BOOST_NULLPTR,    /* tp_as_buffer */
+    0,          /* tp_getattr */
+    0,          /* tp_setattr */
+    0,          /* tp_compare */
+    0,          /* tp_repr */
+    0,          /* tp_as_number */
+    0,          /* tp_as_sequence */
+    0,          /* tp_as_mapping */
+    0,          /* tp_hash */
+    0,          /* tp_call */
+    0,          /* tp_str */
+    0,          /* tp_getattro */
+    0,          /* tp_setattro */
+    0,          /* tp_as_buffer */
     0,          /* tp_flags */
-    BOOST_NULLPTR,    /* tp_doc */
-    BOOST_NULLPTR,    /* tp_traverse */
-    BOOST_NULLPTR,    /* tp_clear */
-    BOOST_NULLPTR,    /* tp_richcompare */
+    0,          /* tp_doc */
+    0,          /* tp_traverse */
+    0,          /* tp_clear */
+    0,          /* tp_richcompare */
     0,          /* tp_weaklistoffset */
-    BOOST_NULLPTR,    /* tp_iter */
-    BOOST_NULLPTR,    /* tp_iternext */
-    BOOST_NULLPTR,    /* tp_methods */
-    BOOST_NULLPTR,    /* tp_members */
-    BOOST_NULLPTR,    /* tp_getset */
-    BOOST_NULLPTR,    /* tp_base */
-    BOOST_NULLPTR,    /* tp_dict */
-    BOOST_NULLPTR,    /* tp_descr_get */
-    BOOST_NULLPTR,    /* tp_descr_set */
+    0,          /* tp_iter */
+    0,          /* tp_iternext */
+    0,          /* tp_methods */
+    0,          /* tp_members */
+    0,          /* tp_getset */
+    0,          /* tp_base */
+    0,          /* tp_dict */
+    0,          /* tp_descr_get */
+    0,          /* tp_descr_set */
     0,          /* tp_dictoffset */
-    BOOST_NULLPTR,    /* tp_init */
-    BOOST_NULLPTR,    /* tp_alloc */
-    BOOST_NULLPTR,    /* tp_new */
-    BOOST_NULLPTR,    /* tp_free */
-    BOOST_NULLPTR,    /* tp_is_gc */
-    BOOST_NULLPTR,    /* tp_bases */
-    BOOST_NULLPTR,    /* tp_mro */
-    BOOST_NULLPTR,    /* tp_cache */
-    BOOST_NULLPTR,    /* tp_subclasses */
-    BOOST_NULLPTR,    /* tp_weaklist */
+    0,          /* tp_init */
+    0,          /* tp_alloc */
+    0,          /* tp_new */
+    0,          /* tp_free */
+    0,          /* tp_is_gc */
+    0,          /* tp_bases */
+    0,          /* tp_mro */
+    0,          /* tp_cache */
+    0,          /* tp_subclasses */
+    0,          /* tp_weaklist */
 #if PYTHON_API_VERSION >= 1012
-    BOOST_NULLPTR     /* tp_del */
+    0           /* tp_del */
 #endif
 };
 
