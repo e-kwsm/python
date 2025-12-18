@@ -682,11 +682,14 @@ namespace objects
     };
   }
   
+#pragma clang diagnostic push
+#pragma clang diagnostic ignored "-Wzero-as-null-pointer-constant"
   void class_base::def_no_init()
   {
       handle<> f(::PyCFunction_New(&no_init_def, 0));
       this->setattr("__init__", object(f));
   }
+#pragma clang diagnostic pop
 
   void class_base::enable_pickling_(bool getstate_manages_dict)
   {
