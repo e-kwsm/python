@@ -10,33 +10,17 @@
 #include <boost/python/errors.hpp>
 #include <boost/cast.hpp>
 #include <boost/python/detail/exception_handler.hpp>
-#include <boost/python/detail/pymutex.hpp>
 
 namespace boost {
 namespace python {
-
-#ifdef Py_GIL_DISABLED
-namespace detail {
-// Global mutex for protecting all Boost.Python internal state
-pymutex &get_global_mutex() {
-  static pymutex mutex;
-  return mutex;
-}
-} // namespace detail
-#endif
 
 error_already_set::~error_already_set() {}
 
 // IMPORTANT: this function may only be called from within a catch block!
 BOOST_PYTHON_DECL bool handle_exception_impl(function0<void> f) {
   try {
-    detail::exception_handler *handler_chain = nullptr;
-    {
-      BOOST_PYTHON_LOCK_STATE();
-      handler_chain = detail::exception_handler::chain;
-    }
-    if (handler_chain)
-      return handler_chain->handle(f);
+    if (detail::exception_handler::chain)
+      return detail::exception_handler::chain->handle(f);
     f();
     return false;
   } catch (const boost::python::error_already_set &) {
@@ -72,7 +56,6 @@ bool exception_handler::operator()(function0<void> const &f) const {
 
 exception_handler::exception_handler(handler_function const &impl)
     : m_impl(impl), m_next(0) {
-  BOOST_PYTHON_LOCK_STATE();
   if (chain != 0)
     tail->m_next = this;
   else

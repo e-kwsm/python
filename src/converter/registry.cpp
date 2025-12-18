@@ -5,7 +5,6 @@
 #include <boost/python/converter/registry.hpp>
 #include <boost/python/converter/registrations.hpp>
 #include <boost/python/converter/builtin_converters.hpp>
-#include <boost/python/detail/pymutex.hpp>
 
 #include <set>
 #include <stdexcept>
@@ -163,8 +162,6 @@ registry_t &entries() {
 #endif // BOOST_PYTHON_CONVERTER_REGISTRY_APPLE_MACH_WORKAROUND
 
 entry *get(type_info type, bool is_shared_ptr = false) {
-  BOOST_PYTHON_LOCK_STATE();
-
 #ifdef BOOST_PYTHON_TRACE_REGISTRY
   registry_t::iterator p = entries().find(entry(type));
 
@@ -260,8 +257,6 @@ registration const &lookup(type_info key) { return *get(key); }
 registration const &lookup_shared_ptr(type_info key) { return *get(key, true); }
 
 registration const *query(type_info type) {
-  BOOST_PYTHON_LOCK_STATE();
-
   registry_t::iterator p = entries().find(entry(type));
 #ifdef BOOST_PYTHON_TRACE_REGISTRY
   std::cout << "querying " << type
