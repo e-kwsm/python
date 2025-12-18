@@ -4,51 +4,40 @@
 
 #include <boost/python/wrapper.hpp>
 
-namespace boost { namespace python {
+namespace boost {
+namespace python {
 
-namespace detail
-{
-  override wrapper_base::get_override(
-      char const* name
-    , PyTypeObject* class_object
-  ) const
-  {
-      if (this->m_self)
-      {
-          if (handle<> m = handle<>(
-                  python::allow_null(
-                      ::PyObject_GetAttrString(
-                          this->m_self, const_cast<char*>(name))))
-          )
-          {
-              PyObject* class_f = 0;
+namespace detail {
+override wrapper_base::get_override(char const *name,
+                                    PyTypeObject *class_object) const {
+  if (this->m_self) {
+    if (handle<> m = handle<>(python::allow_null(::PyObject_GetAttrString(
+            this->m_self, const_cast<char *>(name))))) {
+      PyObject *class_f = 0;
 
-              if (
-                  PyMethod_Check(m.get())
-                  && PyMethod_GET_SELF(m.get()) == this->m_self
-                  && class_object->tp_dict != 0
-              )
-              {
+      if (PyMethod_Check(m.get()) &&
+          PyMethod_GET_SELF(m.get()) == this->m_self &&
+          class_object->tp_dict != 0) {
 #if PY_VERSION_HEX >= 0x030D0000
-                  if (::PyDict_GetItemStringRef(
-                      class_object->tp_dict, const_cast<char*>(name), &class_f) < 0) {
-                      throw_error_already_set();
-                  }
+        if (::PyDict_GetItemStringRef(class_object->tp_dict,
+                                      const_cast<char *>(name), &class_f) < 0) {
+          throw_error_already_set();
+        }
 #else
-                  class_f = ::PyDict_GetItemString(
-                      class_object->tp_dict, const_cast<char*>(name));
-                  Py_XINCREF(class_f);
+        class_f = ::PyDict_GetItemString(class_object->tp_dict,
+                                         const_cast<char *>(name));
+        Py_XINCREF(class_f);
 #endif
-              }
-              bool is_override = (class_f != PyMethod_GET_FUNCTION(m.get()));
-              Py_XDECREF(class_f);
-              if (is_override)
-                  return override(m);
-          }
       }
-      return override(handle<>(detail::none()));
+      bool is_override = (class_f != PyMethod_GET_FUNCTION(m.get()));
+      Py_XDECREF(class_f);
+      if (is_override)
+        return override(m);
+    }
   }
+  return override(handle<>(detail::none()));
 }
+} // namespace detail
 
 #if 0
 namespace converter
@@ -69,6 +58,7 @@ namespace converter
   }
   
 }
-#endif 
+#endif
 
-}} // namespace boost::python::detail
+} // namespace python
+} // namespace boost
