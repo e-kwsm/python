@@ -52,6 +52,8 @@
 #  include <boost/mpl/and.hpp>
 # endif
 
+# include <string>
+
 namespace boost { namespace python {
 
 template <class DerivedVisitor> class def_visitor;
@@ -232,6 +234,12 @@ class class_ : public objects::class_base
             detail::unwrap_wrapper((W*)0)
           , name, f, detail::def_helper<char const*>(0), &f);
         return *this;
+    }
+
+    template <class F>
+    self& def(const std::string& name, F f)
+    {
+        return def(name.str(), f);
     }
 
     template <class A1, class A2>
