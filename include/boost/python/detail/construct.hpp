@@ -28,7 +28,7 @@ void construct_referent(void* storage, Arg const& x, T(*tag)() = BOOST_NULLPTR)
 }
 
 template <class T, class Arg>
-void construct_referent(void* storage, Arg& x, T(*tag)() = 0)
+void construct_referent(void* storage, Arg& x, T(*tag)() = BOOST_NULLPTR)
 {
     construct_referent_impl(storage, x, tag);
 }

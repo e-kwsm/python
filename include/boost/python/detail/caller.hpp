@@ -142,7 +142,7 @@ struct caller;
      typedef arg_from_python<BOOST_DEDUCED_TYPENAME arg_iter##n::type> c_t##n;  \
      c_t##n c##n(get(mpl::int_<n>(), inner_args));                              \
      if (!c##n.convertible())                                                   \
-          return 0;
+          return BOOST_NULLPTR;
 
 #  define BOOST_PP_ITERATION_PARAMS_1                                            \
         (3, (0, BOOST_PYTHON_MAX_ARITY + 1, <boost/python/detail/caller.hpp>))
@@ -228,11 +228,11 @@ struct caller_arity<N>
             // all converters have been checked. Now we can do the
             // precall part of the policy
             if (!m_data.second().precall(inner_args))
-                return 0;
+                return BOOST_NULLPTR;
 
             PyObject* result = detail::invoke(
                 detail::invoke_tag<result_t,F>()
-              , create_result_converter(args_, (result_converter*)0, (result_converter*)0)
+              , create_result_converter(args_, (result_converter*)BOOST_NULLPTR, (result_converter*)BOOST_NULLPTR)
               , m_data.first()
                 BOOST_PP_ENUM_TRAILING_PARAMS(N, c)
             );
