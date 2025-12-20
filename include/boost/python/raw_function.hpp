@@ -29,8 +29,8 @@ namespace detail
           return incref(
               object(
                   f(
-                      tuple(borrowed_reference(args))
-                    , keywords ? dict(borrowed_reference(keywords)) : dict()
+                      tuple(reinterpret_cast<borrowed_reference>(args))
+                    , keywords ? dict(reinterpret_cast<borrowed_reference>(keywords)) : dict()
                   )
               ).ptr()
           );
