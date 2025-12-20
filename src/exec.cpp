@@ -25,7 +25,7 @@ object BOOST_PYTHON_DECL eval(char const *string, object global, object local)
   if (global.is_none())
   {
     if (PyObject *g = PyEval_GetGlobals())
-      global = object(detail::borrowed_reference(g));
+      global = object(reinterpret_cast<detail::borrowed_reference>(g));
     else
       global = dict();
   }
@@ -34,7 +34,7 @@ object BOOST_PYTHON_DECL eval(char const *string, object global, object local)
   char *s = const_cast<char *>(string);
   PyObject* result = PyRun_String(s, Py_eval_input, global.ptr(), local.ptr());
   if (!result) throw_error_already_set();
-  return object(detail::new_reference(result));
+  return object(reinterpret_cast<detail::new_reference>(result));
 }
 
 object BOOST_PYTHON_DECL exec(str string, object global, object local)
@@ -48,7 +48,7 @@ object BOOST_PYTHON_DECL exec(char const *string, object global, object local)
   if (global.is_none())
   {
     if (PyObject *g = PyEval_GetGlobals())
-      global = object(detail::borrowed_reference(g));
+      global = object(reinterpret_cast<detail::borrowed_reference>(g));
     else
       global = dict();
   }
@@ -57,7 +57,7 @@ object BOOST_PYTHON_DECL exec(char const *string, object global, object local)
   char *s = const_cast<char *>(string);
   PyObject* result = PyRun_String(s, Py_file_input, global.ptr(), local.ptr());
   if (!result) throw_error_already_set();
-  return object(detail::new_reference(result));
+  return object(reinterpret_cast<detail::new_reference>(result));
 }
 
 object BOOST_PYTHON_DECL exec_statement(str string, object global, object local)
@@ -71,7 +71,7 @@ object BOOST_PYTHON_DECL exec_statement(char const *string, object global, objec
   if (global.is_none())
   {
     if (PyObject *g = PyEval_GetGlobals())
-      global = object(detail::borrowed_reference(g));
+      global = object(reinterpret_cast<detail::borrowed_reference>(g));
     else
       global = dict();
   }
@@ -80,7 +80,7 @@ object BOOST_PYTHON_DECL exec_statement(char const *string, object global, objec
   char *s = const_cast<char *>(string);
   PyObject* result = PyRun_String(s, Py_single_input, global.ptr(), local.ptr());
   if (!result) throw_error_already_set();
-  return object(detail::new_reference(result));
+  return object(reinterpret_cast<detail::new_reference>(result));
 }
 
 // Execute python source code from file filename.
@@ -97,7 +97,7 @@ object BOOST_PYTHON_DECL exec_file(char const *filename, object global, object l
   if (global.is_none())
   {
     if (PyObject *g = PyEval_GetGlobals())
-      global = object(detail::borrowed_reference(g));
+      global = object(reinterpret_cast<detail::borrowed_reference>(g));
     else
       global = dict();
   }
@@ -131,7 +131,7 @@ object BOOST_PYTHON_DECL exec_file(char const *filename, object global, object l
 		global.ptr(), local.ptr());
   fclose(fs);
   if (!result) throw_error_already_set();
-  return object(detail::new_reference(result));
+  return object(reinterpret_cast<detail::new_reference>(result));
 }
 
 }  // namespace boost::python

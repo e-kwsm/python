@@ -123,7 +123,7 @@ class handle
     inline handle(detail::borrowed_reference x)
         : m_p(
             python::incref(
-                downcast<T>((PyObject*)x)
+                downcast<T>(reinterpret_cast<PyObject*>(x))
                 ))
     {
     }

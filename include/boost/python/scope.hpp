@@ -42,7 +42,7 @@ inline scope::scope(object const& new_scope)
 }
 
 inline scope::scope()
-    : object(detail::borrowed_reference(
+    : object(reinterpret_cast<detail::borrowed_reference>(
                  detail::current_scope ? detail::current_scope : Py_None
                  ))
     , m_previous_scope(python::xincref(detail::current_scope))

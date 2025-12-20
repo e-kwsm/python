@@ -371,7 +371,7 @@ object api::object_operators<U>::operator()(detail::args_proxy const &args) cons
   PyObject *result = PyObject_Call(get_managed_object(self, boost::python::tag), 
                                    args.operator object().ptr(), 
                                    0); 
-  return object(boost::python::detail::new_reference(result)); 
+  return object(reinterpret_cast<boost::python::detail::new_reference>(result));
  
 } 
  
@@ -383,7 +383,7 @@ object api::object_operators<U>::operator()(detail::args_proxy const &args,
   PyObject *result = PyObject_Call(get_managed_object(self, boost::python::tag), 
                                    args.operator object().ptr(), 
                                    kwds.operator object().ptr()); 
-  return object(boost::python::detail::new_reference(result)); 
+  return object(reinterpret_cast<boost::python::detail::new_reference>(result));
  
 }  
 
@@ -434,15 +434,15 @@ inline api::object_base::~object_base()
 }
 
 inline object::object(detail::borrowed_reference p)
-    : object_base(python::incref((PyObject*)p))
+    : object_base(python::incref(reinterpret_cast<PyObject*>(p)))
 {}
 
 inline object::object(detail::new_reference p)
-    : object_base(expect_non_null((PyObject*)p))
+    : object_base(expect_non_null(reinterpret_cast<PyObject*>(p)))
 {}
 
 inline object::object(detail::new_non_null_reference p)
-    : object_base((PyObject*)p)
+    : object_base(reinterpret_cast<PyObject*>(p))
 {}
 
 inline PyObject* api::object_base::ptr() const
@@ -470,7 +470,7 @@ namespace converter
       
       static python::detail::new_non_null_reference adopt(PyObject* x)
       {
-          return python::detail::new_non_null_reference(x);
+          return reinterpret_cast<python::detail::new_non_null_reference>(x);
       }
 #ifndef BOOST_PYTHON_NO_PY_SIGNATURES
       static PyTypeObject const *get_pytype() {return 0;}
