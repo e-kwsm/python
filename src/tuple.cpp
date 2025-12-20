@@ -8,13 +8,13 @@ namespace boost { namespace python { namespace detail {
 
 detail::new_reference tuple_base::call(object const& arg_)
 {
-    return (detail::new_reference)PyObject_CallFunction(
-        (PyObject*)&PyTuple_Type, const_cast<char*>("(O)"), 
-        arg_.ptr());
+    return reinterpret_cast<detail::new_reference>(PyObject_CallFunction(
+        reinterpret_cast<PyObject*>(&PyTuple_Type), const_cast<char*>("(O)"),
+        arg_.ptr()));
 }
     
 tuple_base::tuple_base()
-    : object(detail::new_reference(PyTuple_New(0)))
+    : object(reinterpret_cast<detail::new_reference>(PyTuple_New(0)))
 {}
     
 tuple_base::tuple_base(object_cref sequence)
