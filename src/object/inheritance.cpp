@@ -409,7 +409,7 @@ namespace
           : std::make_pair(p, src_t);
     
       // Look in the cache first for a quickie address translation
-      std::ptrdiff_t offset = (char*)p - (char*)dynamic_id.first;
+      std::ptrdiff_t offset = static_cast<char*>(p) - static_cast<char*>(dynamic_id.first);
 
       cache_element seek(boost::make_tuple(src_t, dst_t, offset, dynamic_id.second));
       cache_t& c = cache();
@@ -421,7 +421,7 @@ namespace
       if (cache_pos != c.end() && cache_pos->key == seek.key)
       {
           return cache_pos->offset == cache_element::not_found
-              ? 0 : (char*)p + cache_pos->offset;
+              ? 0 : static_cast<char*>(p) + cache_pos->offset;
       }
 
       // If we are starting at the most-derived type, only look in the up graph
@@ -434,7 +434,7 @@ namespace
 
       // update the cache
       c.insert(cache_pos, seek)->offset
-          = (result == 0) ? cache_element::not_found : (char*)result - (char*)p;
+          = (result == 0) ? cache_element::not_found : static_cast<char*>(result) - static_cast<char*>(p);
 
       return result;
   }
