@@ -321,20 +321,20 @@ namespace boost { namespace python { namespace objects {
                     
                     int doc_len = len(func_doc);
 
-                    bool show_py_signature = doc_len >= int(sizeof(detail::py_signature_tag)/sizeof(char)-1)
-                                            && str(detail::py_signature_tag) == func_doc.slice(0, int(sizeof(detail::py_signature_tag)/sizeof(char))-1);
+                    bool show_py_signature = doc_len >= static_cast<int>(sizeof(detail::py_signature_tag) / sizeof(char) - 1)
+                                            && str(detail::py_signature_tag) == func_doc.slice(0, static_cast<int>(sizeof(detail::py_signature_tag) / sizeof(char)) - 1);
                     if(show_py_signature)
                     {
-                        func_doc = str(func_doc.slice(int(sizeof(detail::py_signature_tag)/sizeof(char))-1, _));
+                        func_doc = str(func_doc.slice(static_cast<int>(sizeof(detail::py_signature_tag) / sizeof(char)) - 1, _));
                         doc_len = len(func_doc);
                     }
                     
-                    bool show_cpp_signature = doc_len >= int(sizeof(detail::cpp_signature_tag)/sizeof(char)-1)
-                                            && str(detail::cpp_signature_tag) == func_doc.slice( 1-int(sizeof(detail::cpp_signature_tag)/sizeof(char)), _);
+                    bool show_cpp_signature = doc_len >= static_cast<int>(sizeof(detail::cpp_signature_tag) / sizeof(char) - 1)
+                                            && str(detail::cpp_signature_tag) == func_doc.slice(1 - static_cast<int>(sizeof(detail::cpp_signature_tag) / sizeof(char)), _);
                     
                     if(show_cpp_signature)
                     {
-                        func_doc = str(func_doc.slice(_, 1-int(sizeof(detail::cpp_signature_tag)/sizeof(char))));
+                        func_doc = str(func_doc.slice(_, 1 - static_cast<int>(sizeof(detail::cpp_signature_tag) / sizeof(char))));
                         doc_len = len(func_doc);
                     }
                     
