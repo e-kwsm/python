@@ -220,7 +220,7 @@ namespace boost { namespace python { namespace objects {
 
         unsigned arity = impl.max_arity();
 
-        if(arity == unsigned(-1))// is this the proper raw function test?
+        if(arity == UINT_MAX) // is this the proper raw function test?
         {
             return raw_function_pretty_signature(f,n_overloads,cpp_types);
         }
