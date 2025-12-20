@@ -9,18 +9,18 @@ namespace boost { namespace python { namespace detail {
 
 detail::new_reference str_base::call(object const& arg_)
 {
-    return (detail::new_reference)PyObject_CallFunction(
+    return reinterpret_cast<detail::new_reference>(PyObject_CallFunction(
 #if PY_VERSION_HEX >= 0x03000000
-        (PyObject*)&PyUnicode_Type,
+        reinterpret_cast<PyObject*>(&PyUnicode_Type),
 #else
-        (PyObject*)&PyString_Type, 
+        reinterpret_cast<PyObject*>(&PyString_Type),
 #endif
         const_cast<char*>("(O)"), 
-        arg_.ptr());
+        arg_.ptr()));
 } 
 
 str_base::str_base()
-  : object(detail::new_reference(
+  : object(reinterpret_cast<detail::new_reference>(
 #if PY_VERSION_HEX >= 0x03000000
               ::PyUnicode_FromString("")
 #else
@@ -30,7 +30,7 @@ str_base::str_base()
 {}
 
 str_base::str_base(const char* s)
-  : object(detail::new_reference(
+  : object(reinterpret_cast<detail::new_reference>(
 #if PY_VERSION_HEX >= 0x03000000
               ::PyUnicode_FromString(s)
 #else
@@ -54,7 +54,7 @@ namespace {
 
 str_base::str_base(char const* start, char const* finish)
     : object(
-        detail::new_reference(
+        reinterpret_cast<detail::new_reference>(
 #if PY_VERSION_HEX >= 0x03000000
             ::PyUnicode_FromStringAndSize
 #else
@@ -67,7 +67,7 @@ str_base::str_base(char const* start, char const* finish)
 
 str_base::str_base(char const* start, std::size_t length) // new str
     : object(
-        detail::new_reference(
+        reinterpret_cast<detail::new_reference>(
 #if PY_VERSION_HEX >= 0x03000000
             ::PyUnicode_FromStringAndSize
 #else
