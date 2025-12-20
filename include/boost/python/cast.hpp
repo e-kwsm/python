@@ -29,7 +29,7 @@ namespace detail
   {
       typedef typename base_type_traits<Source>::type base;
       
-      return detail::upcast_impl((base*)p, (Target*)0);
+      return detail::upcast_impl((base*)p, static_cast<Target*>(0));
   }
 
   template <bool is_same = true>

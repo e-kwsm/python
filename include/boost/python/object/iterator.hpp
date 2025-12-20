@@ -133,7 +133,7 @@ namespace detail
       operator()(back_reference<Target&> x) const
       {
           // Make sure the Python class is instantiated.
-          detail::demand_iterator_class("iterator", (Iterator*)0, NextPolicies());
+          detail::demand_iterator_class("iterator", static_cast<Iterator*>(0), NextPolicies());
           
           return iterator_range<NextPolicies,Iterator>(
               x.source()
@@ -176,8 +176,8 @@ namespace detail
           get_start
         , get_finish
         , next_policies
-        , (Iterator const&(*)())0
-        , (boost::type<Target>*)0
+        , static_cast<Iterator const&(*)()>(0)
+        , static_cast<boost::type<Target>*>(0)
         , 0
       );
   }
@@ -206,8 +206,8 @@ inline object make_iterator_function(
         get_start
       , get_finish
       , next_policies
-      , (iterator_cref(*)())0
-      , (boost::type<Target>*)0
+      , static_cast<iterator_cref(*)()>(0)
+      , static_cast<boost::type<Target>*>(0)
       , 0
     );
 }
