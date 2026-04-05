@@ -87,6 +87,7 @@ namespace boost { namespace python {
                 .def("__repr__", &DerivedPolicies::print_elem)
                 .def("data", &DerivedPolicies::get_data, get_data_return_policy())
                 .def("key", &DerivedPolicies::get_key)
+                .def("pop", &base_pop)
             ;
         }
 
@@ -153,6 +154,17 @@ namespace boost { namespace python {
         contains(Container& container, key_type const& key)
         {
             return container.find(key) != container.end();
+        }
+
+        static void
+        base_pop(Container& container, const key_type& key)
+        {
+            auto i = container.erase(key);
+            if (i == 0)
+            {
+                PyErr_SetString(PyExc_KeyError, "non existing key");
+                throw_error_already_set();
+            }
         }
 
         static bool

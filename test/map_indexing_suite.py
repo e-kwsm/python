@@ -64,6 +64,8 @@ foo
 >>> del xm['joel']
 >>> print_xmap(xm)
 [ (kim, kiwi) (mariel, grape) (tenji, orange) (tutit, banana) ]
+>>> try: xm.pop('alice')
+... except ValueError: ...
 
 #####################################################################
 # adding an entry
