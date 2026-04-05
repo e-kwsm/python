@@ -366,6 +366,8 @@ namespace boost { namespace python {
         static iterator<Container>
         base_reversed(Container& container)
         {
+            PyErr_SetString(PyExc_NotImplementedError, "");
+            throw_error_already_set();
         }
 
         static void
