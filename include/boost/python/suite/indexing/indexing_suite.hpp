@@ -303,7 +303,13 @@ namespace boost { namespace python {
         base_pop(Container& container, PyObject* i = BOOST_NULLPTR)
         {
             if (i == BOOST_NULLPTR) {
+                if (container.empty()) {
+                    PyErr_SetString(PyExc_IndexError, "pop from empty list");
+                    throw_error_already_set();
+                }
             }
+                    PyErr_SetString(PyExc_IndexError, "pop index out of range");
+                    throw_error_already_set();
         }
     };
 
