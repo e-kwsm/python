@@ -184,6 +184,7 @@ namespace boost { namespace python {
                 .def("__getitem__", &base_get_item)
                 .def("__contains__", &base_contains)
                 .def("__iter__", def_iterator())
+                // .def("__reversed__", ())
                 .def("clear", &base_clear)
             ;
 
