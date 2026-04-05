@@ -228,18 +228,40 @@ namespace boost { namespace python {
         
     private:
 
-        static size_t
-        base_count(Container& container, object v)
+        static void
+        base_append(Container& container, PyObject* i, PyObject* v)
         {
-            extract<data_type&> elem(v);
-            if (elem.check()) {
-                return std::count(container.begin(), container.end(), elem());
-            } else {
-                extract<data_type> elem(v);
-                if (!elem.check()) {
-                    return 0;
+            // TODO
+            // if i > len; append(v)
+            // else __setitem__(i+1:end+1, __getitem__(i:end))
+            //      __setitem__(i, v)
+            {
+                extract<Data&> elem(v);
+                // try if elem is an exact Data
+                if (elem.check())
+                {
+                    DerivedPolicies::
+                        set_item(container,
+                            DerivedPolicies::
+                                convert_index(container, i), elem());
                 }
-                return std::count(container.begin(), container.end(), elem());
+                else
+                {
+                    //  try to convert elem to Data
+                    extract<Data> elem(v);
+                    if (elem.check())
+                    {
+                        DerivedPolicies::
+                            set_item(container,
+                                DerivedPolicies::
+                                    convert_index(container, i), elem());
+                    }
+                    else
+                    {
+                        PyErr_SetString(PyExc_TypeError, "Invalid assignment");
+                        throw_error_already_set();
+                    }
+                }
             }
         }
     
