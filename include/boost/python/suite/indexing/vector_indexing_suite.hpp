@@ -66,6 +66,7 @@ namespace boost { namespace python {
                 .def("append", &base_append)
                 .def("count", &base_count)
                 .def("extend", &base_extend)
+                // .def("index", &)
                 .def("pop", &base_pop)
                 .def("remove", &base_remove)
                 .def("reverse", &base_reverse)
