@@ -65,6 +65,7 @@ namespace boost { namespace python {
                 .def("append", &base_append)
                 .def("count", &base_count)
                 .def("extend", &base_extend)
+                .def("pop", &base_pop)
                 .def("remove", &base_remove)
                 .def("reverse", &base_reverse)
             ;
@@ -302,6 +303,12 @@ namespace boost { namespace python {
                     throw_error_already_set();
                 }
             }
+        }
+
+        static object
+        base_pop(Container& container, object v)
+        {
+            return object(42);
         }
 
         static void
