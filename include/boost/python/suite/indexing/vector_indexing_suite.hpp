@@ -160,9 +160,18 @@ namespace boost { namespace python {
         }
         
         static size_t
-        base_count(Container& container, const data_type& v)
+        base_count(Container& container, object v)
         {
-            return std::count(container.begin(), container.end(), v);
+            extract<data_type&> elem(v);
+            if (elem.check()){
+                return std::count(container.begin(), container.end(), elem());
+            } else {
+                extract<data_type> elem(v);
+                if (!elem.check()) {
+                    return 0;
+                }
+                return std::count(container.begin(), container.end(), elem());
+            }
         }
         
         static index_type
