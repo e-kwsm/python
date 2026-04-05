@@ -159,6 +159,12 @@ namespace boost { namespace python {
                 != container.end();
         }
         
+        static size_t
+        count(Container& container, key_type const& key)
+        {
+            return std::count(container.cbegin(), container.cend(), key);
+        }
+        
         static index_type
         get_min_index(Container& /*container*/)
         { 
