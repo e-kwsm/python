@@ -187,8 +187,8 @@ namespace boost { namespace python {
                 // .def("__reversed__", ())
                 .def("clear", &base_clear)
                 // .def("insert", ())
-                .def("pop", &base_pop)
                 .def("count", &base_count)
+                .def("pop", &base_pop)
             ;
 
             DerivedPolicies::extension_def(cl);
