@@ -187,7 +187,6 @@ namespace boost { namespace python {
                 // .def("__next__", )
                 // .def("__reversed__", ())
                 .def("clear", &base_clear)
-                // .def("insert", ())
                 // .def("pop", &base_pop)
             ;
 
