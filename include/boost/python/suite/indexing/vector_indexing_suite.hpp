@@ -62,6 +62,7 @@ namespace boost { namespace python {
         {
             cl
                 .def("__iadd__", &base_iadd)
+                .def("__reversed__", &base_reversed)
                 .def("append", &base_append)
                 .def("count", &base_count)
                 .def("extend", &base_extend)
@@ -309,6 +310,11 @@ namespace boost { namespace python {
         base_pop(Container& container, object v)
         {
             return object(42);
+        }
+
+        static iterator<Container>
+        base_reversed(Container& container)
+        {
         }
 
         static void
