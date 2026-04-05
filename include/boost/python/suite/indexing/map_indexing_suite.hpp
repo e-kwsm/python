@@ -87,6 +87,9 @@ namespace boost { namespace python {
                 .def("__repr__", &DerivedPolicies::print_elem)
                 .def("data", &DerivedPolicies::get_data, get_data_return_policy())
                 .def("key", &DerivedPolicies::get_key)
+                // .def("keys", )
+                // .def("items", )
+                // .def("values", )
                 .def("pop", &base_pop)
             ;
         }
