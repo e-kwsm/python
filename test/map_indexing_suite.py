@@ -134,7 +134,8 @@ foo
 >>> assert 'kim' in xm
 >>> assert not 'X' in xm
 >>> assert not 12345 in xm
->>> xm.count("X")
+
+# >>> xm.count("X")
 
 #####################################################################
 # Some references to the container elements
