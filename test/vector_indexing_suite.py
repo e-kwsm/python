@@ -77,6 +77,10 @@ a
 >>> v[0] = 'yaba' # must do implicit conversion
 >>> print_xvec(v)
 [ yaba c d e ]
+>>> v.pop()
+e
+>>> print_xvec(v)
+[ yaba c d ]
 
 >>> v2 = XVec()
 >>> v2[:] = [X('b'), X('a'), X('c'), X('b'), X('a')]

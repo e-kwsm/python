@@ -205,6 +205,18 @@ namespace boost { namespace python {
             container.push_back(v);
         }
         
+        static data_type
+        pop(Container& container)
+        { 
+            if (container.empty()) {
+                PyErr_SetString(PyExc_IndexError, "pop from empty vector_indexing_suite");
+                throw_error_already_set();
+            }
+            data_type tmp = container.back();
+            container.pop_back();
+            return tmp;
+        }
+        
         template <class Iter>
         static void 
         extend(Container& container, Iter first, Iter last)
