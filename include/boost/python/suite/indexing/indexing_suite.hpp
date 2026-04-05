@@ -188,7 +188,6 @@ namespace boost { namespace python {
                 .def("clear", &base_clear)
                 // .def("insert", ())
                 .def("pop", &base_pop)
-                .def("count", &base_count)
             ;
 
             DerivedPolicies::extension_def(cl);
@@ -311,18 +310,6 @@ namespace boost { namespace python {
             }
                     PyErr_SetString(PyExc_IndexError, "pop index out of range");
                     throw_error_already_set();
-        }
-
-        static size_t
-        base_count(Container& container, PyObject* key)
-        {
-            extract<const Key&> x(key);
-            if (x.check()) {
-                return DerivedPolicies::count(container, x());
-            } else {
-                extract<Key> x(key);
-                return x.check() ? DerivedPolicies::contains(container, x()) : 0;
-            }
         }
     };
 
