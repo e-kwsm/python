@@ -186,6 +186,7 @@ namespace boost { namespace python {
                 .def("__iter__", def_iterator())
                 // .def("__reversed__", ())
                 .def("clear", &base_clear)
+                // .def("insert", ())
             ;
 
             DerivedPolicies::extension_def(cl);
