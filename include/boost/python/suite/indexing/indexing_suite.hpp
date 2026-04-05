@@ -187,6 +187,7 @@ namespace boost { namespace python {
                 // .def("__reversed__", ())
                 .def("clear", &base_clear)
                 // .def("insert", ())
+                .def("pop", &base_pop)
             ;
 
             DerivedPolicies::extension_def(cl);
@@ -296,6 +297,13 @@ namespace boost { namespace python {
         base_clear(Container& container)
         {
             return DerivedPolicies::clear(container);
+        }
+
+        static object
+        base_pop(Container& container, PyObject* i = BOOST_NULLPTR)
+        {
+            if (i == BOOST_NULLPTR) {
+            }
         }
     };
 
