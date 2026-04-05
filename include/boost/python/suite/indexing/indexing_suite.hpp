@@ -139,12 +139,6 @@ namespace boost { namespace python {
           , iterator<Container, return_policy> >::type
         def_iterator;
 
-        // typedef typename mpl::if_<
-        //     no_proxy
-        //   , iterator<Container::value_type>
-        //   , iterator<Container::value_type, return_policy> >::type
-        // def_next;
-
         typedef typename mpl::if_<
             no_proxy
           , detail::no_proxy_helper<
@@ -190,7 +184,6 @@ namespace boost { namespace python {
                 .def("__getitem__", &base_get_item)
                 .def("__contains__", &base_contains)
                 .def("__iter__", def_iterator())
-                .def("__next__", &base_next)
                 .def("clear", &base_clear)
             ;
 
@@ -301,18 +294,6 @@ namespace boost { namespace python {
         base_clear(Container& container)
         {
             return DerivedPolicies::clear(container);
-        }
-
-        static object
-        base_next(Container& container,
-                  typename mpl::if_<no_proxy, iterator<Container>, iterator<Container, return_policy> >::type iter)
-        {
-            object tmp = *iter++;
-            if (iter == container.end()) {
-                PyErr_SetString(PyExc_StopIteration, "");
-                throw_error_already_set();
-            }
-            return tmp;
         }
     };
 
