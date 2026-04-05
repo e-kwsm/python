@@ -94,6 +94,7 @@ namespace boost { namespace python {
                 // .def("__eq__", )
                 // .def("__ne__", )
                 .def("pop", &base_pop)
+                // .def("popitem", )
             ;
         }
 
