@@ -48,7 +48,7 @@ template < class T, class Conversion, bool has_get_pytype=false >
 struct to_python_converter 
 {
 #ifndef BOOST_PYTHON_NO_PY_SIGNATURES
-    typedef boost::mpl::bool_<has_get_pytype> HasGetPytype;
+    using HasGetPytype = boost::mpl::bool_<has_get_pytype>;
 
     static PyTypeObject const* get_pytype_1(boost::mpl::true_ *)
     {
@@ -75,9 +75,9 @@ struct to_python_converter
 template <class T, class Conversion ,bool has_get_pytype>
 to_python_converter<T,Conversion, has_get_pytype>::to_python_converter()
 {
-    typedef converter::as_to_python_function<
+    using normalized = converter::as_to_python_function<
         T, Conversion
-        > normalized;
+        >;
             
     converter::registry::insert(
         &normalized::convert

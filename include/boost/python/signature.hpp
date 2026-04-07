@@ -41,11 +41,11 @@ namespace boost { namespace python { namespace detail {
 template <class C1, class C2>
 struct most_derived
 {
-    typedef typename mpl::if_<
+    using type = typename mpl::if_<
         detail::is_convertible<C1*,C2*>
       , C1
       , C2
-    >::type type;
+    >::type;
 };
 
 //  The following macros generate expansions for::

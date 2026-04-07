@@ -29,7 +29,7 @@ namespace detail
   struct replace_front2
   {
       // Metafunction forwarding seemed to confound vc6 
-      typedef typename mpl::push_front<
+      using type = typename mpl::push_front<
           typename mpl::push_front<
               typename mpl::pop_front<
                   typename mpl::pop_front<
@@ -39,7 +39,7 @@ namespace detail
             , T2
           >::type
         , T1
-      >::type type;
+      >::type;
   };
 
   // Given an MPL sequence representing a member function [object]
@@ -49,7 +49,7 @@ namespace detail
   typename replace_front2<S,void,C&>::type
   error_signature(S)
   {
-      typedef typename replace_front2<S,void,C&>::type r;
+      using r = typename replace_front2<S,void,C&>::type;
       return r();
   }
 
@@ -88,7 +88,7 @@ namespace detail
             , options.policies()
           );
 
-          typedef BOOST_DEDUCED_TYPENAME C_::metadata::held_type held_type;
+          using held_type = BOOST_DEDUCED_TYPENAME C_::metadata::held_type;
           
           // Add the default implementation which raises the exception
           c.def(

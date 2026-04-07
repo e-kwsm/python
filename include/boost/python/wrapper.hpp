@@ -16,12 +16,12 @@ class wrapper : public detail::wrapper_base
 {
  public:
     // Do not touch this implementation detail!
-    typedef T _wrapper_wrapped_type_;
+    using _wrapper_wrapped_type_ = T;
 
  protected:
     override get_override(char const* name) const
     {
-        typedef detail::wrapper_base base;
+        using base = detail::wrapper_base;
         converter::registration const& r
             = converter::registered<T>::converters;
         PyTypeObject* type = r.get_class_object();

@@ -38,8 +38,8 @@ namespace boost { namespace python { namespace objects {
 template <class Value>
 struct value_holder : instance_holder
 {
-    typedef Value held_type;
-    typedef Value value_type;
+    using held_type = Value;
+    using value_type = Value;
 
     // Forward construction to the held object
 #  define BOOST_PP_ITERATION_PARAMS_1 (4, (0, BOOST_PYTHON_MAX_ARITY, <boost/python/object/value_holder.hpp>, 1))
@@ -65,8 +65,8 @@ struct value_holder : instance_holder
 template <class Value, class Held>
 struct value_holder_back_reference : instance_holder
 {
-    typedef Held held_type;
-    typedef Value value_type;
+    using held_type = Held;
+    using value_type = Value;
     
     // Forward construction to the held object
 #  define BOOST_PP_ITERATION_PARAMS_1 (4, (0, BOOST_PYTHON_MAX_ARITY, <boost/python/object/value_holder.hpp>, 2))

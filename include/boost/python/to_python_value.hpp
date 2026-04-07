@@ -57,12 +57,12 @@ struct object_manager_get_pytype<true>
   template <class T>
   struct object_manager_to_python_value
   {
-      typedef typename value_arg<T>::type argument_type;
+      using argument_type = typename value_arg<T>::type;
     
       PyObject* operator()(argument_type) const;
 #ifndef BOOST_PYTHON_NO_PY_SIGNATURES
-      typedef boost::mpl::bool_<is_handle<T>::value> is_t_handle;
-      typedef boost::detail::indirect_traits::is_reference_to_const<T> is_t_const;
+      using is_t_handle = boost::mpl::bool_<is_handle<T>::value>;
+      using is_t_const = boost::detail::indirect_traits::is_reference_to_const<T>;
       PyTypeObject const* get_pytype() const {
           return get_pytype_aux((is_t_handle*)0);
       }
@@ -86,7 +86,7 @@ struct object_manager_get_pytype<true>
   template <class T>
   struct registry_to_python_value
   {
-      typedef typename value_arg<T>::type argument_type;
+      using argument_type = typename value_arg<T>::type;
     
       PyObject* operator()(argument_type) const;
 #ifndef BOOST_PYTHON_NO_PY_SIGNATURES
@@ -102,7 +102,7 @@ struct object_manager_get_pytype<true>
   template <class T>
   struct shared_ptr_to_python_value
   {
-      typedef typename value_arg<T>::type argument_type;
+      using argument_type = typename value_arg<T>::type;
     
       PyObject* operator()(argument_type) const;
 #ifndef BOOST_PYTHON_NO_PY_SIGNATURES

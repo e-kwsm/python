@@ -19,7 +19,7 @@ namespace boost { namespace python {
 template<class Ptr> class pointer_wrapper
 { 
  public:
-    typedef Ptr type;
+    using type = Ptr;
     
     explicit pointer_wrapper(Ptr x): p_(x) {}
     operator Ptr() const { return p_; }
@@ -50,14 +50,14 @@ template<typename T>
 class unwrap_pointer
 {
  public:
-    typedef T type;
+    using type = T;
 };
 
 template<typename T>
 class unwrap_pointer<pointer_wrapper<T> >
 {
  public:
-    typedef T type;
+    using type = T;
 };
 
 }} // namespace boost::python

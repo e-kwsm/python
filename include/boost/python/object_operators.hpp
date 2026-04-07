@@ -19,7 +19,7 @@ namespace boost { namespace python { namespace api {
 template <class X>
 char is_object_operators_helper(object_operators<X> const*);
     
-typedef char (&no_type)[2];
+using no_type = char(&)[2];
 no_type is_object_operators_helper(...);
 
 template <class X> X* make_ptr();
@@ -34,7 +34,7 @@ struct is_object_operators
            < 4
         )
     };
-    typedef mpl::bool_<value> type;
+    using type = mpl::bool_<value>;
 };
 
 # if !defined(BOOST_NO_SFINAE) && !defined(BOOST_NO_IS_CONVERTIBLE)

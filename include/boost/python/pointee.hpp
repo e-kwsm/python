@@ -23,7 +23,7 @@ namespace detail
   {
       template <class T> struct apply
       {
-          typedef typename T::element_type type;
+          using type = typename T::element_type;
       };
   };
 }

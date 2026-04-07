@@ -31,7 +31,7 @@ namespace detail
 
 class tuple : public detail::tuple_base
 {
-    typedef detail::tuple_base base;
+    using base = detail::tuple_base;
  public:
     tuple() {}
 

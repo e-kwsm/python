@@ -13,9 +13,9 @@ namespace boost { namespace python { namespace api {
 template <class Policies>
 class proxy : public object_operators<proxy<Policies> >
 {
-    typedef typename Policies::key_type key_type;
+    using key_type = typename Policies::key_type;
     
-    typedef proxy const& assignment_self;
+    using assignment_self = proxy const&;
  public:
     proxy(object const& target, key_type const& key);
     operator object() const;

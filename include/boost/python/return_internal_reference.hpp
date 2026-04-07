@@ -31,11 +31,11 @@ struct return_internal_reference
  private:
     BOOST_STATIC_CONSTANT(bool, legal = owner_arg > 0);
  public:
-    typedef typename mpl::if_c<
+    using result_converter = typename mpl::if_c<
         legal
         , reference_existing_object
         , detail::return_internal_reference_owner_arg_must_be_greater_than_zero<owner_arg>
-    >::type result_converter;
+    >::type;
 };
 
 }} // namespace boost::python

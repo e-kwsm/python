@@ -46,7 +46,7 @@ namespace detail {
 
   struct pickle_suite_registration
   {
-    typedef pickle_suite::inaccessible inaccessible;
+    using inaccessible = pickle_suite::inaccessible;
 
     template <class Class_, class Tgetinitargs>
     static
@@ -105,9 +105,9 @@ namespace detail {
       Class_&,
       ...)
     {
-      typedef typename
+      using error_type = typename
         error_messages::missing_pickle_suite_function_or_incorrect_signature<
-          Class_>::error_type error_type BOOST_ATTRIBUTE_UNUSED;
+          Class_>::error_type BOOST_ATTRIBUTE_UNUSED;
     }
   };
 

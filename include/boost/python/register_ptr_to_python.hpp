@@ -14,7 +14,7 @@ namespace boost { namespace python {
 template <class P>
 void register_ptr_to_python()
 {
-    typedef typename boost::python::pointee<P>::type X;
+    using X = typename boost::python::pointee<P>::type;
     objects::class_value_wrapper<
         P
       , objects::make_ptr_instance<

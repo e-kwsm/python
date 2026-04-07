@@ -23,13 +23,13 @@ static const slice_nil _ = slice_nil();
 template <class T>
 struct slice_bound
 {
-    typedef object type;
+    using type = object;
 };
 
 template <>
 struct slice_bound<slice_nil>
 {
-    typedef slice_nil type;
+    using type = slice_nil;
 };
 
 }

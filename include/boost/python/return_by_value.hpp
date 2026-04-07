@@ -19,9 +19,9 @@ struct return_by_value
     template <class R>
     struct apply
     {
-       typedef to_python_value<
+       using type = to_python_value<
            typename detail::value_arg<R>::type
-       > type;
+       >;
     };
 };
 

@@ -129,7 +129,7 @@ namespace detail
       template <class ClassT>
       void visit(ClassT& cl) const
       {
-          typedef typename mpl::eval_if<
+          using generator = typename mpl::eval_if<
               is_same<L,self_t>
             , mpl::if_<
                   is_same<R,self_t>
@@ -147,7 +147,7 @@ namespace detail
                     , BOOST_DEDUCED_TYPENAME unwrap_other<L>::type
                   >
               >
-          >::type generator;
+          >::type;
       
           cl.def(
               generator::name()

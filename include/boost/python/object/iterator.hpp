@@ -34,7 +34,7 @@ namespace boost { namespace python { namespace objects {
 // iterators are copied, so we just replace the result_converter from
 // the default_iterator_call_policies with a permissive one which
 // always copies the result.
-typedef return_value_policy<return_by_value> default_iterator_call_policies;
+using default_iterator_call_policies = return_value_policy<return_by_value>;
 
 // Instantiations of these are wrapped to produce Python iterators.
 template <class NextPolicies, class Iterator>
@@ -42,17 +42,17 @@ struct iterator_range
 {
     iterator_range(object sequence, Iterator start, Iterator finish);
 
-    typedef std::iterator_traits<Iterator> traits_t;
+    using traits_t = std::iterator_traits<Iterator>;
 
     struct next
     {
-        typedef typename mpl::if_<
+        using result_type = typename mpl::if_<
             is_reference<
                 typename traits_t::reference
             >
           , typename traits_t::reference
           , typename traits_t::value_type
-        >::type result_type;
+        >::type;
         
         result_type
         operator()(iterator_range<NextPolicies,Iterator>& self)
@@ -68,7 +68,7 @@ struct iterator_range
 # endif 
     };
     
-    typedef next next_fn;
+    using next_fn = next;
     
     object m_sequence; // Keeps the sequence alive while iterating.
     Iterator m_start;
@@ -83,7 +83,7 @@ namespace detail
   template <class Iterator, class NextPolicies>
   object demand_iterator_class(char const* name, Iterator* = 0, NextPolicies const& policies = NextPolicies())
   {
-      typedef iterator_range<NextPolicies,Iterator> range_;
+      using range_ = iterator_range<NextPolicies,Iterator>;
 
       // Check the registry. If one is already registered, return it.
       handle<> class_obj(
@@ -92,8 +92,8 @@ namespace detail
       if (class_obj.get() != 0)
           return object(class_obj);
 
-      typedef typename range_::next_fn next_fn;
-      typedef typename next_fn::result_type result_type;
+      using next_fn = typename range_::next_fn;
+      using result_type = typename next_fn::result_type;
       
       return class_<range_>(name, no_init)
           .def("__iter__", identity_function())
@@ -198,9 +198,9 @@ inline object make_iterator_function(
   , boost::type<Target>* = 0
 )
 {
-    typedef typename Accessor1::result_type iterator;
-    typedef typename boost::python::detail::add_const<iterator>::type iterator_const;
-    typedef typename boost::python::detail::add_lvalue_reference<iterator_const>::type iterator_cref;
+    using iterator = typename Accessor1::result_type;
+    using iterator_const = typename boost::python::detail::add_const<iterator>::type;
+    using iterator_cref = typename boost::python::detail::add_lvalue_reference<iterator_const>::type;
       
     return detail::make_iterator_function(
         get_start

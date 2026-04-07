@@ -66,14 +66,14 @@ namespace api
   struct slice_policies;
   class slice_nil;
 
-  typedef proxy<const_attribute_policies> const_object_attribute;
-  typedef proxy<attribute_policies> object_attribute;
-  typedef proxy<const_objattribute_policies> const_object_objattribute;
-  typedef proxy<objattribute_policies> object_objattribute;
-  typedef proxy<const_item_policies> const_object_item;
-  typedef proxy<item_policies> object_item;
-  typedef proxy<const_slice_policies> const_object_slice;
-  typedef proxy<slice_policies> object_slice;
+  using const_object_attribute = proxy<const_attribute_policies>;
+  using object_attribute = proxy<attribute_policies>;
+  using const_object_objattribute = proxy<const_objattribute_policies>;
+  using object_objattribute = proxy<objattribute_policies>;
+  using const_object_item = proxy<const_item_policies>;
+  using object_item = proxy<item_policies>;
+  using const_object_slice = proxy<const_slice_policies>;
+  using object_slice = proxy<slice_policies>;
 
   //
   // is_proxy -- proxy type detection
@@ -83,13 +83,13 @@ namespace api
   template <class T> struct object_initializer;
   
   class object;
-  typedef PyObject* (object::*bool_type)() const;
+  using bool_type = PyObject* (object::*)() const;
   
   template <class U>
   class object_operators : public def_visitor<U>
   {
    protected:
-      typedef object const& object_cref;
+      using object_cref = object const&;
    public:
       // function call
       //
@@ -175,7 +175,7 @@ namespace api
      // early destruction of a temporary by binding a named object
      // instead.
 # if __MWERKS__ < 0x3000 || __MWERKS__ > 0x3003
-    typedef object const& object_cref2;
+    using object_cref2 = object const&;
 # else
     typedef object const object_cref2;
 # endif
@@ -222,10 +222,10 @@ namespace api
   template <class T>
   PyObject* object_base_initializer(T const& x)
   {
-      typedef typename is_derived<
+      using is_obj = typename is_derived<
           BOOST_DEDUCED_TYPENAME objects::unforward_cref<T>::type
         , object
-      >::type is_obj;
+      >::type;
 
       return object_initializer<
           BOOST_DEDUCED_TYPENAME unwrap_reference<T>::type

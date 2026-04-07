@@ -13,12 +13,12 @@
 
 namespace boost { namespace python { namespace objects {
 
-typedef type_info class_id;
+using class_id = type_info;
 using python::type_id;
 
 // Types used to get address and id of most derived type
-typedef std::pair<void*,class_id> dynamic_id_t;
-typedef dynamic_id_t (*dynamic_id_function)(void*);
+using dynamic_id_t = std::pair<void*,class_id>;
+using dynamic_id_function = dynamic_id_t(*)(void*);
 
 BOOST_PYTHON_DECL void register_dynamic_id_aux(
     class_id static_id, dynamic_id_function get_dynamic_id);
@@ -68,7 +68,7 @@ struct dynamic_id_generator
 template <class T>
 void register_dynamic_id(T* = 0)
 {
-    typedef typename dynamic_id_generator<T>::type generator;
+    using generator = typename dynamic_id_generator<T>::type;
     register_dynamic_id_aux(
         python::type_id<T>(), &generator::execute);
 }
@@ -116,7 +116,7 @@ inline void register_conversion(
     // These parameters shouldn't be used; they're an MSVC bug workaround
     , Source* = 0, Target* = 0)
 {
-    typedef typename cast_generator<Source,Target>::type generator;
+    using generator = typename cast_generator<Source,Target>::type;
 
     add_cast(
         python::type_id<Source>()

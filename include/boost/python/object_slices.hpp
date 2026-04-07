@@ -17,7 +17,7 @@ namespace boost { namespace python { namespace api {
 
 struct const_slice_policies
 {
-    typedef std::pair<handle<>, handle<> > key_type;
+    using key_type = std::pair<handle<>, handle<> >;
     static object get(object const& target, key_type const& key);
 };
   

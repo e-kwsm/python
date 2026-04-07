@@ -13,7 +13,7 @@ namespace boost { namespace python {
 
 template<class T> struct other
 { 
-    typedef T type;
+    using type = T;
 };
 
 namespace detail
@@ -36,14 +36,14 @@ namespace detail
   class unwrap_other
   {
    public:
-      typedef T type;
+      using type = T;
   };
 
   template<typename T>
   class unwrap_other<other<T> >
   {
    public:
-      typedef T type;
+      using type = T;
   };
 }
 

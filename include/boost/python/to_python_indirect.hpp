@@ -86,9 +86,9 @@ namespace detail
 # elif defined(BOOST_NO_CXX11_SMART_PTR)
           typedef std::auto_ptr<T> smart_pointer;
 # else
-          typedef std::unique_ptr<T> smart_pointer;
+          using smart_pointer = std::unique_ptr<T>;
 # endif
-          typedef objects::pointer_holder<smart_pointer, T> holder_t;
+          using holder_t = objects::pointer_holder<smart_pointer, T>;
 
           smart_pointer ptr(const_cast<T*>(p));
           return objects::make_ptr_instance<T, holder_t>::execute(ptr);
@@ -100,7 +100,7 @@ namespace detail
       template <class T>
       static PyObject* execute(T* p)
       {
-          typedef objects::pointer_holder<T*, T> holder_t;
+          using holder_t = objects::pointer_holder<T*, T>;
           T* q = const_cast<T*>(p);
           return objects::make_ptr_instance<T, holder_t>::execute(q);
       }

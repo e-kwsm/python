@@ -44,7 +44,7 @@ namespace detail
 
 class slice : public detail::slice_base
 {
-    typedef detail::slice_base base;
+    using base = detail::slice_base;
  public:
     // Equivalent to slice(::)
     slice() : base(0,0,0) {}
@@ -118,7 +118,7 @@ class slice : public detail::slice_base
         // the range of the container.
         slice::range<RandomAccessIterator> ret;
         
-        typedef typename iterator_difference<RandomAccessIterator>::type difference_type;
+        using difference_type = typename iterator_difference<RandomAccessIterator>::type;
         difference_type max_dist = std::distance(begin, end);
 
         object slice_start = this->start();

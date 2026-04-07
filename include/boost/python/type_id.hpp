@@ -59,7 +59,7 @@ struct type_info : private totally_ordered<type_info>
     
  private: // data members
 #  ifdef BOOST_PYTHON_TYPE_ID_NAME
-    typedef char const* base_id_t;
+    using base_id_t = char const*;
 #  else
     typedef std::type_info const* base_id_t;
 #  endif

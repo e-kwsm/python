@@ -143,7 +143,7 @@ namespace detail
 
 class str : public detail::str_base
 {
-    typedef detail::str_base base;
+    using base = detail::str_base;
  public:
     str() {} // new str
     

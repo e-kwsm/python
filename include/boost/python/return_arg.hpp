@@ -66,7 +66,7 @@ struct return_arg : Base
     BOOST_STATIC_CONSTANT(bool, legal = arg_pos > 0);
 
  public:
-    typedef typename mpl::if_c<
+    using result_converter = typename mpl::if_c<
         legal
         , detail::return_none
         , detail::return_arg_pos_argument_must_be_positive<arg_pos>
@@ -74,7 +74,7 @@ struct return_arg : Base
         // arg_pos==0 since return arg 0 means return result, but I
         // think it is better to issue an error instead, cause it can
         // lead to confusions
-    >::type result_converter;
+    >::type;
 
     template <class ArgumentPackage>
     static PyObject* postcall(ArgumentPackage const& args, PyObject* result)
