@@ -195,8 +195,9 @@ namespace boost { namespace python { namespace objects {
                 else
                     param = str(" (%s)%s%d" % make_tuple(py_type_str(s[n], current_module_name),"arg", n) );
             }
-            else //we are processing the return type
+            else { //we are processing the return type
                 param = py_type_str(f.get_return_type(), current_module_name);
+            }
         }
 
         //an argument - check for default value and append it
@@ -250,8 +251,9 @@ namespace boost { namespace python { namespace objects {
                 }
                 else
                     //argument without default, preceeding the arity-n_overloads
-                    if( n <= arity-n_overloads)
+                    if( n <= arity-n_overloads) {
                         n_extra_default_args = 0;
+                    }
             }
         }
 
@@ -367,8 +369,9 @@ namespace boost { namespace python { namespace objects {
                 }
                 ++sfi;
                 n_overloads = 0;
-            }else
+            } else {
                 ++n_overloads ;
+            }
         }
 
         return signatures;

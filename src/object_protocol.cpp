@@ -125,7 +125,9 @@ namespace // slicing code copied directly out of the Python implementation
               return res;
           }
           else
+          {
               return NULL;
+          }
       }
   }
 
@@ -162,7 +164,9 @@ namespace // slicing code copied directly out of the Python implementation
               return res;
           }
           else
+          {
               return -1;
+          }
       }
   }
 }

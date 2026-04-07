@@ -144,7 +144,9 @@ class slice : public detail::slice_base
                 --ret.start;
             }
             else
+            {
                 ret.start = begin;
+            }
         }
         else {
             difference_type i = extract<long>( slice_start);

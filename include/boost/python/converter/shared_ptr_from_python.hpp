@@ -46,13 +46,17 @@ struct shared_ptr_from_python
     void* const storage = ((converter::rvalue_from_python_storage<SP<T> >*)data)->storage.bytes;
     // Deal with the "None" case.
     if (data->convertible == source)
+    {
       new (storage) SP<T>();
+    }
     else
     {
       void *const storage = ((converter::rvalue_from_python_storage<SP<T> >*)data)->storage.bytes;
       // Deal with the "None" case.
       if (data->convertible == source)
+      {
         new (storage) SP<T>();
+      }
       else
       {
         SP<void> hold_convertible_ref_count((void*)0, shared_ptr_deleter(handle<>(borrowed(source))) );
