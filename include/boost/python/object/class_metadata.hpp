@@ -126,7 +126,7 @@ struct class_metadata
     // held_type_arg -- not_specified, [a class derived from] T or a
     // smart pointer to [a class derived from] T.  Preserving
     // not_specified allows us to give class_<T,T> a back-reference.
-    typedef typename select_held_type<
+    using held_type_arg = typename select_held_type<
         X1
       , typename select_held_type<
             X2
@@ -135,10 +135,10 @@ struct class_metadata
               , python::detail::not_specified
             >::type
         >::type
-    >::type held_type_arg;
+    >::type;
 
     // bases
-    typedef typename python::detail::select_bases<
+    using bases = typename python::detail::select_bases<
         X1
       , typename python::detail::select_bases<
             X2
@@ -147,45 +147,45 @@ struct class_metadata
               , python::bases<>
             >::type
         >::type
-    >::type bases;
+    >::type;
 
-    typedef mpl::or_<
+    using is_noncopyable = mpl::or_<
         boost::python::detail::is_same<X1,noncopyable>
       , boost::python::detail::is_same<X2,noncopyable>
       , boost::python::detail::is_same<X3,noncopyable>
-    > is_noncopyable;
+    >;
     
     //
     // Holder computation.
     //
     
     // Compute the actual type that will be held in the Holder.
-    typedef typename mpl::if_<
+    using held_type = typename mpl::if_<
         boost::python::detail::is_same<held_type_arg,python::detail::not_specified>, T, held_type_arg
-    >::type held_type;
+    >::type;
 
     // Determine if the object will be held by value
-    typedef mpl::bool_<boost::python::detail::is_convertible<held_type*,T*>::value> use_value_holder;
+    using use_value_holder = mpl::bool_<boost::python::detail::is_convertible<held_type*,T*>::value>;
     
     // Compute the "wrapped type", that is, if held_type is a smart
     // pointer, we're talking about the pointee.
-    typedef typename mpl::eval_if<
+    using wrapped = typename mpl::eval_if<
         use_value_holder
       , mpl::identity<held_type>
       , pointee<held_type>
-    >::type wrapped;
+    >::type;
 
     // Determine whether to use a "back-reference holder"
-    typedef mpl::bool_<
+    using use_back_reference = mpl::bool_<
         mpl::or_<
             has_back_reference<T>
           , boost::python::detail::is_same<held_type_arg,T>
           , is_base_and_derived<T,wrapped>
         >::value
-    > use_back_reference;
+    >;
 
     // Select the holder.
-    typedef typename mpl::eval_if<
+    using holder = typename mpl::eval_if<
         use_back_reference
       , mpl::if_<
             use_value_holder
@@ -197,7 +197,7 @@ struct class_metadata
           , value_holder<T>
           , pointer_holder<held_type,wrapped>
         >
-    >::type holder;
+    >::type;
     
     inline static void register_() // Register the runtime metadata.
     {
@@ -208,13 +208,13 @@ struct class_metadata
     template <class T2>
     inline static void register_aux(python::wrapper<T2>*) 
     {
-        typedef typename mpl::not_<boost::python::detail::is_same<T2,wrapped> >::type use_callback;
+        using use_callback = typename mpl::not_<boost::python::detail::is_same<T2,wrapped> >::type;
         class_metadata::register_aux2((T2*)0, use_callback());
     }
 
     inline static void register_aux(void*) 
     {
-        typedef typename is_base_and_derived<T,wrapped>::type use_callback;
+        using use_callback = typename is_base_and_derived<T,wrapped>::type;
         class_metadata::register_aux2((T*)0, use_callback());
     }
 

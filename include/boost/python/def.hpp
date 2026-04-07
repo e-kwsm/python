@@ -23,7 +23,7 @@ namespace detail
   {
     // Compile-time error messages
     template <bool> struct multiple_functions_passed_to_def;
-    template <> struct multiple_functions_passed_to_def<false> { typedef char type; };
+    template <> struct multiple_functions_passed_to_def<false> { using type = char; };
   }
   
   //
@@ -35,9 +35,9 @@ namespace detail
       char const* name, F const& fn, Helper const& helper)
   {
       // Must not try to use default implementations except with method definitions.
-      typedef typename error::multiple_functions_passed_to_def<
+      using assertion = typename error::multiple_functions_passed_to_def<
           Helper::has_default_implementation
-          >::type assertion BOOST_ATTRIBUTE_UNUSED;
+          >::type BOOST_ATTRIBUTE_UNUSED;
       
       detail::scope_setattr_doc(
           name, boost::python::make_function(

@@ -31,7 +31,7 @@ namespace detail
 
 class long_ : public detail::long_base
 {
-    typedef detail::long_base base;
+    using base = detail::long_base;
  public:
     long_() {} // new long_
 

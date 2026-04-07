@@ -24,7 +24,7 @@ struct BOOST_NUMPY_DECL add_pointer_meta
   template <typename T>
   struct apply 
   {
-    typedef typename boost::add_pointer<T>::type type;
+    using type = typename boost::add_pointer<T>::type;
   };
 
 };

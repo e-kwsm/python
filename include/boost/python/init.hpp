@@ -142,9 +142,9 @@ struct init_base : def_visitor<DerivedT>
     template <class classT>
     void visit(classT& cl) const
     {
-        typedef typename DerivedT::signature signature;
-        typedef typename DerivedT::n_arguments n_arguments;
-        typedef typename DerivedT::n_defaults n_defaults;
+        using signature = typename DerivedT::signature;
+        using n_arguments = typename DerivedT::n_arguments;
+        using n_defaults = typename DerivedT::n_defaults;
     
         detail::define_class_init_helper<n_defaults::value>::apply(
             cl
@@ -166,11 +166,11 @@ template <class CallPoliciesT, class InitT>
 class init_with_call_policies
     : public init_base<init_with_call_policies<CallPoliciesT, InitT> >
 {
-    typedef init_base<init_with_call_policies<CallPoliciesT, InitT> > base;
+    using base = init_base<init_with_call_policies<CallPoliciesT, InitT> >;
  public:
-    typedef typename InitT::n_arguments n_arguments;
-    typedef typename InitT::n_defaults n_defaults;
-    typedef typename InitT::signature signature;
+    using n_arguments = typename InitT::n_arguments;
+    using n_defaults = typename InitT::n_defaults;
+    using signature = typename InitT::signature;
 
     init_with_call_policies(
         CallPoliciesT const& policies_
@@ -209,9 +209,9 @@ namespace detail
 template <BOOST_PYTHON_OVERLOAD_TYPES>
 class init : public init_base<init<BOOST_PYTHON_OVERLOAD_ARGS> >
 {
-    typedef init_base<init<BOOST_PYTHON_OVERLOAD_ARGS> > base;
+    using base = init_base<init<BOOST_PYTHON_OVERLOAD_ARGS> >;
  public:
-    typedef init<BOOST_PYTHON_OVERLOAD_ARGS> self_t;
+    using self_t = init<BOOST_PYTHON_OVERLOAD_ARGS>;
 
     init(char const* doc_ = 0)
         : base(doc_)
@@ -222,18 +222,18 @@ class init : public init_base<init<BOOST_PYTHON_OVERLOAD_ARGS> >
     init(char const* doc_, detail::keywords<N> const& kw)
         : base(doc_, kw.range())
     {
-        typedef typename detail::error::more_keywords_than_init_arguments<
+        using assertion = typename detail::error::more_keywords_than_init_arguments<
             N, n_arguments::value + 1
-            >::too_many_keywords assertion BOOST_ATTRIBUTE_UNUSED;
+            >::too_many_keywords BOOST_ATTRIBUTE_UNUSED;
     }
 
     template <std::size_t N>
     init(detail::keywords<N> const& kw, char const* doc_ = 0)
         : base(doc_, kw.range())
     {
-        typedef typename detail::error::more_keywords_than_init_arguments<
+        using assertion = typename detail::error::more_keywords_than_init_arguments<
             N, n_arguments::value + 1
-            >::too_many_keywords assertion BOOST_ATTRIBUTE_UNUSED;
+            >::too_many_keywords BOOST_ATTRIBUTE_UNUSED;
     }
 
     template <class CallPoliciesT>
@@ -244,23 +244,23 @@ class init : public init_base<init<BOOST_PYTHON_OVERLOAD_ARGS> >
             policies, this->doc_string(), this->keywords());
     }
 
-    typedef detail::type_list<BOOST_PYTHON_OVERLOAD_ARGS> signature_;
+    using signature_ = detail::type_list<BOOST_PYTHON_OVERLOAD_ARGS>;
 
-    typedef detail::is_optional<
+    using back_is_optional = detail::is_optional<
         typename mpl::eval_if<
             mpl::empty<signature_>
           , mpl::false_
           , mpl::back<signature_>
         >::type
-    > back_is_optional;
+    >;
     
-    typedef typename mpl::eval_if<
+    using optional_args = typename mpl::eval_if<
         back_is_optional
       , mpl::back<signature_>
       , mpl::vector0<>
-    >::type optional_args;
+    >::type;
 
-    typedef typename mpl::eval_if<
+    using signature = typename mpl::eval_if<
         back_is_optional
       , mpl::if_<
             mpl::empty<optional_args>
@@ -271,13 +271,13 @@ class init : public init_base<init<BOOST_PYTHON_OVERLOAD_ARGS> >
             >
         >
       , signature_
-    >::type signature;
+    >::type;
 
     // TODO: static assert to make sure there are no other optional elements
 
     // Count the number of default args
-    typedef mpl::size<optional_args> n_defaults;
-    typedef mpl::size<signature> n_arguments;
+    using n_defaults = mpl::size<optional_args>;
+    using n_arguments = mpl::size<signature>;
 };
 
 ///////////////////////////////////////////////////////////////////////////////
@@ -346,7 +346,7 @@ namespace detail
           if (keywords.second > keywords.first)
               --keywords.second;
 
-          typedef typename mpl::prior<NArgs>::type next_nargs;
+          using next_nargs = typename mpl::prior<NArgs>::type;
           define_class_init_helper<NDefaults-1>::apply(
               cl, policies, Signature(), next_nargs(), doc, keywords);
       }

@@ -54,7 +54,7 @@ namespace detail
       , objects::class_base*
       )
   {
-      typedef typename NameSpaceT::wrapped_type wrapped_type;
+      using wrapped_type = typename NameSpaceT::wrapped_type;
       
       objects::add_to_namespace(
           name_space, name,
@@ -233,20 +233,20 @@ namespace detail
       NameSpaceT& name_space,
       SigT const&)
   {
-      typedef typename mpl::front<SigT>::type return_type;
-      typedef typename OverloadsT::void_return_type void_return_type;
-      typedef typename OverloadsT::non_void_return_type non_void_return_type;
+      using return_type = typename mpl::front<SigT>::type;
+      using void_return_type = typename OverloadsT::void_return_type;
+      using non_void_return_type = typename OverloadsT::non_void_return_type;
 
-      typedef typename mpl::if_c<
+      using stubs_type = typename mpl::if_c<
           is_same<void, return_type>::value
           , void_return_type
           , non_void_return_type
-      >::type stubs_type;
+      >::type;
 
       BOOST_STATIC_ASSERT(
           (stubs_type::max_args) <= mpl::size<SigT>::value);
 
-      typedef typename stubs_type::template gen<SigT> gen_type;
+      using gen_type = typename stubs_type::template gen<SigT>;
       define_with_defaults_helper<stubs_type::n_funcs-1>::def(
           name
           , gen_type()

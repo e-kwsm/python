@@ -13,7 +13,7 @@ template <class T> class wrapper;
 
 namespace detail
 {
-  typedef char (&is_not_wrapper)[2];
+  using is_not_wrapper = char(&)[2];
   is_not_wrapper is_wrapper_helper(...);
   template <class T>
   char is_wrapper_helper(wrapper<T> const volatile*);

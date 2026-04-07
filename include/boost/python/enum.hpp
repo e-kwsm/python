@@ -16,7 +16,7 @@ namespace boost { namespace python {
 template <class T>
 struct enum_ : public objects::enum_base
 {
-    typedef objects::enum_base base;
+    using base = objects::enum_base;
 
     // Declare a new enumeration type in the current scope()
     enum_(char const* name, char const* doc = 0);

@@ -164,7 +164,7 @@ namespace detail
   template <class D>
   inline object make_getter(D* d, not_specified, detail::false_, long)
   {
-      typedef typename default_datum_getter_policy<D>::type policies;
+      using policies = typename default_datum_getter_policy<D>::type;
       return detail::make_getter(d, policies(), detail::false_(), 0);
   }
 
@@ -175,7 +175,7 @@ namespace detail
 #if BOOST_WORKAROUND(__MWERKS__, BOOST_TESTED_AT(0x3003))
       typedef typename detail::remove_cv<C>::type Class;
 #else
-      typedef C Class;
+      using Class = C;
 #endif 
       return python::make_function(
           detail::member<D,Class>(pm)
@@ -188,7 +188,7 @@ namespace detail
   template <class C, class D>
   inline object make_getter(D C::*pm, not_specified, detail::true_, long)
   {
-      typedef typename default_member_getter_policy<D>::type policies;
+      using policies = typename default_member_getter_policy<D>::type;
       return detail::make_getter(pm, policies(), detail::true_(), 0);
   }
 

@@ -38,7 +38,7 @@ namespace detail
       template <class Tuple, class Predicate>
       struct apply
       {
-          typedef typename Tuple::head_type result_type;
+          using result_type = typename Tuple::head_type;
           
           static typename Tuple::head_type extract(Tuple const& x)
           {
@@ -56,8 +56,8 @@ namespace detail
       struct apply
       {
           // recursive application of tuple_extract on the tail of the tuple
-          typedef tuple_extract<typename Tuple::tail_type, Predicate> next;
-          typedef typename next::result_type result_type;
+          using next = tuple_extract<typename Tuple::tail_type, Predicate>;
+          using result_type = typename next::result_type;
           
           static result_type extract(Tuple const& x)
           {
@@ -71,11 +71,11 @@ namespace detail
   template <class Tuple, class Predicate>
   struct tuple_extract_base_select
   {
-      typedef typename Tuple::head_type head_type;
-      typedef typename mpl::apply1<Predicate,
-              typename add_lvalue_reference<head_type>::type>::type match_t;
+      using head_type = typename Tuple::head_type;
+      using match_t = typename mpl::apply1<Predicate,
+              typename add_lvalue_reference<head_type>::type>::type;
       BOOST_STATIC_CONSTANT(bool, match = match_t::value);
-      typedef typename tuple_extract_impl<match>::template apply<Tuple,Predicate> type;
+      using type = typename tuple_extract_impl<match>::template apply<Tuple,Predicate>;
   };
   
   template <class Tuple, class Predicate>
@@ -148,7 +148,7 @@ namespace detail
       // A tuple type which begins with references to the supplied
       // arguments and ends with actual representatives of the default
       // types.
-      typedef boost::tuples::tuple<
+      using all_t = boost::tuples::tuple<
           T1 const&
           , T2 const&
           , T3 const&
@@ -158,7 +158,7 @@ namespace detail
           , char const*
           , void(not_specified::*)()   // A function pointer type which is never an
                                        // appropriate default implementation
-          > all_t;
+          >;
 
       // Constructors; these initialize an member of the tuple type
       // shown above.
@@ -168,7 +168,7 @@ namespace detail
       def_helper(T1 const& a1, T2 const& a2, T3 const& a3, T4 const& a4) : m_all(a1,a2,a3,a4) {}
 
    private: // types
-      typedef typename default_implementation_extract<all_t>::result_type default_implementation_t;
+      using default_implementation_t = typename default_implementation_extract<all_t>::result_type;
       
    public: // Constants which can be used for static assertions.
 

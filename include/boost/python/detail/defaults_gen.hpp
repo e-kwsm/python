@@ -63,8 +63,8 @@ namespace detail
   struct overloads_proxy
       : public overloads_base
   {
-      typedef typename OverloadsT::non_void_return_type   non_void_return_type;
-      typedef typename OverloadsT::void_return_type       void_return_type;
+      using non_void_return_type = typename OverloadsT::non_void_return_type;
+      using void_return_type = typename OverloadsT::void_return_type;
 
       overloads_proxy(
           CallPoliciesT const& policies_

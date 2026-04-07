@@ -111,7 +111,7 @@ namespace detail
     //
     
     template <class C> struct assertion_failed { };
-    template <class C> struct assertion_ok { typedef C failed; };
+    template <class C> struct assertion_ok { using failed = C; };
 
     template <class C>
     struct assertion
@@ -136,9 +136,9 @@ namespace detail
             // https://svn.boost.org/trac/boost/ticket/5803
             //typedef typename assertion<mpl::not_<detail::is_same<Default,Fn> > >::failed test0;
 # if !BOOST_WORKAROUND(__MWERKS__, <= 0x2407)
-            typedef typename assertion<detail::is_polymorphic<T> >::failed test1 BOOST_ATTRIBUTE_UNUSED;
+            using test1 = typename assertion<detail::is_polymorphic<T> >::failed BOOST_ATTRIBUTE_UNUSED;
 # endif 
-            typedef typename assertion<detail::is_member_function_pointer<Fn> >::failed test2 BOOST_ATTRIBUTE_UNUSED;
+            using test2 = typename assertion<detail::is_member_function_pointer<Fn> >::failed BOOST_ATTRIBUTE_UNUSED;
             not_a_derived_class_member<Default>(Fn());
         }
     };
@@ -156,10 +156,10 @@ template <
 class class_ : public objects::class_base
 {
  public: // types
-    typedef objects::class_base base;
-    typedef class_<W,X1,X2,X3> self;
-    typedef typename objects::class_metadata<W,X1,X2,X3> metadata;
-    typedef W wrapped_type;
+    using base = objects::class_base;
+    using self = class_<W,X1,X2,X3>;
+    using metadata = typename objects::class_metadata<W,X1,X2,X3>;
+    using wrapped_type = W;
     
  private: // types
 
@@ -167,7 +167,7 @@ class class_ : public objects::class_base
     // passed to the base class constructor
     struct id_vector
     {
-        typedef typename metadata::bases bases;
+        using bases = typename metadata::bases;
         
         id_vector()
         {
@@ -370,7 +370,7 @@ class class_ : public objects::class_base
     template <class F>
     object make_getter(F f)
     {
-        typedef typename api::is_object_operators<F>::type is_obj_or_proxy;
+        using is_obj_or_proxy = typename api::is_object_operators<F>::type;
         
         return objects::add_doc(
             this->make_fn_impl(
@@ -382,7 +382,7 @@ class class_ : public objects::class_base
     template <class F>
     object make_setter(F f)
     {
-        typedef typename api::is_object_operators<F>::type is_obj_or_proxy;
+        using is_obj_or_proxy = typename api::is_object_operators<F>::type;
         
         return objects::add_doc(
             this->make_fn_impl(
@@ -451,7 +451,7 @@ class class_ : public objects::class_base
     {
         metadata::register_(); // set up runtime metadata/conversions
         
-        typedef typename metadata::holder holder;
+        using holder = typename metadata::holder;
         this->set_instance_size( objects::additional_instance_size<holder>::value );
         
         this->def(i);

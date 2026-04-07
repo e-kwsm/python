@@ -14,7 +14,7 @@ namespace boost { namespace python { namespace detail {
 template <class T>
 struct unwrap_wrapper_helper
 {
-    typedef typename T::_wrapper_wrapped_type_ type;
+    using type = typename T::_wrapper_wrapped_type_;
 };
 
 template <class T>

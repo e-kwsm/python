@@ -31,9 +31,9 @@ struct translate_exception
         typename add_const<ExceptionType>::type
     >::type exception_non_ref;
 # else
-    typedef typename add_lvalue_reference<
+    using exception_cref = typename add_lvalue_reference<
         typename add_const<ExceptionType>::type
-    >::type exception_cref;
+    >::type;
 # endif
     
     inline bool operator()(

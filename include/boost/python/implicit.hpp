@@ -19,7 +19,7 @@ namespace boost { namespace python {
 template <class Source, class Target>
 void implicitly_convertible(boost::type<Source>* = 0, boost::type<Target>* = 0)
 {
-    typedef converter::implicit<Source,Target> functions;
+    using functions = converter::implicit<Source,Target>;
     
     converter::registry::push_back(
           &functions::convertible

@@ -29,11 +29,11 @@ struct copy_const_reference
     template <class T>
     struct apply
     {
-        typedef typename mpl::if_c<
+        using type = typename mpl::if_c<
             indirect_traits::is_reference_to_const<T>::value
           , to_python_value<T>
           , detail::copy_const_reference_expects_a_const_reference_return_type<T>
-        >::type type;
+        >::type;
     };
 };
 

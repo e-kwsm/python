@@ -55,7 +55,7 @@ namespace detail
       template <class T>
       struct apply
       {
-          typedef typename T::iterator iterator;
+          using iterator = typename T::iterator;
           static iterator begin(T& x) { return x.begin(); }
           static iterator end(T& x) { return x.end(); }
       };
@@ -67,7 +67,7 @@ namespace detail
       template <class T>
       struct apply
       {
-          typedef typename T::const_iterator iterator;
+          using iterator = typename T::const_iterator;
           static iterator begin(T& x) { return x.begin(); }
           static iterator end(T& x) { return x.end(); }
       };

@@ -57,9 +57,9 @@ namespace detail
       template <class Ptr>
       void dispatch(Ptr x, detail::false_) const
       {
-          typedef typename pointee<Ptr>::type value_type;
-          typedef objects::pointer_holder<Ptr,value_type> holder;
-          typedef objects::instance<holder> instance_t;
+          using value_type = typename pointee<Ptr>::type;
+          using holder = objects::pointer_holder<Ptr,value_type>;
+          using instance_t = objects::instance<holder>;
 
           void* memory = holder::allocate(this->m_self, offsetof(instance_t, storage), sizeof(holder),
                                           boost::python::detail::alignment_of<holder>::value);
@@ -84,7 +84,7 @@ namespace detail
       template <class T>
       struct apply
       {
-          typedef install_holder<T> type;
+          using type = install_holder<T>;
       };
   };
 
@@ -122,23 +122,23 @@ namespace detail
         , MAKE_CONSTRUCTOR_SUPPLIES_ITS_OWN_RESULT_CONVERTER_THAT_WOULD_OVERRIDE_YOURS
         , (typename BasePolicy_::result_converter)
       );
-      typedef constructor_result_converter result_converter;
-      typedef offset_args<typename BasePolicy_::argument_package, mpl::int_<1> > argument_package;
+      using result_converter = constructor_result_converter;
+      using argument_package = offset_args<typename BasePolicy_::argument_package, mpl::int_<1> >;
   };
 
   template <class InnerSignature>
   struct outer_constructor_signature
   {
-      typedef typename mpl::pop_front<InnerSignature>::type inner_args;
-      typedef typename mpl::push_front<inner_args,object>::type outer_args;
-      typedef typename mpl::push_front<outer_args,void>::type type;
+      using inner_args = typename mpl::pop_front<InnerSignature>::type;
+      using outer_args = typename mpl::push_front<inner_args,object>::type;
+      using type = typename mpl::push_front<outer_args,void>::type;
   };
 
   // ETI workaround
   template <>
   struct outer_constructor_signature<int>
   {
-      typedef int type;
+      using type = int;
   };
   
   //
@@ -155,9 +155,9 @@ namespace detail
     , Sig const&                      // An MPL sequence of argument types expected by F
   )
   {
-      typedef typename outer_constructor_signature<Sig>::type outer_signature;
+      using outer_signature = typename outer_constructor_signature<Sig>::type;
 
-      typedef constructor_policy<CallPolicies> inner_policy;
+      using inner_policy = constructor_policy<CallPolicies>;
       
       return objects::function_object(
           objects::py_function(
@@ -182,13 +182,13 @@ namespace detail
   {
       enum { arity = mpl::size<Sig>::value - 1 };
       
-      typedef typename detail::error::more_keywords_than_function_arguments<
+      using assertion = typename detail::error::more_keywords_than_function_arguments<
           NumKeywords::value, arity
-          >::too_many_keywords assertion BOOST_ATTRIBUTE_UNUSED;
+          >::too_many_keywords BOOST_ATTRIBUTE_UNUSED;
     
-      typedef typename outer_constructor_signature<Sig>::type outer_signature;
+      using outer_signature = typename outer_constructor_signature<Sig>::type;
 
-      typedef constructor_policy<CallPolicies> inner_policy;
+      using inner_policy = constructor_policy<CallPolicies>;
       
       return objects::function_object(
           objects::py_function(
@@ -255,9 +255,8 @@ object make_constructor(
   , CallPolicies const& policies
   , KeywordsOrSignature const& keywords_or_signature)
 {
-    typedef typename
-        detail::is_reference_to_keywords<KeywordsOrSignature&>::type
-        is_kw;
+    using is_kw = typename
+        detail::is_reference_to_keywords<KeywordsOrSignature&>::type;
     
     return detail::make_constructor_dispatch(
         f

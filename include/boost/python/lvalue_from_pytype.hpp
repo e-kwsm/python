@@ -36,7 +36,7 @@ namespace detail
   {
       static inline void* execute(PyObject* op)
       {
-          typedef typename add_lvalue_reference<U>::type param;
+          using param = typename add_lvalue_reference<U>::type;
           return &Extractor::execute(
               boost::python::detail::void_ptr_to_reference(
                   op, (param(*)())0 )

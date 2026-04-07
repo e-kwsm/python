@@ -24,7 +24,7 @@ struct decorated_type_info : totally_ordered<decorated_type_info>
 
     operator type_info const&() const;
  private: // type
-    typedef type_info base_id_t;
+    using base_id_t = type_info;
     
  private: // data members
     decoration m_decoration;
