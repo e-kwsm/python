@@ -61,10 +61,10 @@ namespace detail
 template <class T>
 class handle
 {
-    typedef T* (handle::* bool_type )() const;
+    using bool_type = T* (handle::*)() const;
 
  public: // types
-    typedef T element_type;
+    using element_type = T;
     
  public: // member functions
     handle();
@@ -150,7 +150,7 @@ using boost::get_pointer;
 
 #endif
 
-typedef handle<PyTypeObject> type_handle;
+using type_handle = handle<PyTypeObject>;
 
 //
 // Compile-time introspection

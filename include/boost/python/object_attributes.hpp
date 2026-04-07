@@ -15,7 +15,7 @@ namespace boost { namespace python { namespace api {
 
 struct const_attribute_policies
 {
-    typedef char const* key_type;
+    using key_type = char const*;
     static object get(object const& target, char const* key);
     static object get(object const& target, object const& key);
 };
@@ -28,7 +28,7 @@ struct attribute_policies : const_attribute_policies
 
 struct const_objattribute_policies
 {
-    typedef object const key_type;
+    using key_type = object const;
     static object get(object const& target, object const& key);
 };
   

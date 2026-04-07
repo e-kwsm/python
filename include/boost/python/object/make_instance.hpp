@@ -19,7 +19,7 @@ namespace boost { namespace python { namespace objects {
 template <class T, class Holder, class Derived>
 struct make_instance_impl
 {
-    typedef objects::instance<Holder> instance_t;
+    using instance_t = objects::instance<Holder>;
         
     template <class Arg>
     static inline PyObject* execute(Arg& x)

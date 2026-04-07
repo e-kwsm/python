@@ -50,7 +50,7 @@ namespace boost { namespace python { namespace objects {
 template <class Pointer, class Value>
 struct pointer_holder : instance_holder
 {
-    typedef Value value_type;
+    using value_type = Value;
     
     pointer_holder(Pointer);
 
@@ -83,9 +83,9 @@ template <class Pointer, class Value>
 struct pointer_holder_back_reference : instance_holder
 {
  private:
-    typedef typename python::pointee<Pointer>::type held_type;
+    using held_type = typename python::pointee<Pointer>::type;
  public:
-    typedef Value value_type;
+    using value_type = Value;
 
     // Not sure about this one -- can it work? The source object
     // undoubtedly does not carry the correct back reference pointer.
@@ -127,7 +127,7 @@ inline pointer_holder_back_reference<Pointer,Value>::pointer_holder_back_referen
 template <class Pointer, class Value>
 void* pointer_holder<Pointer, Value>::holds(type_info dst_t, bool null_ptr_only)
 {
-    typedef typename boost::python::detail::remove_const< Value >::type non_const_value;
+    using non_const_value = typename boost::python::detail::remove_const< Value >::type;
 
     if (dst_t == python::type_id<Pointer>()
         && !(null_ptr_only && get_pointer(this->m_p))

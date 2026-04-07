@@ -25,9 +25,9 @@ struct instance
     PyObject* weakrefs; 
     instance_holder* objects;
 
-    typedef typename boost::python::detail::type_with_alignment<
+    using align_t = typename boost::python::detail::type_with_alignment<
         boost::python::detail::alignment_of<Data>::value
-    >::type align_t;
+    >::type;
 
     union
     {
@@ -39,8 +39,8 @@ struct instance
 template <class Data>
 struct additional_instance_size
 {
-    typedef instance<Data> instance_data;
-    typedef instance<char> instance_char;
+    using instance_data = instance<Data>;
+    using instance_char = instance<char>;
     BOOST_STATIC_CONSTANT(std::size_t,
                           value = sizeof(instance_data) -
                              BOOST_PYTHON_OFFSETOF(instance_char,storage) +

@@ -56,7 +56,7 @@ namespace detail
 
 class list : public detail::list_base
 {
-    typedef detail::list_base base;
+    using base = detail::list_base;
  public:
     list() {} // new list
 

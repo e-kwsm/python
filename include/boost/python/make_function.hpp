@@ -53,9 +53,9 @@ namespace detail
   {
       enum { arity = mpl::size<Sig>::value - 1 };
       
-      typedef typename detail::error::more_keywords_than_function_arguments<
+      using assertion = typename detail::error::more_keywords_than_function_arguments<
           NumKeywords::value, arity
-          >::too_many_keywords assertion BOOST_ATTRIBUTE_UNUSED;
+          >::too_many_keywords BOOST_ATTRIBUTE_UNUSED;
     
       return objects::function_object(
           detail::caller<F,CallPolicies,Sig>(f, p)
@@ -117,9 +117,8 @@ object make_function(
   , CallPolicies const& policies
   , KeywordsOrSignature const& keywords_or_signature)
 {
-    typedef typename
-        detail::is_reference_to_keywords<KeywordsOrSignature&>::type
-        is_kw;
+    using is_kw = typename
+        detail::is_reference_to_keywords<KeywordsOrSignature&>::type;
     
     return detail::make_function_dispatch(
         f

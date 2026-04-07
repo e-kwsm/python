@@ -20,8 +20,8 @@ namespace boost { namespace python { namespace objects {
 template <class T>
 struct reference_to_value
 {
-    typedef typename boost::python::detail::add_lvalue_reference<typename
-        boost::python::detail::add_const<T>::type>::type reference;
+    using reference = typename boost::python::detail::add_lvalue_reference<typename
+        boost::python::detail::add_const<T>::type>::type;
     
     reference_to_value(reference x) : m_value(x) {}
     reference get() const { return m_value; }
@@ -45,13 +45,13 @@ struct forward
 template<typename T>
 struct unforward
 {
-    typedef typename unwrap_reference<T>::type& type;
+    using type = typename unwrap_reference<T>::type&;
 };
 
 template<typename T>
 struct unforward<reference_to_value<T> >
 {
-    typedef T type;
+    using type = T;
 };
 
 template <typename T>
