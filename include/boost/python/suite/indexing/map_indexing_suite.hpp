@@ -59,12 +59,12 @@ namespace boost { namespace python {
     {
     public:
 
-        typedef typename Container::value_type value_type;
-        typedef typename Container::value_type::second_type data_type;
-        typedef typename Container::key_type key_type;
-        typedef typename Container::key_type index_type;
-        typedef typename Container::size_type size_type;
-        typedef typename Container::difference_type difference_type;
+        using value_type = typename Container::value_type;
+        using data_type = typename Container::value_type::second_type;
+        using key_type = typename Container::key_type;
+        using index_type = typename Container::key_type;
+        using size_type = typename Container::size_type;
+        using difference_type = typename Container::difference_type;
 
         template <class Class>
         static void
@@ -77,11 +77,11 @@ namespace boost { namespace python {
             elem_name += class_name_extractor();
             elem_name += "_entry";
 
-            typedef typename mpl::if_<
+            using get_data_return_policy = typename mpl::if_<
                 mpl::and_<is_class<data_type>, mpl::bool_<!NoProxy> >
               , return_internal_reference<>
               , default_call_policies
-            >::type get_data_return_policy;
+            >::type;
 
             class_<value_type>(elem_name.c_str())
                 .def("__repr__", &DerivedPolicies::print_elem)
