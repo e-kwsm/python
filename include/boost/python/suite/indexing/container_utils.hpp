@@ -20,7 +20,7 @@ namespace boost { namespace python { namespace container_utils {
     void
     extend_container(Container& container, object l)
     {
-        typedef typename Container::value_type data_type;
+        using data_type = typename Container::value_type;
         
         //  l must be iterable
         BOOST_FOREACH(object elem,

@@ -50,11 +50,11 @@ namespace boost { namespace python {
     {
     public:
     
-        typedef typename Container::value_type data_type;
-        typedef typename Container::value_type key_type;
-        typedef typename Container::size_type index_type;
-        typedef typename Container::size_type size_type;
-        typedef typename Container::difference_type difference_type;
+        using data_type = typename Container::value_type;
+        using key_type = typename Container::value_type;
+        using index_type = typename Container::size_type;
+        using size_type = typename Container::size_type;
+        using difference_type = typename Container::difference_type;
         
         template <class Class>
         static void 

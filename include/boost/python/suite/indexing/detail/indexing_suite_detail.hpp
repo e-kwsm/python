@@ -34,7 +34,7 @@ namespace boost { namespace python { namespace detail {
         template <class Index>
         bool operator()(PyObject* prox, Index i) const
         {
-            typedef typename Proxy::policies_type policies_type;
+            using policies_type = typename Proxy::policies_type;
             Proxy& proxy = extract<Proxy&>(prox)();
             return policies_type::
                 compare_index(proxy.get_container(), proxy.get_index(), i);
@@ -55,10 +55,10 @@ namespace boost { namespace python { namespace detail {
     {
     public:
     
-        typedef typename std::vector<PyObject*>::const_iterator const_iterator;
-        typedef typename std::vector<PyObject*>::iterator iterator;
-        typedef typename Proxy::index_type index_type;
-        typedef typename Proxy::policies_type policies_type;
+        using const_iterator = typename std::vector<PyObject*>::const_iterator;
+        using iterator = typename std::vector<PyObject*>::iterator;
+        using index_type = typename Proxy::index_type;
+        using policies_type = typename Proxy::policies_type;
         
         iterator
         first_proxy(index_type i)
@@ -170,7 +170,7 @@ namespace boost { namespace python { namespace detail {
 
             while (right != proxies.end())
             {
-                typedef typename Proxy::container_type::difference_type difference_type;
+                using difference_type = typename Proxy::container_type::difference_type;
                 extract<Proxy&> p(*right);
                 p().set_index(
                     extract<Proxy&>(*right)().get_index() 
@@ -256,8 +256,8 @@ namespace boost { namespace python { namespace detail {
     {
     public:
     
-        typedef std::map<Container*, proxy_group<Proxy> > links_t;
-        typedef typename Proxy::index_type index_type;
+        using links_t = std::map<Container*, proxy_group<Proxy> >;
+        using index_type = typename Proxy::index_type;
 
         void
         remove(Proxy& proxy)
@@ -359,12 +359,12 @@ namespace boost { namespace python { namespace detail {
     {
     public:
     
-        typedef Index index_type;
-        typedef Container container_type;
-        typedef typename Policies::data_type element_type;
-        typedef Policies policies_type;
-        typedef container_element<Container, Index, Policies> self_t;
-        typedef proxy_group<self_t> links_type;
+        using index_type = Index;
+        using container_type = Container;
+        using element_type = typename Policies::data_type;
+        using policies_type = Policies;
+        using self_t = container_element<Container, Index, Policies>;
+        using links_type = proxy_group<self_t>;
         
         container_element(object container, Index index)
             : ptr()

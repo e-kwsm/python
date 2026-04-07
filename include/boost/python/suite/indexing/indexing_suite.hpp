@@ -118,28 +118,25 @@ namespace boost { namespace python {
     {
     private:
 
-        typedef mpl::or_<
+        using no_proxy = mpl::or_<
             mpl::bool_<NoProxy>
           , mpl::not_<is_class<Data> >
           , typename mpl::or_<
                 detail::is_same<Data, std::string>
               , detail::is_same<Data, std::complex<float> >
               , detail::is_same<Data, std::complex<double> >
-              , detail::is_same<Data, std::complex<long double> > >::type>
-        no_proxy;
+              , detail::is_same<Data, std::complex<long double> > >::type>;
 
-        typedef detail::container_element<Container, Index, DerivedPolicies>
-            container_element_t;
+        using container_element_t = detail::container_element<Container, Index, DerivedPolicies>;
 
-        typedef return_internal_reference<> return_policy;
+        using return_policy = return_internal_reference<>;
 
-        typedef typename mpl::if_<
+        using def_iterator = typename mpl::if_<
             no_proxy
           , iterator<Container>
-          , iterator<Container, return_policy> >::type
-        def_iterator;
+          , iterator<Container, return_policy> >::type;
 
-        typedef typename mpl::if_<
+        using proxy_handler = typename mpl::if_<
             no_proxy
           , detail::no_proxy_helper<
                 Container
@@ -150,10 +147,9 @@ namespace boost { namespace python {
                 Container
               , DerivedPolicies
               , container_element_t
-              , Index> >::type
-        proxy_handler;
+              , Index> >::type;
 
-        typedef typename mpl::if_<
+        using slice_handler = typename mpl::if_<
             mpl::bool_<NoSlice>
           , detail::no_slice_helper<
                 Container
@@ -166,8 +162,7 @@ namespace boost { namespace python {
               , DerivedPolicies
               , proxy_handler
               , Data
-              , Index> >::type
-        slice_handler;
+              , Index> >::type;
 
     public:
 
