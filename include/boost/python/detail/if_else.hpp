@@ -21,7 +21,7 @@ struct if_selected
     template <class U>
     struct else_
     {
-        typedef T type;
+        using type = T;
     };
 };
 
@@ -63,7 +63,7 @@ struct if_unselected
     template <class U>
     struct else_
     {
-        typedef U type;
+        using type = U;
     };
 };
 
