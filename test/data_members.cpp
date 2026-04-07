@@ -21,7 +21,7 @@ struct Y : test_class<1>
 {
     Y(int v) : test_class<1>(v) {}
     Y& operator=(Y const& rhs) { x = rhs.x; return *this; }
-    bool q;
+    bool q{};
 };
 
 double get_fair_value(X const& x) { return x.value(); }

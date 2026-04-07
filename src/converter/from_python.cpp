@@ -40,7 +40,7 @@ BOOST_PYTHON_DECL rvalue_from_python_stage1_data rvalue_from_python_stage1(
     PyObject* source
     , registration const& converters)
 {
-    rvalue_from_python_stage1_data data;
+    rvalue_from_python_stage1_data data{};
 
     // First check to see if it's embedded in an extension class
     // instance, as a special case.

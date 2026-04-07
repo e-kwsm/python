@@ -62,7 +62,7 @@ function::function(
 #endif
     , unsigned num_keywords
     )
-    : m_fn(implementation)
+    : _object(), m_fn(implementation)
     , m_nkeyword_values(0)
 {
     if (names_and_defaults != 0)

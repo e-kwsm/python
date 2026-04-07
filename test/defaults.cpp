@@ -79,7 +79,7 @@ struct Y {
         return format % bpl::make_tuple(a, b, c, d);
     }
 
-    int a; char b; std::string c; double d;
+    int a{}; char b{}; std::string c; double d{};
 };
 
 

@@ -105,7 +105,7 @@ class slice : public detail::slice_base
     {
         RandomAccessIterator start;
         RandomAccessIterator stop;
-        typename iterator_difference<RandomAccessIterator>::type step;
+        typename iterator_difference<RandomAccessIterator>::type step{};
     };
     
     template<typename RandomAccessIterator>
