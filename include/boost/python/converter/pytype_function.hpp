@@ -24,7 +24,7 @@ struct wrap_pytype
     }
 };
 
-typedef PyTypeObject const* (*pytype_function)();
+using pytype_function = PyTypeObject const* (*)();
 
 #ifndef BOOST_PYTHON_NO_PY_SIGNATURES
 
@@ -33,7 +33,7 @@ typedef PyTypeObject const* (*pytype_function)();
 namespace detail
 {
 struct unwind_type_id_helper{
-    typedef python::type_info result_type;
+    using result_type = python::type_info;
     template <class U>
     static result_type execute(U* ){
         return python::type_id<U>();

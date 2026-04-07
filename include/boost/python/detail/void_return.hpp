@@ -19,7 +19,7 @@ struct void_return
 template <class T>
 struct returnable
 {
-    typedef T type;
+    using type = T;
 };
 
 # ifdef BOOST_NO_VOID_RETURNS

@@ -15,20 +15,20 @@ struct cv_tag
     BOOST_STATIC_CONSTANT(bool, is_volatile = is_volatile_);
 };
 
-typedef cv_tag<false,false> cv_unqualified;
-typedef cv_tag<true,false> const_;
-typedef cv_tag<false,true> volatile_;
-typedef cv_tag<true,true> const_volatile_;
+using cv_unqualified = cv_tag<false,false>;
+using const_ = cv_tag<true,false>;
+using volatile_ = cv_tag<false,true>;
+using const_volatile_ = cv_tag<true,true>;
 
 template <class T>
 struct cv_category
 {
 //    BOOST_STATIC_CONSTANT(bool, c = is_const<T>::value);
 //    BOOST_STATIC_CONSTANT(bool, v = is_volatile<T>::value);
-    typedef cv_tag<
+    using type = cv_tag<
         is_const<T>::value
       , is_volatile<T>::value
-    > type;
+    >;
 };
 
 }}} // namespace boost::python::detail

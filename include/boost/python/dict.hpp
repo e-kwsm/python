@@ -80,7 +80,7 @@ namespace detail
 
 class dict : public detail::dict_base
 {
-    typedef detail::dict_base base;
+    using base = detail::dict_base;
  public:
     // dict() -> new empty dictionary.
     // dict(mapping) -> new dictionary initialized from a mapping object's

@@ -22,7 +22,7 @@ namespace boost { namespace python { namespace converter {
 template <class T>
 struct object_manager_value_arg_from_python
 {
-    typedef T result_type;
+    using result_type = T;
     
     object_manager_value_arg_from_python(PyObject*);
     bool convertible() const;
@@ -43,7 +43,7 @@ struct object_manager_value_arg_from_python
 template <class Ref>
 struct object_manager_ref_arg_from_python
 {
-    typedef Ref result_type;
+    using result_type = Ref;
     
     object_manager_ref_arg_from_python(PyObject*);
     bool convertible() const;

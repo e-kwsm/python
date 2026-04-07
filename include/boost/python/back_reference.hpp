@@ -17,9 +17,9 @@ template <class T>
 struct back_reference
 {
  private: // types
-    typedef typename detail::dependent<object,T>::type source_t;
+    using source_t = typename detail::dependent<object,T>::type;
  public:
-    typedef T type;
+    using type = T;
     
     back_reference(PyObject*, T);
     source_t const& source() const;

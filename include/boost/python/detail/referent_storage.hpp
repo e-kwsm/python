@@ -37,7 +37,7 @@ struct aligned_storage
 template <class T>
 struct referent_storage
 {
-    typedef typename aligned_storage<referent_size<T>::value, alignment_of<T>::value>::type type;
+    using type = typename aligned_storage<referent_size<T>::value, alignment_of<T>::value>::type;
 };
 
 }}} // namespace boost::python::detail

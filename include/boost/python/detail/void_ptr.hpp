@@ -26,7 +26,7 @@ template <class U>
 inline void write_void_ptr_reference(void const volatile* storage, void* ptr, U&(*)())
 {
     // stripping CV qualification suppresses warnings on older EDGs
-    typedef typename remove_cv<U>::type u_stripped; 
+    using u_stripped = typename remove_cv<U>::type;
     write_void_ptr(storage, ptr, u_stripped(0));
 }
 

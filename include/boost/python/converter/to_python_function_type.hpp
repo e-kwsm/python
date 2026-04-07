@@ -12,7 +12,7 @@ namespace boost { namespace python { namespace converter {
 // The type of stored function pointers which actually do conversion
 // by-value. The void* points to the object to be converted, and
 // type-safety is preserved through runtime registration.
-typedef PyObject* (*to_python_function_t)(void const*);
+using to_python_function_t = PyObject* (*)(void const*);
 
 }}} // namespace boost::python::converter
 

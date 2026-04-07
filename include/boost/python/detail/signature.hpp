@@ -49,7 +49,7 @@ template <class Sig>
 struct signature_base_select
 {
     enum { arity = mpl::size<Sig>::value - 1 };
-    typedef typename signature_arity<arity>::template impl<Sig> type;
+    using type = typename signature_arity<arity>::template impl<Sig>;
 };
 
 template <class Sig>

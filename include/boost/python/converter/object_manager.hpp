@@ -79,7 +79,7 @@ struct handle_object_manager_traits
     : pyobject_traits<typename T::element_type>
 {
  private:
-  typedef pyobject_traits<typename T::element_type> base;
+  using base = pyobject_traits<typename T::element_type>;
   
  public:
   BOOST_STATIC_CONSTANT(bool, is_specialized = true);

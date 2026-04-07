@@ -56,7 +56,7 @@ inline Py_ssize_t arity(PyObject* const& args_)
 // This "result converter" is really just used as
 // a dispatch tag to invoke(...), selecting the appropriate
 // implementation
-typedef int void_result_to_python;
+using void_result_to_python = int;
 
 // Given a model of CallPolicies and a C++ result type, this
 // metafunction selects the appropriate converter to use for
@@ -114,8 +114,8 @@ struct converter_target_type <void_result_to_python >
 // which left the ret uninitialized and caused segfaults in Python interpreter.
 template<class Policies, class Sig> const signature_element* get_ret()
 {
-    typedef BOOST_DEDUCED_TYPENAME Policies::template extract_return_type<Sig>::type rtype;
-    typedef typename select_result_converter<Policies, rtype>::type result_converter;
+    using rtype = BOOST_DEDUCED_TYPENAME Policies::template extract_return_type<Sig>::type;
+    using result_converter = typename select_result_converter<Policies, rtype>::type;
 
     static const signature_element ret = {
         (is_void<rtype>::value ? "void" : type_id<rtype>().name())
@@ -157,7 +157,7 @@ template <class F, class CallPolicies, class Sig>
 struct caller_base_select
 {
     enum { arity = mpl::size<Sig>::value - 1 };
-    typedef typename caller_arity<arity>::template impl<F,CallPolicies,Sig> type;
+    using type = typename caller_arity<arity>::template impl<F,CallPolicies,Sig>;
 };
 
 // A function object type which wraps C++ objects as Python callable
@@ -182,11 +182,11 @@ template <class F, class CallPolicies, class Sig>
 struct caller
     : caller_base_select<F,CallPolicies,Sig>::type
 {
-    typedef typename caller_base_select<
+    using base = typename caller_base_select<
         F,CallPolicies,Sig
-        >::type base;
+        >::type;
 
-    typedef PyObject* result_type;
+    using result_type = PyObject*;
     
     caller(F f, CallPolicies p) : base(f,p) {}
 

@@ -15,7 +15,7 @@ namespace boost { namespace python { namespace detail {
 
 template<class T> class borrowed
 { 
-    typedef T type;
+    using type = T;
 };
 
 template<typename T>

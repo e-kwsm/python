@@ -99,8 +99,8 @@ namespace boost { namespace python { namespace detail {
     using std::remove_cv;
     using std::remove_const;
 
-    typedef std::integral_constant<bool, true> true_;
-    typedef std::integral_constant<bool, false> false_;
+    using true_ = std::integral_constant<bool, true>;
+    using false_ = std::integral_constant<bool, false>;
 #endif
     using boost::is_base_and_derived;
     using boost::type_with_alignment;

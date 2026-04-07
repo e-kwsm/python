@@ -7,7 +7,7 @@
 
 namespace boost { namespace python { namespace converter { 
 
-typedef void* (*convertible_function)(PyObject*);
+using convertible_function = void* (*)(PyObject*);
     
 }}} // namespace boost::python::converter
 

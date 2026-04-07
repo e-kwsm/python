@@ -39,7 +39,7 @@ namespace converter
   template <class Ptr>
   struct extract_pointer
   {
-      typedef Ptr result_type;
+      using result_type = Ptr;
       extract_pointer(PyObject*);
       
       bool check() const;
@@ -53,7 +53,7 @@ namespace converter
   template <class Ref>
   struct extract_reference
   {
-      typedef Ref result_type;
+      using result_type = Ref;
       extract_reference(PyObject*);
       
       bool check() const;
@@ -67,11 +67,11 @@ namespace converter
   template <class T>
   struct extract_rvalue : private noncopyable
   {
-      typedef typename mpl::if_<
+      using result_type = typename mpl::if_<
           python::detail::copy_ctor_mutates_rhs<T>
         , T&
         , typename call_traits<T>::param_type
-      >::type result_type;
+      >::type;
 
       extract_rvalue(PyObject*);
 
@@ -85,7 +85,7 @@ namespace converter
   template <class T>
   struct extract_object_manager
   {
-      typedef T result_type;
+      using result_type = T;
       extract_object_manager(PyObject*);
 
       bool check() const;
@@ -106,7 +106,7 @@ namespace converter
       BOOST_STATIC_CONSTANT(
           bool, ref = is_reference<T>::value);
 
-      typedef typename mpl::if_c<
+      using type = typename mpl::if_c<
           obj_mgr
           , extract_object_manager<T>
           , typename mpl::if_c<
@@ -118,7 +118,7 @@ namespace converter
                   , extract_rvalue<T>
                 >::type
             >::type
-         >::type type;
+         >::type;
   };
 }
 
@@ -127,9 +127,9 @@ struct extract
     : converter::select_extract<T>::type
 {
  private:
-    typedef typename converter::select_extract<T>::type base;
+    using base = typename converter::select_extract<T>::type;
  public:
-    typedef typename base::result_type result_type;
+    using result_type = typename base::result_type;
     
     operator result_type() const
     {

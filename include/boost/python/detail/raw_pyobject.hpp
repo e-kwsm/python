@@ -17,15 +17,15 @@ namespace boost { namespace python { namespace detail {
 
 // New references are normally checked for null
 struct new_reference_t;
-typedef new_reference_t* new_reference;
+using new_reference = new_reference_t*;
 
 // Borrowed references are assumed to be non-null
 struct borrowed_reference_t;
-typedef borrowed_reference_t* borrowed_reference;
+using borrowed_reference = borrowed_reference_t*;
 
 // New references which aren't checked for null
 struct new_non_null_reference_t;
-typedef new_non_null_reference_t* new_non_null_reference;
+using new_non_null_reference = new_non_null_reference_t*;
 
 }}} // namespace boost::python::detail
 

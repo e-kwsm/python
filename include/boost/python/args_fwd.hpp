@@ -28,7 +28,7 @@ namespace detail
   
   template <std::size_t nkeywords = 0> struct keywords;
   
-  typedef std::pair<keyword const*, keyword const*> keyword_range;
+  using keyword_range = std::pair<keyword const*, keyword const*>;
   
   template <>
   struct keywords<0>

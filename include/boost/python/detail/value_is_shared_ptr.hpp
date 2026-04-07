@@ -20,7 +20,7 @@ struct value_is_shared_ptr
 					      ::type>
 					    ::type>
     ::value;
-  typedef mpl::bool_<value> type;
+  using type = mpl::bool_<value>;
 };
 
 }}} // namespace boost::python::detail

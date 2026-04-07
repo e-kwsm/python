@@ -14,8 +14,8 @@
 // dispatching to work around the Metrowerks Pro7 limitation with boost/std::is_convertible
 namespace boost { namespace python { namespace detail { 
 
-typedef char* yes_convertible;
-typedef int* no_convertible;
+using yes_convertible = char*;
+using no_convertible = int*;
 
 template <class Target>
 struct convertible

@@ -57,7 +57,7 @@ template <class Generator, class U>
 inline typename Generator::result_type
 unwind_ptr_type(U* p, Generator* = 0)
 {
-    typedef typename cv_category<U>::type tag;
+    using tag = typename cv_category<U>::type;
     return unwind_type_cv<Generator>(p, tag());
 }
 

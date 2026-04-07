@@ -23,19 +23,19 @@ template <class T> struct base_type_traits
 template <>
 struct base_type_traits<PyObject>
 {
-    typedef PyObject type;
+    using type = PyObject;
 };
 
 template <>
 struct base_type_traits<PyTypeObject>
 {
-    typedef PyObject type;
+    using type = PyObject;
 };
 
 template <>
 struct base_type_traits<PyMethodObject>
 {
-    typedef PyObject type;
+    using type = PyObject;
 };
 
 }} // namespace boost::python

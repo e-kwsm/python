@@ -46,8 +46,8 @@ struct default_call_policies
         return result;
     }
 
-    typedef default_result_converter result_converter;
-    typedef PyObject* argument_package;
+    using result_converter = default_result_converter;
+    using argument_package = PyObject*;
 
     template <class Sig> 
     struct extract_return_type : mpl::front<Sig>
@@ -61,13 +61,13 @@ struct default_result_converter
     template <class R>
     struct apply
     {
-        typedef typename mpl::if_<
+        using type = typename mpl::if_<
             mpl::or_<detail::is_pointer<R>, detail::is_reference<R> >
           , detail::specify_a_return_value_policy_to_wrap_functions_returning<R>
           , boost::python::to_python_value<
                 typename detail::value_arg<R>::type
             >
-        >::type type;
+        >::type;
     };
 };
 
@@ -75,13 +75,13 @@ struct default_result_converter
 template <>
 struct default_result_converter::apply<char const*>
 {
-    typedef boost::python::to_python_value<char const*const&> type;
+    using type = boost::python::to_python_value<char const*const&>;
 };
 
 template <>
 struct default_result_converter::apply<PyObject*>
 {
-    typedef boost::python::to_python_value<PyObject*const&> type;
+    using type = boost::python::to_python_value<PyObject*const&>;
 };
 
 }} // namespace boost::python

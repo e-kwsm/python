@@ -19,7 +19,7 @@ namespace boost { namespace python { namespace detail {
 template <class T, class U>
 struct dependent
 {
-    typedef T type;
+    using type = T;
 };
 
 }}} // namespace boost::python::detail

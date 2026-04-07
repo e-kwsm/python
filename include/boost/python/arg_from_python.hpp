@@ -25,14 +25,14 @@ struct arg_from_python
 # endif 
       >::type
 {
-    typedef typename converter::select_arg_from_python<
+    using base = typename converter::select_arg_from_python<
 # if BOOST_WORKAROUND(BOOST_MSVC, BOOST_TESTED_AT(1400)) \
     || BOOST_WORKAROUND(BOOST_INTEL_WIN, BOOST_TESTED_AT(800))
           typename detail::remove_cv<T>::type
 # else
           T
 # endif 
-        >::type base;
+        >::type;
     
     arg_from_python(PyObject*);
 };
@@ -41,7 +41,7 @@ struct arg_from_python
 template <>
 struct arg_from_python<PyObject*>
 {
-    typedef PyObject* result_type;
+    using result_type = PyObject*;
     
     arg_from_python(PyObject* p) : m_source(p) {}
     bool convertible() const { return true; }
@@ -53,7 +53,7 @@ struct arg_from_python<PyObject*>
 template <>
 struct arg_from_python<PyObject* const&>
 {
-    typedef PyObject* const& result_type;
+    using result_type = PyObject* const&;
     
     arg_from_python(PyObject* p) : m_source(p) {}
     bool convertible() const { return true; }

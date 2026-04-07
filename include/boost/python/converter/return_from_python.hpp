@@ -27,21 +27,21 @@ namespace detail
   template <class T>
   struct return_pointer_from_python
   {
-      typedef T result_type;
+      using result_type = T;
       T operator()(PyObject*) const;
   };
   
   template <class T>
   struct return_reference_from_python
   {
-      typedef T result_type;
+      using result_type = T;
       T operator()(PyObject*) const;
   };
   
   template <class T>
   struct return_rvalue_from_python
   {
-      typedef T result_type;
+      using result_type = T;
 
       return_rvalue_from_python();
       result_type operator()(PyObject*);
@@ -52,7 +52,7 @@ namespace detail
   template <class T>
   struct return_object_manager_from_python
   {
-      typedef T result_type;
+      using result_type = T;
       result_type operator()(PyObject*) const;
   };
   
@@ -68,7 +68,7 @@ namespace detail
       BOOST_STATIC_CONSTANT(
           bool, ref = is_reference<T>::value);
 
-      typedef typename mpl::if_c<
+      using type = typename mpl::if_c<
           obj_mgr
           , return_object_manager_from_python<T>
           , typename mpl::if_c<
@@ -80,7 +80,7 @@ namespace detail
                   , return_rvalue_from_python<T>
                 >::type
             >::type
-         >::type type;
+         >::type;
   };
 }
 
@@ -94,7 +94,7 @@ struct return_from_python
 template <>
 struct return_from_python<void>
 {
-    typedef python::detail::returnable<void>::type result_type;
+    using result_type = python::detail::returnable<void>::type;
     
     result_type operator()(PyObject* x) const
     {

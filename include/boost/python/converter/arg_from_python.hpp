@@ -44,7 +44,7 @@ namespace boost { namespace python { namespace converter {
 template <class T>
 struct pointer_cref_arg_from_python
 {
-    typedef T result_type;
+    using result_type = T;
     
     pointer_cref_arg_from_python(PyObject*);
     T operator()() const;
@@ -74,7 +74,7 @@ struct arg_lvalue_from_python_base
 template <class T>
 struct pointer_arg_from_python : arg_lvalue_from_python_base
 {
-    typedef T result_type;
+    using result_type = T;
     
     pointer_arg_from_python(PyObject*);
     T operator()() const;
@@ -84,7 +84,7 @@ struct pointer_arg_from_python : arg_lvalue_from_python_base
 template <class T>
 struct reference_arg_from_python : arg_lvalue_from_python_base
 {
-    typedef T result_type;
+    using result_type = T;
     
     reference_arg_from_python(PyObject*);
     T operator()() const;
@@ -105,11 +105,11 @@ struct reference_arg_from_python : arg_lvalue_from_python_base
 template <class T>
 struct arg_rvalue_from_python
 {
-    typedef typename boost::python::detail::add_lvalue_reference<
+    using result_type = typename boost::python::detail::add_lvalue_reference<
         T
         // We can't add_const here, or it would be impossible to pass
         // auto_ptr<U> args from Python to C++
-    >::type result_type;
+    >::type;
     
     arg_rvalue_from_python(PyObject*);
     bool convertible() const;
@@ -133,12 +133,12 @@ template <class T>
 struct back_reference_arg_from_python
     : boost::python::arg_from_python<typename T::type>
 {
-    typedef T result_type;
+    using result_type = T;
     
     back_reference_arg_from_python(PyObject*);
     T operator()();
  private:
-    typedef boost::python::arg_from_python<typename T::type> base;
+    using base = boost::python::arg_from_python<typename T::type>;
     PyObject* m_source;
 };
 
@@ -148,7 +148,7 @@ struct back_reference_arg_from_python
 template <class C, class T, class F>
 struct if_2
 {
-    typedef typename mpl::eval_if<C, mpl::identity<T>, F>::type type;
+    using type = typename mpl::eval_if<C, mpl::identity<T>, F>::type;
 };
 
 // This metafunction selects the appropriate arg_from_python converter
@@ -156,7 +156,7 @@ struct if_2
 template <class T>
 struct select_arg_from_python
 {
-    typedef typename if_2<
+    using type = typename if_2<
         is_object_manager<T>
       , object_manager_value_arg_from_python<T>
       , if_2<
@@ -187,7 +187,7 @@ struct select_arg_from_python
                 >
             >
         >
-    >::type type;
+    >::type;
 };
 
 // ==================

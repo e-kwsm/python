@@ -97,10 +97,10 @@ namespace detail
   template <class T>
   struct select_arg_to_python
   {
-      typedef typename unwrap_reference<T>::type unwrapped_referent;
-      typedef typename unwrap_pointer<T>::type unwrapped_ptr;
+      using unwrapped_referent = typename unwrap_reference<T>::type;
+      using unwrapped_ptr = typename unwrap_pointer<T>::type;
 
-      typedef typename mpl::if_<
+      using type = typename mpl::if_<
           // Special handling for char const[N]; interpret them as char
           // const* for the sake of conversion
           python::detail::is_string_literal<T const>
@@ -140,9 +140,7 @@ namespace detail
                   >::type
               >::type
           >::type
-      >::type
-      
-      type;
+      >::type;
   };
 }
 
@@ -150,7 +148,7 @@ template <class T>
 struct arg_to_python
     : detail::select_arg_to_python<T>::type
 {
-    typedef typename detail::select_arg_to_python<T>::type base;
+    using base = typename detail::select_arg_to_python<T>::type;
  public: // member functions
     // Throw an exception if the conversion can't succeed
     arg_to_python(T const& x);
@@ -185,7 +183,7 @@ namespace detail
       reject_raw_object_helper<T,yes_convertible>::error(
           python::detail::convertible<PyObject const volatile*>::check((T*)0));
       
-      typedef typename remove_cv<T>::type value_type;
+      using value_type = typename remove_cv<T>::type;
       
       reject_raw_object_helper<T,no_convertible>::error(
           python::detail::convertible<unspecialized*>::check(

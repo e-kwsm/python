@@ -10,7 +10,7 @@ namespace boost { namespace python { namespace converter {
 // Declares the type of functions used to construct C++ objects for
 // rvalue from_python conversions.
 struct rvalue_from_python_stage1_data;
-typedef void (*constructor_function)(PyObject* source, rvalue_from_python_stage1_data*);
+using constructor_function = void (*)(PyObject* source, rvalue_from_python_stage1_data*);
 
 }}} // namespace boost::python::converter
 

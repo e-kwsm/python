@@ -27,7 +27,7 @@ namespace detail
   template <class Source, class Target>
   inline Target* upcast(Source* p, no_convertible, no_convertible, Target*)
   {
-      typedef typename base_type_traits<Source>::type base;
+      using base = typename base_type_traits<Source>::type;
       
       return detail::upcast_impl((base*)p, (Target*)0);
   }
@@ -62,7 +62,7 @@ namespace detail
   template <class Target, class Source>
   inline Target* downcast(Source* p, no_convertible, boost::type<Target>* = 0)
   {
-      typedef typename base_type_traits<Source>::type base;
+      using base = typename base_type_traits<Source>::type;
       return (Target*)detail::downcast<base>(p, convertible<Source*>::check((base*)0));
   }
 
@@ -75,8 +75,8 @@ namespace detail
   template <class Source, class Target>
   inline Target* upcast_impl(Source* x, Target*)
   {
-      typedef typename detail::add_cv<Source>::type src_t;
-      typedef typename detail::add_cv<Target>::type target_t;
+      using src_t = typename detail::add_cv<Source>::type;
+      using target_t = typename detail::add_cv<Target>::type;
       bool const same = detail::is_same<src_t,target_t>::value;
       
       return detail::upcaster<same>::execute(x, (Target*)0);

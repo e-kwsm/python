@@ -28,8 +28,8 @@
 
 namespace boost { namespace python {
 
-typedef detail::keywords<1> arg;
-typedef arg arg_; // gcc 2.96 workaround
+using arg = detail::keywords<1>;
+using arg_ = arg; // gcc 2.96 workaround
 
 namespace detail
 {
@@ -114,12 +114,12 @@ namespace detail
   struct is_reference_to_keywords
   {
       BOOST_STATIC_CONSTANT(bool, is_ref = detail::is_reference<T>::value);
-      typedef typename detail::remove_reference<T>::type deref;
-      typedef typename detail::remove_cv<deref>::type key_t;
+      using deref = typename detail::remove_reference<T>::type;
+      using key_t = typename detail::remove_cv<deref>::type;
       BOOST_STATIC_CONSTANT(bool, is_key = is_keywords<key_t>::value);
       BOOST_STATIC_CONSTANT(bool, value = (is_ref & is_key));
       
-      typedef mpl::bool_<value> type;
+      using type = mpl::bool_<value>;
       BOOST_PYTHON_MPL_LAMBDA_SUPPORT(1,is_reference_to_keywords,(T))
   };
 }

@@ -110,8 +110,8 @@ struct rvalue_from_python_data : rvalue_from_python_storage<T>
     // Destroys any object constructed in the storage.
     ~rvalue_from_python_data();
  private:
-    typedef typename boost::python::detail::add_lvalue_reference<
-                typename boost::python::detail::add_cv<T>::type>::type ref_type;
+    using ref_type = typename boost::python::detail::add_lvalue_reference<
+                typename boost::python::detail::add_cv<T>::type>::type;
 };
 
 //

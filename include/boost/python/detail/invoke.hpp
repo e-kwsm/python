@@ -40,7 +40,7 @@ namespace boost { namespace python { namespace detail {
 
 // This "result converter" is really just used as a dispatch tag to
 // invoke(...), selecting the appropriate implementation
-typedef int void_result_to_python;
+using void_result_to_python = int;
 
 template <bool void_return, bool member>
 struct invoke_tag_ {};
