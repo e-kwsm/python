@@ -158,7 +158,7 @@ PyObject* new_simple()
 {
     SimpleObject* simple = PyObject_New(SimpleObject, &SimpleType);
     simple->x.s = const_cast<char*>("hello, world");
-    return (PyObject*)simple;
+    return reinterpret_cast<PyObject*>(simple);
 }
 
 //
@@ -176,7 +176,7 @@ struct simple_to_python
     {
         SimpleObject* p = PyObject_New(SimpleObject, &SimpleType);
         p->x = x;
-        return (PyObject*)p;
+        return reinterpret_cast<PyObject*>(p);
     }
     static PyTypeObject const *get_pytype(){return &SimpleType; }
 };

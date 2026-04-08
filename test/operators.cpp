@@ -54,17 +54,17 @@ X abs(X x) { return X(x.value() < 0 ? -x.value() : x.value()); }
 
 X pow(X x, int y)
 {
-    return X(int(pow(double(x.value()), double(y))));
+    return X(static_cast<int>(pow(static_cast<double>(x.value()), static_cast<double>(y))));
 }
 
 X pow(X x, X y)
 {
-    return X(int(pow(double(x.value()), double(y.value()))));
+    return X(static_cast<int>(pow(static_cast<double>(x.value()), static_cast<double>(y.value()))));
 }
 
 int pow(int x, X y)
 {
-    return int(pow(double(x), double(y.value())));
+    return static_cast<int>(pow(static_cast<double>(x), static_cast<double>(y.value())));
 }
 
 std::ostream& operator<<(std::ostream& s, X const& x)

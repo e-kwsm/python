@@ -31,7 +31,7 @@ struct AToPython
 {
   static PyObject* convert(const A& s)
   {
-    return boost::python::incref(boost::python::object((int)s.value).ptr());
+    return boost::python::incref(boost::python::object(s.value).ptr());
   }
 };
 
@@ -61,11 +61,11 @@ struct AFromPython
       boost::python::converter::rvalue_from_python_stage1_data* data)
   {
     void* storage = (
-        (boost::python::converter::rvalue_from_python_storage< A >*)
-        data)-> storage.bytes;
+        reinterpret_cast<boost::python::converter::rvalue_from_python_storage< A >*>(
+        data))-> storage.bytes;
 
 #if PY_VERSION_HEX >= 0x03000000
-    new (storage) A((int)PyLong_AsLong(obj_ptr));
+    new (storage) A(static_cast<int>(PyLong_AsLong(obj_ptr)));
 #else
     new (storage) A((int)PyInt_AsLong(obj_ptr));
 #endif
