@@ -11,7 +11,6 @@
 struct Widget
 {
     Widget()
-      : sensitive_(true)
     {}
     
     bool get_sensitive() const
@@ -25,7 +24,7 @@ struct Widget
     }
     
  private:
-   bool sensitive_;
+   bool sensitive_ = true;
 };
 
 struct Label : Widget

@@ -24,8 +24,8 @@ namespace boost  // Pro7 has a hard time detecting enums
 color identity_(color x) { return x; }
 
 struct colorized {
-    colorized() : x(red) {}
-    color x;
+    colorized() {}
+    color x = red;
 };
 
 BOOST_PYTHON_MODULE(enum_ext)
