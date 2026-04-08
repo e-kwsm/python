@@ -82,6 +82,8 @@ class handle
 
     handle& operator=(handle const& r)
     {
+        if (this == &r)
+            return *this;
         python::xdecref(m_p);
         m_p = python::xincref(r.m_p);
         return *this;

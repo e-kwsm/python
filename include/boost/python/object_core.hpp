@@ -411,6 +411,8 @@ inline api::object_base::object_base(PyObject* p)
 
 inline api::object_base& api::object_base::operator=(api::object_base const& rhs)
 {
+    if (this == &rhs)
+        return *this;
     Py_INCREF(rhs.m_ptr);
     Py_DECREF(this->m_ptr);
     this->m_ptr = rhs.m_ptr;
