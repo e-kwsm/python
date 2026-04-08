@@ -95,7 +95,6 @@ bool exception_handler::operator()(function0<void> const& f) const
 
 exception_handler::exception_handler(handler_function const& impl)
     : m_impl(impl)
-    , m_next(0)
 {
     BOOST_PYTHON_LOCK_STATE();
     if (chain != 0)

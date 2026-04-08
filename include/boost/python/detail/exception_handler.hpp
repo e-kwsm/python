@@ -32,7 +32,7 @@ struct BOOST_PYTHON_DECL exception_handler
     static exception_handler* tail;
     
     handler_function m_impl;
-    exception_handler* m_next;
+    exception_handler* m_next = 0;
 };
 
 
