@@ -45,14 +45,14 @@ object matrix::construct(object const & obj, bool copy)
 
 matrix matrix::view(dtype const & dt) const 
 {
-  return matrix(python::detail::new_reference
-    (PyObject_CallMethod(this->ptr(), const_cast<char*>("view"), const_cast<char*>("O"), dt.ptr())));
+  return matrix(reinterpret_cast<python::detail::new_reference
+   >(PyObject_CallMethod(this->ptr(), const_cast<char*>("view"), const_cast<char*>("O"), dt.ptr())));
 }
 
 matrix matrix::copy() const 
 {
-  return matrix(python::detail::new_reference
-    (PyObject_CallMethod(this->ptr(), const_cast<char*>("copy"), const_cast<char*>(""))));
+  return matrix(reinterpret_cast<python::detail::new_reference
+   >(PyObject_CallMethod(this->ptr(), const_cast<char*>("copy"), const_cast<char*>(""))));
 }
 
 matrix matrix::transpose() const 

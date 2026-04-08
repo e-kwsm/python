@@ -123,7 +123,7 @@ ndarray from_data_impl(void * data,
   if (is_c_contiguous(shape, strides, itemsize)) flags |= NPY_ARRAY_C_CONTIGUOUS;
   if (is_f_contiguous(shape, strides, itemsize)) flags |= NPY_ARRAY_F_CONTIGUOUS;
   if (is_aligned(strides, itemsize)) flags |= NPY_ARRAY_ALIGNED;
-  ndarray r(python::detail::new_reference
+  ndarray r(reinterpret_cast<python::detail::new_reference>
     (PyArray_NewFromDescr(&PyArray_Type,
 			  incref_dtype(dt),
 			  shape.size(),
@@ -164,31 +164,31 @@ Py_intptr_t ndarray::strides(int n) const
 
 ndarray ndarray::view(dtype const & dt) const
 {
-  return ndarray(python::detail::new_reference
+  return ndarray(reinterpret_cast<python::detail::new_reference>
     (PyObject_CallMethod(this->ptr(), const_cast<char*>("view"), const_cast<char*>("O"), dt.ptr())));
 }
     
 ndarray ndarray::astype(dtype const & dt) const
 {
-  return ndarray(python::detail::new_reference
+  return ndarray(reinterpret_cast<python::detail::new_reference>
     (PyObject_CallMethod(this->ptr(), const_cast<char*>("astype"), const_cast<char*>("O"), dt.ptr())));
 }
 
 ndarray ndarray::copy() const 
 {
-  return ndarray(python::detail::new_reference
+  return ndarray(reinterpret_cast<python::detail::new_reference>
     (PyObject_CallMethod(this->ptr(), const_cast<char*>("copy"), const_cast<char*>(""))));
 }
 
 dtype ndarray::get_dtype() const 
 {
-  return dtype(python::detail::borrowed_reference(get_struct()->descr));
+  return dtype(reinterpret_cast<python::detail::borrowed_reference>(get_struct()->descr));
 }
 
 python::object ndarray::get_base() const 
 {
   if (get_struct()->base == NULL) return object();
-  return python::object(python::detail::borrowed_reference(get_struct()->base));
+  return python::object(reinterpret_cast<python::detail::borrowed_reference>(get_struct()->base));
 }
 
 void ndarray::set_base(object const & base) 
