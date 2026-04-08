@@ -18,7 +18,7 @@ using namespace boost::python;
 
 struct X
 {
-    explicit X(int x) : x(x), magic(7654321) { ++counter; }
+    explicit X(int x) : x(x) { ++counter; }
     X(X const& rhs) : x(rhs.x), magic(7654321) { ++counter; }
     virtual ~X() { BOOST_ASSERT(magic == 7654321); magic = 6666666; x = 9999; --counter; }
 
@@ -29,7 +29,7 @@ struct X
     void operator=(X const&);
  private:
     int x;
-    long magic;
+    long magic = 7654321;
     static int counter;
 };
 
