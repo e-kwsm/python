@@ -11,8 +11,8 @@ namespace test {
 class ret_type
 {
  public:
-    ret_type() : i(42.5) {}
-    double i;
+    ret_type() {}
+    double i = 42.5;
 };
 
 class crash_me
