@@ -9,8 +9,8 @@ using namespace boost;
 
 class A : public enable_shared_from_this<A> {
  public:
-   A() : val(0) {};
-   int val;
+   A() {};
+   int val = 0;
    typedef shared_ptr<A> A_ptr;
    A_ptr self() {
       A_ptr self;
