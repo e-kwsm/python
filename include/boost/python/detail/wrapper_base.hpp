@@ -42,7 +42,7 @@ namespace detail
       friend void initialize_wrapper(PyObject* self, wrapper_base* w);
       friend PyObject* wrapper_base_::get_owner(wrapper_base const volatile& w);
    protected:
-      wrapper_base() : m_self(0) {}
+      wrapper_base() {}
           
       override get_override(
           char const* name, PyTypeObject* class_object) const;
@@ -51,7 +51,7 @@ namespace detail
       void detach();
       
    private:
-      PyObject* m_self;
+      PyObject* m_self = 0;
   };
 
   namespace wrapper_base_ // ADL disabler
