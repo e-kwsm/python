@@ -128,13 +128,12 @@ namespace
       cast_graph const& topology() const { return m_topology; }
 
       smart_graph()
-          : m_known_vertices(0)
       {}
       
    private:
       cast_graph m_topology;
       mutable std::vector<std::size_t> m_distances;
-      mutable std::size_t m_known_vertices;
+      mutable std::size_t m_known_vertices = 0;
   };
   
   smart_graph& full_graph()
@@ -360,11 +359,10 @@ namespace
 
       cache_element(key_type const& k)
           : key(k)
-          , offset(0)
       {}
       
       key_type key;
-      std::ptrdiff_t offset;
+      std::ptrdiff_t offset = 0;
 
       BOOST_STATIC_CONSTANT(
           std::ptrdiff_t, not_found = integer_traits<std::ptrdiff_t>::const_min);
