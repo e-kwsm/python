@@ -38,9 +38,9 @@ struct VarBase
 
 struct Var : VarBase
 {
-    Var(std::string name_) : VarBase(name_), value(), name2(name.c_str()), y(6) {}
+    Var(std::string name_) : VarBase(name_),  name2(name.c_str()), y(6) {}
     std::string const& get_name2() const { return name; }
-    float value;
+    float value = 0.0f;
     char const* name2;
     Y y;
 
@@ -56,8 +56,8 @@ namespace boost_python_test
 {
   struct trivial
   {
-    trivial() : value(123) {}
-    double value;
+    trivial() {}
+    double value = 123;
   };
 
   struct Color3

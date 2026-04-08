@@ -227,25 +227,25 @@ simple const& g(simple const& x)
 
 struct A
 {
-    A() : x(0) {}
+    A() {}
     virtual ~A() {}
     char const* name() { return "A"; }
-    int x;
+    int x = 0;
 };
 
 struct B : A
 {
-    B() : x(1) {}
+    B() {}
     static char const* name(B*) { return "B"; }
-    int x;
+    int x = 1;
 };
 
 struct C : A
 {
-    C() : x(2) {}
+    C() {}
     char const* name() { return "C"; }
     virtual ~C() {}
-    int x;
+    int x = 2;
 };
 
 struct D : B, C
