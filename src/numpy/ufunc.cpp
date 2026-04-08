@@ -19,17 +19,17 @@ namespace numpy
 
 multi_iter make_multi_iter(object const & a1)
 {
-  return multi_iter(python::detail::new_reference(PyArray_MultiIterNew(1, a1.ptr())));
+  return multi_iter(reinterpret_cast<python::detail::new_reference>(PyArray_MultiIterNew(1, a1.ptr())));
 }
 
   multi_iter make_multi_iter(object const & a1, object const & a2)
 {
-  return multi_iter(python::detail::new_reference(PyArray_MultiIterNew(2, a1.ptr(), a2.ptr())));
+  return multi_iter(reinterpret_cast<python::detail::new_reference>(PyArray_MultiIterNew(2, a1.ptr(), a2.ptr())));
 }
 
 multi_iter make_multi_iter(object const & a1, object const & a2, object const & a3)
 {
-  return multi_iter(python::detail::new_reference(PyArray_MultiIterNew(3, a1.ptr(), a2.ptr(), a3.ptr())));
+  return multi_iter(reinterpret_cast<python::detail::new_reference>(PyArray_MultiIterNew(3, a1.ptr(), a2.ptr(), a3.ptr())));
 }
 
 void multi_iter::next() 

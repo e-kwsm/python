@@ -212,26 +212,26 @@ ndarray::bitflag ndarray::get_flags() const
 
 ndarray ndarray::transpose() const 
 {
-  return ndarray(python::detail::new_reference
+  return ndarray(reinterpret_cast<python::detail::new_reference>
     (PyArray_Transpose(reinterpret_cast<PyArrayObject*>(this->ptr()), NULL)));
 }
 
 ndarray ndarray::squeeze() const 
 {
-  return ndarray(python::detail::new_reference
+  return ndarray(reinterpret_cast<python::detail::new_reference>
     (PyArray_Squeeze(reinterpret_cast<PyArrayObject*>(this->ptr()))));
 }
 
 ndarray ndarray::reshape(python::tuple const & shape) const 
 {
-  return ndarray(python::detail::new_reference
+  return ndarray(reinterpret_cast<python::detail::new_reference>
     (PyArray_Reshape(reinterpret_cast<PyArrayObject*>(this->ptr()), shape.ptr())));
 }
 
 python::object ndarray::scalarize() const 
 {
   Py_INCREF(ptr());
-  return python::object(python::detail::new_reference(PyArray_Return(reinterpret_cast<PyArrayObject*>(ptr()))));
+  return python::object(reinterpret_cast<python::detail::new_reference>(PyArray_Return(reinterpret_cast<PyArrayObject*>(ptr()))));
 }
 
 ndarray zeros(python::tuple const & shape, dtype const & dt) 
@@ -239,13 +239,13 @@ ndarray zeros(python::tuple const & shape, dtype const & dt)
   int nd = len(shape);
   boost::scoped_array<Py_intptr_t> dims(new Py_intptr_t[nd]);
   for (int n=0; n<nd; ++n) dims[n] = python::extract<Py_intptr_t>(shape[n]);
-  return ndarray(python::detail::new_reference
+  return ndarray(reinterpret_cast<python::detail::new_reference>
                  (PyArray_Zeros(nd, dims.get(), detail::incref_dtype(dt), 0)));
 }
 
 ndarray zeros(int nd, Py_intptr_t const * shape, dtype const & dt) 
 {
-  return ndarray(python::detail::new_reference
+  return ndarray(reinterpret_cast<python::detail::new_reference>
     (PyArray_Zeros(nd, const_cast<Py_intptr_t*>(shape), detail::incref_dtype(dt), 0)));
 }
 
@@ -254,32 +254,32 @@ ndarray empty(python::tuple const & shape, dtype const & dt)
   int nd = len(shape);
   boost::scoped_array<Py_intptr_t> dims(new Py_intptr_t[nd]);
   for (int n=0; n<nd; ++n) dims[n] = python::extract<Py_intptr_t>(shape[n]);
-  return ndarray(python::detail::new_reference
+  return ndarray(reinterpret_cast<python::detail::new_reference>
                  (PyArray_Empty(nd, dims.get(), detail::incref_dtype(dt), 0)));    
 }
 
 ndarray empty(int nd, Py_intptr_t const * shape, dtype const & dt)
 {
-  return ndarray(python::detail::new_reference
+  return ndarray(reinterpret_cast<python::detail::new_reference>
     (PyArray_Empty(nd, const_cast<Py_intptr_t*>(shape), detail::incref_dtype(dt), 0)));
 }
 
 ndarray array(python::object const & obj) 
 {
-  return ndarray(python::detail::new_reference
+  return ndarray(reinterpret_cast<python::detail::new_reference>
     (PyArray_FromAny(obj.ptr(), NULL, 0, 0, NPY_ARRAY_ENSUREARRAY, NULL)));
 }
 
 ndarray array(python::object const & obj, dtype const & dt) 
 {
-  return ndarray(python::detail::new_reference
+  return ndarray(reinterpret_cast<python::detail::new_reference>
     (PyArray_FromAny(obj.ptr(), detail::incref_dtype(dt), 0, 0, NPY_ARRAY_ENSUREARRAY, NULL)));
 }
 
 ndarray from_object(python::object const & obj, dtype const & dt, int nd_min, int nd_max, ndarray::bitflag flags)
 {
   int requirements = detail::bitflag_to_numpy(flags);
-  return ndarray(python::detail::new_reference
+  return ndarray(reinterpret_cast<python::detail::new_reference>
     (PyArray_FromAny(obj.ptr(),
 		     detail::incref_dtype(dt),
 		     nd_min, nd_max,
@@ -290,7 +290,7 @@ ndarray from_object(python::object const & obj, dtype const & dt, int nd_min, in
 ndarray from_object(python::object const & obj, int nd_min, int nd_max, ndarray::bitflag flags) 
 {
   int requirements = detail::bitflag_to_numpy(flags);
-  return ndarray(python::detail::new_reference
+  return ndarray(reinterpret_cast<python::detail::new_reference>
     (PyArray_FromAny(obj.ptr(),
 		     NULL,
 		     nd_min, nd_max,
