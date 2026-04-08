@@ -26,12 +26,10 @@ class scope
     inline scope(object const&);
     inline scope();
     inline ~scope();
+    void operator=(scope const&) = delete;
     
  private: // data members
     PyObject* m_previous_scope;
-
- private: // unimplemented functions
-    void operator=(scope const&);
 };
 
 inline scope::scope(object const& new_scope)

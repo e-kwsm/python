@@ -12,8 +12,7 @@ namespace boost { namespace python { namespace detail {
 struct void_return
 {
     void_return() {}
- private: 
-    void operator=(void_return const&);
+    void operator=(void_return const&) = delete;
 };
 
 template <class T>
