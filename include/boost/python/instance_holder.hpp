@@ -44,7 +44,7 @@ struct BOOST_PYTHON_DECL instance_holder : private noncopyable
     // the given Python object by allocate(), above.
     static void deallocate(PyObject*, void* storage) throw();
  private:
-    instance_holder* m_next;
+    instance_holder* m_next = 0;
 };
 
 // This macro is needed for implementation of derived holders

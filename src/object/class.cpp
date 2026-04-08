@@ -38,7 +38,6 @@ namespace self_ns
 # endif 
 
 instance_holder::instance_holder()
-    : m_next(0)
 {
 }
 

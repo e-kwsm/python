@@ -60,7 +60,7 @@ struct BOOST_PYTHON_DECL function : PyObject
     object m_module;
     object m_doc;
     object m_arg_names;
-    unsigned m_nkeyword_values;
+    unsigned m_nkeyword_values = 0;
     friend class function_doc_signature_generator;
 };
 
