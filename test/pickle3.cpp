@@ -31,7 +31,7 @@ namespace boost_python_test {
   class world
   {
     public:
-      world(const std::string& _country) : secret_number(0) {
+      world(const std::string& _country) {
         this->country = _country;
       }
       std::string greet() const { return "Hello from " + country + "!"; }
@@ -40,7 +40,7 @@ namespace boost_python_test {
       int get_secret_number() const { return secret_number; }
     private:
       std::string country;
-      int secret_number;
+      int secret_number = 0;
   };
 
   struct world_pickle_suite : boost::python::pickle_suite
