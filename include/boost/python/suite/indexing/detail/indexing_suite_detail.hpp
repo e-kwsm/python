@@ -385,6 +385,8 @@ namespace boost { namespace python { namespace detail {
             if (!is_detached())
                 get_links().remove(*this);
         }
+
+        container_element& operator=(container_element const& ce) = delete;
                       
         element_type& operator*() const
         {
@@ -448,8 +450,6 @@ namespace boost { namespace python { namespace detail {
         }
 
     private:
-            
-        container_element& operator=(container_element const& ce);
 
         scoped_ptr<element_type> ptr;
         object container;

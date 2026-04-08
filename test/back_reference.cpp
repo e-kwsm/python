@@ -26,12 +26,11 @@ struct X
     explicit X(int x) : x(x), magic(7654321) { ++counter; }
     X(X const& rhs) : x(rhs.x), magic(7654321) { ++counter; }
     virtual ~X() { BOOST_ASSERT(magic == 7654321); magic = 6666666; x = 9999; --counter; }
+    void operator=(X const&) = delete;
 
     void set(int _x) { BOOST_ASSERT(magic == 7654321); this->x = _x; }
     int value() const { BOOST_ASSERT(magic == 7654321); return x; }
     static int count() { return counter; }
- private:
-    void operator=(X const&);
  private:
     int x;
     long magic;
@@ -44,8 +43,8 @@ struct Y : X
 {
     Y(PyObject* self, int x) : X(x), self(self) {}
     Y(PyObject* self, Y const& rhs) : X(rhs), self(self) {}
+    Y(Y const&) = delete;
  private:
-    Y(Y const&);
     PyObject* self;
 };
 
@@ -53,8 +52,8 @@ struct Z : X
 {
     Z(PyObject* self, int x) : X(x), self(self) {}
     Z(PyObject* self, Z const& rhs) : X(rhs), self(self) {}
+    Z(Z const&) = delete;
  private:
-    Z(Z const&);
     PyObject* self;
 };
 
