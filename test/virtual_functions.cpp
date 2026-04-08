@@ -19,7 +19,7 @@ using namespace boost::python;
 struct X
 {
     explicit X(int x) : x(x) { ++counter; }
-    X(X const& rhs) : x(rhs.x), magic(7654321) { ++counter; }
+    X(X const& rhs) : x(rhs.x) { ++counter; }
     virtual ~X() { BOOST_ASSERT(magic == 7654321); magic = 6666666; x = 9999; --counter; }
 
     void set(int _x) { BOOST_ASSERT(magic == 7654321); this->x = _x; }
