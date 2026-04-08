@@ -250,9 +250,9 @@ struct C : A
 
 struct D : B, C
 {
-    D() : x(3) {}
+    D() {}
     char const* name() { return "D"; }
-    int x;
+    int x = 3;
 };
 
 A take_a(A const& a) { return a; }
